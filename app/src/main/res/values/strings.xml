@@ -1,6 +1,7 @@
 <resources>
     <!--app name -->
     <string name="app_name">TripReminderApp</string>
+<<<<<<< Updated upstream
     <!--processing trip -->
     <string name="StartPoint">Starting Point</string>
     <string name="endPoint">Ending Point</string>
@@ -31,4 +32,15 @@
     <string name="want_logout">Do You Want Logout?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+=======
+    <string name="trip_name">TRIP NAME</string>
+    <string name="start_point">START POINT</string>
+    <string name="end_point">END POINT</string>
+    <string name="date">DATE</string>
+    <string name="time">TIME</string>
+    <string name="one_direction_trip">ONE DIRECTION</string>
+    <string name="round_trip">ROUND TRIP</string>
+    <string name="todo">TODO</string>
+
+>>>>>>> Stashed changes
 </resources>

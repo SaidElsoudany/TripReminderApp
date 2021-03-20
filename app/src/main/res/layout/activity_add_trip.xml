@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTripActivity">
+
+
+
+    <EditText
+        android:id="@+id/txt_time"
+        android:layout_width="361dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableEnd="@drawable/ic_time"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/time"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/txt_date"
+        android:layout_width="361dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_edittext"
+        android:focusable="false"
+        android:drawableEnd="@drawable/ic_date"
+        android:ems="10"
+        android:hint="@string/date"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_endPoint"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/txt_endPoint"
+        android:layout_width="361dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableEnd="@drawable/ic_pin"
+        android:focusable="false"
+        android:ems="10"
+        android:hint="@string/end_point"
+        android:inputType="textPersonName"
+
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_startPoint"
+        android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/txt_startPoint"
+        android:layout_width="361dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableEnd="@drawable/ic_pin"
+        android:ems="10"
+        android:hint="@string/start_point"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:focusable="false"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_tripName"
+        android:importantForAutofill="no" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="120dp"
+        android:layout_height="123dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/todo" />
+
+    <EditText
+        android:id="@+id/txt_tripName"
+        android:layout_width="361dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableEnd="@drawable/ic_trip_name"
+        android:ems="10"
+        android:hint="@string/trip_name"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        android:importantForAutofill="no" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="#5d9e43"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_trip"
+        android:contentDescription="@string/todo"
+        android:focusable="true" />
+
+    <RadioGroup
+        android:layout_width="354dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_time">
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="185dp"
+            android:layout_height="61dp"
+            android:text="@string/one_direction_trip"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="177dp"
+            android:layout_height="60dp"
+            android:text="@string/round_trip"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

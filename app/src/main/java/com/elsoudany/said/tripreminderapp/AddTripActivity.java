@@ -55,7 +55,7 @@ public class AddTripActivity extends AppCompatActivity
         endPoint=findViewById(R.id.txt_endPoint);
         calendar=Calendar.getInstance();
         /*-----------------------------------------start point --------------------------*/
-        Places.initialize(getApplicationContext(),"AIzaSyBaZW0MH4ZZpRhPnRlYv_JLr-kd9VfwaEg");
+        Places.initialize(getApplicationContext(),"AIzaSyCdXqSieoMfWeS3GunOh0FKQzKJnsCWIGM");
         startPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

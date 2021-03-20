@@ -4,4 +4,6 @@
     <string name="endPoint">Ending Point</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

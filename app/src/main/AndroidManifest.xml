@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
         <activity android:name=".ProcessingTripsActivity"></activity>
+        <activity android:name=".Drawer">
+        </activity>
         <activity android:name=".SignUp" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity">

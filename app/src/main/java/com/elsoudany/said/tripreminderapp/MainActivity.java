@@ -9,12 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button buttonLogout;
+    Button buttonLogout,buttonDrawer;
     Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonLogout=findViewById(R.id.Logout);
+        buttonDrawer=findViewById(R.id.drawer);
         btn = findViewById(R.id.RecyclerViewBtn);
         btn.setOnClickListener(view -> {
             Intent intent = new Intent(this,ProcessingTripsActivity.class);
@@ -56,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
+            }
+        });
+
+        buttonDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(MainActivity.this,Drawer.class);
+                startActivity(intent);
             }
         });
     }

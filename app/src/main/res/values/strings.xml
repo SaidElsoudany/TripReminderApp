@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TripReminderApp</string>
+    <string name="StartPoint">Starting Point</string>
+    <string name="endPoint">Ending Point</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 </resources>

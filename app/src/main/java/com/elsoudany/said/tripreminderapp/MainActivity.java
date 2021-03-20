@@ -15,13 +15,18 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     Button buttonLogout;
+    Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         buttonLogout=findViewById(R.id.Logout);
-
+        btn = findViewById(R.id.RecyclerViewBtn);
+        btn.setOnClickListener(view -> {
+            Intent intent = new Intent(this,ProcessingTripsActivity.class);
+            startActivity(intent);
+        });
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

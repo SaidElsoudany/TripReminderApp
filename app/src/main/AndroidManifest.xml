@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".ProcessingTripsActivity"></activity>
+        <activity android:name=".SignUp" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity">
             <intent-filter>

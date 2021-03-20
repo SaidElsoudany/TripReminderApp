@@ -24,12 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
     Button buttonLogout,buttonDrawer;
     Button btn;
+    Button btnMayar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        btnMayar = findViewById(R.id.BtnMayar);
         buttonLogout=findViewById(R.id.Logout);
         buttonDrawer=findViewById(R.id.drawer);
         btn = findViewById(R.id.RecyclerViewBtn);
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this,ProcessingTripsActivity.class);
             startActivity(intent);
         });
+        btnMayar.setOnClickListener(view ->{
+            Intent intent = new Intent(this,AddTripActivity.class);
+            startActivity(intent);
+        });
+
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

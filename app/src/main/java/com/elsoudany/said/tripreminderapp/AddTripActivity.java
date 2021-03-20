@@ -43,10 +43,10 @@ public class AddTripActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        getSupportActionBar().hide(); // hide the title bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+//        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
+//        getSupportActionBar().hide(); // hide the title bar
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_add_trip);
 
         dateText=findViewById(R.id.txt_date);
@@ -55,7 +55,7 @@ public class AddTripActivity extends AppCompatActivity
         endPoint=findViewById(R.id.txt_endPoint);
         calendar=Calendar.getInstance();
         /*-----------------------------------------start point --------------------------*/
-        Places.initialize(getApplicationContext(),"AIzaSyA0Kx9zId-o28_lte7ezbsoe7XIxv_HyHA");
+        Places.initialize(getApplicationContext(),"AIzaSyBaZW0MH4ZZpRhPnRlYv_JLr-kd9VfwaEg");
         startPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

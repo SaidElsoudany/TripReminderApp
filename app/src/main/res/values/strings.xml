@@ -1,9 +1,34 @@
 <resources>
+    <!--app name -->
     <string name="app_name">TripReminderApp</string>
+    <!--processing trip -->
     <string name="StartPoint">Starting Point</string>
     <string name="endPoint">Ending Point</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <!--Drawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="logout">Logout</string>
+    <string name="drawer">Drawer</string>
+    <string name="Upcoming">Upcoming</string>
+    <string name="History">History</string>
+    <string name="Map">Map</string>
+    <string name="Send">Send</string>
+    <!--SignUp && Login -->
+    <string name="Register">Register</string>
+    <string name="userName">UserName</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="confirm_Password">Confirm Password</string>
+    <string name="have_account">Already Have an Account?</string>
+    <string name="Login">Login</string>
+    <string name="Forgot">Forgot Password?</string>
+    <string name="dont_have_account">Dont have an Account?</string>
+    <string name="SignUp">SignUp</string>
+    <string name="SignIn_Google">SignIn With Google</string>
+    <!--alert -->
+    <string name="want_logout">Do You Want Logout?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

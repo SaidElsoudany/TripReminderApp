@@ -11,7 +11,7 @@
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:padding="16dp"
-        android:text="Do You Want Logout?"
+        android:text="@string/want_logout"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -28,22 +28,22 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="no"
+            android:gravity="center_horizontal"
+            android:text="@android:string/no"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            android:gravity="center_horizontal" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/text_yes_logout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="yes"
+            android:gravity="center_horizontal"
+            android:text="@android:string/yes"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            android:gravity="center_horizontal" />
+            android:textSize="22sp" />
 
 
     </LinearLayout>

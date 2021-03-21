@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/nav_notification"
+            android:id="@+id/nav_Upcoming"
             android:icon="@drawable/ic_notifications"
             android:title="@string/Upcoming" />
 
@@ -12,18 +12,13 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_history"
             android:title="@string/History" />
-
-        <item
-            android:id="@+id/nav_map"
-            android:icon="@drawable/ic_map"
-            android:title="@string/Map" />
     </group>
 <item android:title="TODO">
         <menu>
             <item
                 android:id="@+id/nav_sync"
                 android:icon="@drawable/ic_sync"
-                android:title="@string/Send" />
+                android:title="@string/sync" />
 
             <item
                 android:id="@+id/nav_logout"

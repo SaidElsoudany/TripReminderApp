@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         buttonDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Click To Drawer", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, Drawer.class);
                 startActivity(intent);
             }});

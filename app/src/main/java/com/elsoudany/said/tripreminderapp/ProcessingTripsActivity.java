@@ -19,6 +19,7 @@ import com.elsoudany.said.tripreminderapp.room.User;
 import com.elsoudany.said.tripreminderapp.room.UserDAO;
 import com.elsoudany.said.tripreminderapp.room.UserTrip;
 import com.elsoudany.said.tripreminderapp.room.UserTripDAO;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +53,15 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                 tripDAO = db.tripDAO();
                 userTripDAO = db.userTripDAO();
                 userDAO = db.userDAO();
-                User user1 = new User("55");
-                Trip trip1 = new Trip("trip10","Alex","Cairo","5/10/2021","5:10pm","55","processing");
-                Trip trip2 = new Trip("trip20","Alex","Cairo","5/10/2021","5:10pm","55","processing");
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                String id = firebaseAuth.getCurrentUser().getUid();
+                User user1 = new User(id);
+                //Trip trip1 = new Trip("trip10","Alex","Cairo","5/10/2021","5:10pm",id,"processing");
+                //Trip trip2 = new Trip("trip20","Alex","Cairo","5/10/2021","5:10pm",id,"processing");
                 userDAO.insertAll(user1);
-                tripDAO.insertAll(trip1,trip2);
-                List<UserTrip> tripList = userTripDAO.getAllTrips("55");
+                //tripDAO.insertAll(trip1,trip2);
+
+                List<UserTrip> tripList = userTripDAO.getAllTrips(id);
 
                 processingTripList.addAll((ArrayList<Trip>) tripList.get(0).tripList);
                 processingTripList.removeIf(new Predicate<Trip>() {

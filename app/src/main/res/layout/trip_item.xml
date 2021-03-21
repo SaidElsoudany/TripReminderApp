@@ -1,89 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="0dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp"
+    app:contentPaddingTop="10dp"
+    app:contentPaddingBottom="10dp"
+    app:contentPaddingLeft="10dp"
+    app:contentPaddingRight="10dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
 
-    <androidx.cardview.widget.CardView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/StartPoint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_weight="3.9"
+                android:orientation="vertical"
+                android:weightSum="4">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/endPoint"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_trip_name"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/name" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow3"
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time"
-                app:layout_constraintStart_toStartOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                        />
 
-            <TextView
-                android:id="@+id/startPointField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:text="@string/StartPoint"
-                app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-                app:layout_constraintStart_toEndOf="@+id/textView4" />
+                    <TextView
+                        android:id="@+id/trip_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/name" />
 
-            <TextView
-                android:id="@+id/endPointField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/endPoint"
-                app:layout_constraintStart_toStartOf="@+id/startPointField"
-                app:layout_constraintTop_toBottomOf="@+id/startPointField" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/dateField"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/date"
-                app:layout_constraintStart_toStartOf="@+id/endPointField"
-                app:layout_constraintTop_toBottomOf="@+id/endPointField" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/timeField"
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_pin"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/From" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow3"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/startPointField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/StartPoint" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_pin"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/to" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow3"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/endPointField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/endPoint" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_date"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/date" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow3"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/dateField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/date" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_edittext"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_time"
+                        android:drawablePadding="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:paddingRight="10dp"
+                        android:text="@string/time" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow3"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/timeField"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="20dp"
+                        android:text="@string/time" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="55dp"
+                    android:src="@drawable/edit" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/bin" />
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/notes" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/cancelBtn"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/time"
-                app:layout_constraintStart_toStartOf="@+id/dateField"
-                app:layout_constraintTop_toBottomOf="@+id/dateField" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorRed"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/startBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/teal_200"
+                android:text="@string/start" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

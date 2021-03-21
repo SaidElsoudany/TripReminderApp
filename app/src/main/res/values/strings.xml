@@ -40,5 +40,10 @@
     <string name="round_trip">ROUND TRIP</string>
     <string name="todo">TODO</string>
     <string name="sync">Sync</string>
+    <string name="From">FROM</string>
+    <string name="to">To</string>
+    <string name="cancel">Cancel</string>
+    <string name="start">START</string>
+    <string name="name">Name</string>
 
 </resources>

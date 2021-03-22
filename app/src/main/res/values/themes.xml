@@ -3,7 +3,7 @@
     <style name="Theme.TripReminderApp" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">#5d9e43</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/black</item>
 

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,15 +23,26 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private DrawerLayout drawer;
     Toolbar toolbar;
+   TextView userEmail;
+   View headerView;
+    String email;
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
 
+       firebaseAuth = FirebaseAuth.getInstance();
+       email = firebaseAuth.getCurrentUser().getEmail();
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_id);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        //access header view in navigation
+        headerView=navigationView.getHeaderView(0);
+        userEmail=headerView.findViewById(R.id.txt_userEmail);
+        userEmail.setText(email);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -40,12 +52,15 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         //selected item
         if (savedInstanceState == null) {
             navigationView.setCheckedItem(R.id.nav_Upcoming);
+
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START))
+        {
+
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -80,6 +95,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 dialog.show();
                 TextView textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
                 TextView textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
+
                 textViewYesLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -101,6 +117,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
                 break;
         }
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

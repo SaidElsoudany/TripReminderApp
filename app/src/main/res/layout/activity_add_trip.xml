@@ -119,11 +119,11 @@
         android:importantForAutofill="no" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/btn_addTrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="#5d9e43"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -135,7 +135,7 @@
     <RadioGroup
         android:layout_width="354dp"
         android:layout_height="56dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
@@ -143,14 +143,14 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_time">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radio_oneDirection"
             android:layout_width="185dp"
             android:layout_height="61dp"
             android:text="@string/one_direction_trip"
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radio_roundTrip"
             android:layout_width="177dp"
             android:layout_height="60dp"
             android:text="@string/round_trip"

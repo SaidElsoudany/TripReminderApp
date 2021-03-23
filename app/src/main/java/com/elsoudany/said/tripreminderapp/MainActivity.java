@@ -29,7 +29,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null)
+        {
+            FirebaseAuth.getInstance().signOut();
+            SharedPreferences preferencesConfig = getSharedPreferences("status", MODE_PRIVATE);
+            preferencesConfig.edit().clear().commit();
+            Intent intent = new Intent(MainActivity.this, Login.class);
+            startActivity(intent);
+            finish();
+        }
         btnMayar = findViewById(R.id.BtnMayar);
         buttonLogout=findViewById(R.id.Logout);
         buttonDrawer=findViewById(R.id.drawer);

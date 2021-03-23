@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient.signOut();
 
 
 
@@ -161,7 +162,9 @@ public class Login extends AppCompatActivity {
     }
     //Google Authentication
     private void firebaseAuthWithGoogle(String idToken) {
+
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+
         fAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

@@ -1,12 +1,15 @@
 package com.elsoudany.said.tripreminderapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +22,7 @@ import com.elsoudany.said.tripreminderapp.room.User;
 import com.elsoudany.said.tripreminderapp.room.UserDAO;
 import com.elsoudany.said.tripreminderapp.room.UserTrip;
 import com.elsoudany.said.tripreminderapp.room.UserTripDAO;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -26,6 +30,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ProcessingTripsActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 1005;
     ArrayList<Trip> processingTripList = new ArrayList<>();
     RecyclerView processingTripListView;
     TripsAdapter tripsAdapter;
@@ -33,6 +38,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
     TripDAO tripDAO;
     UserDAO userDAO;
     UserTripDAO userTripDAO;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,10 @@ public class ProcessingTripsActivity extends AppCompatActivity {
         processingTripListView.setLayoutManager(layoutManager);
         tripsAdapter = new TripsAdapter(this,processingTripList);
         processingTripListView.setAdapter(tripsAdapter);
+        fab = findViewById(R.id.addBtn);
+        fab.setOnClickListener(view ->{
+            startActivityForResult(new Intent(this,AddTripActivity.class),REQUEST_CODE);
+        });
         handler = new MyHandler();
         new Thread(){
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -56,10 +66,8 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 String id = firebaseAuth.getCurrentUser().getUid();
                 User user1 = new User(id);
-                //Trip trip1 = new Trip("trip10","Alex","Cairo","5/10/2021","5:10pm",id,"processing");
-                //Trip trip2 = new Trip("trip20","Alex","Cairo","5/10/2021","5:10pm",id,"processing");
+
                 userDAO.insertAll(user1);
-                //tripDAO.insertAll(trip1,trip2);
 
                 List<UserTrip> tripList = userTripDAO.getAllTrips(id);
 
@@ -81,6 +89,33 @@ public class ProcessingTripsActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             tripsAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("radio");
+                String start = data.getStringExtra("startPoint");
+                String end = data.getStringExtra("endPoint");
+                String date = data.getStringExtra("date");
+                String time = data.getStringExtra("time");
+                String name = data.getStringExtra("tripName");
+                String userid = data.getStringExtra("userId");
+                String status = data.getStringExtra("status");
+                Trip addedTrip = new Trip(name,start,end,date,time,userid,status);
+                processingTripList.add(addedTrip);
+                tripsAdapter.notifyDataSetChanged();
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        tripDAO.insertAll(addedTrip);
+                    }
+                }.start();
+            }
         }
     }
 }

@@ -13,8 +13,14 @@ public interface TripDAO {
     @Query("SELECT * FROM trips")
     List<Trip> getAll();
 
+    @Query("SELECT * FROM trips WHERE uid = :id")
+    Trip getTrip(Long id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Trip... trips);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(Trip trip);
 
     @Delete
     void delete(Trip trip);

@@ -32,7 +32,8 @@ android {
 
 dependencies {
     def room_version = "2.2.6"
-
+    def versions_work = "2.3.3"
+    implementation "androidx.work:work-runtime:$versions_work"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation platform('com.google.firebase:firebase-bom:26.7.0')

@@ -12,7 +12,8 @@ import java.io.Serializable;
 
 public class Trip implements Serializable {
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    public long uid;
     @ColumnInfo(name = "trip_name")
     public String tripName;
     @ColumnInfo(name = "start_point")
@@ -25,11 +26,12 @@ public class Trip implements Serializable {
     public String time;
     public String userId;
     public String status;
+    public String tripType;
     public Trip(){
 
     }
     @Ignore
-    public Trip(String tripName, String startPoint, String endPoint, String date, String time, String userId,String status) {
+    public Trip(String tripName, String startPoint, String endPoint, String date, String time, String userId,String status,String tripType) {
         this.tripName = tripName;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -37,18 +39,21 @@ public class Trip implements Serializable {
         this.time = time;
         this.userId = userId;
         this.status = status;
+        this.tripType = tripType;
     }
 
     @Override
     public String toString() {
         return "Trip{" +
-                "tripName='" + tripName + '\'' +
+                "uid=" + uid +
+                ", tripName='" + tripName + '\'' +
                 ", startPoint='" + startPoint + '\'' +
                 ", endPoint='" + endPoint + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", userId='" + userId + '\'' +
                 ", status='" + status + '\'' +
+                ", tripType='" + tripType + '\'' +
                 '}';
     }
 }

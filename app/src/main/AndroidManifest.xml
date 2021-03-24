@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elsoudany.said.tripreminderapp">
+
     <uses-permission android:name="android.permission.INTERNET" />
-
-
-
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/appstore"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
-        <activity android:name=".History"></activity>
+        <service
+            android:name=".ReminderWork.ReminderService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".History" />
         <activity android:name=".ProcessingTripsActivity" />
-        <activity android:name=".Drawer"></activity>
+        <activity android:name=".Drawer" />
         <activity android:name=".SignUp" />
         <activity android:name=".Login" />
         <activity android:name=".AddTripActivity" />

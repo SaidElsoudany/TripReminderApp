@@ -1,12 +1,14 @@
 package com.elsoudany.said.tripreminderapp;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -29,6 +31,9 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -42,8 +47,8 @@ public class AddTripActivity extends AppCompatActivity
     //time edit Text
     EditText timeText;
     //add trip button
-   FloatingActionButton addTripButton;
-   //trip name
+    FloatingActionButton addTripButton;
+    //trip name
     EditText tripName;
     //calendar instance
     Calendar calendar;
@@ -55,8 +60,8 @@ public class AddTripActivity extends AppCompatActivity
     //points
     EditText startPoint,endPoint;
     //api key
-   final int AUTOCOMPLETE_REQUEST_CODE=100;
-   //flag to know start or end point
+    final int AUTOCOMPLETE_REQUEST_CODE=100;
+    //flag to know start or end point
     String point;
     //firebase reference to get user id
     FirebaseAuth firebaseAuth;
@@ -83,8 +88,8 @@ public class AddTripActivity extends AppCompatActivity
         startPoint=findViewById(R.id.txt_startPoint);
         endPoint=findViewById(R.id.txt_endPoint);
         //get userid from firebase
-       firebaseAuth = FirebaseAuth.getInstance();
-       userId = firebaseAuth.getCurrentUser().getUid();
+        firebaseAuth = FirebaseAuth.getInstance();
+        userId = firebaseAuth.getCurrentUser().getUid();
         //instance from calendar to get current date and time
         calendar=Calendar.getInstance();
         /*-----------------------------------------start point --------------------------*/
@@ -110,34 +115,34 @@ public class AddTripActivity extends AppCompatActivity
             }
         });
 
-   addTripButton.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view)
-    {
-        String radio="";
-      if(oneDirectionRadio.isChecked()){
-       radio="one";
-       }
-        if(roundedRadio.isChecked())
-        {
-            radio="round";
+        addTripButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                String radio="";
+                if(oneDirectionRadio.isChecked()){
+                    radio="one";
+                }
+                if(roundedRadio.isChecked())
+                {
+                    radio="round";
 
 
-        }
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("radio",radio);
-        returnIntent.putExtra("tripName",tripName.getText().toString());
-        returnIntent.putExtra("startPoint",startPoint.getText().toString());
-        returnIntent.putExtra("endPoint",endPoint.getText().toString());
-        returnIntent.putExtra("date",dateText.getText().toString());
-        returnIntent.putExtra("time",timeText.getText().toString());
-        returnIntent.putExtra("userId",userId);
-        returnIntent.putExtra("status","processing");
-        Toast.makeText(AddTripActivity.this, ""+userId, Toast.LENGTH_SHORT).show();
-        setResult(Activity.RESULT_OK,returnIntent);
-        finish();
-    }
-     });
+                }
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("radio",radio);
+                returnIntent.putExtra("tripName",tripName.getText().toString());
+                returnIntent.putExtra("startPoint",startPoint.getText().toString());
+                returnIntent.putExtra("endPoint",endPoint.getText().toString());
+                returnIntent.putExtra("date",dateText.getText().toString());
+                returnIntent.putExtra("time",timeText.getText().toString());
+                returnIntent.putExtra("userId",userId);
+                returnIntent.putExtra("status","processing");
+                Toast.makeText(AddTripActivity.this, ""+userId, Toast.LENGTH_SHORT).show();
+                setResult(Activity.RESULT_OK,returnIntent);
+                finish();
+            }
+        });
 
         /*-----------------------------------------date text --------------------------*/
         dateText.setOnClickListener(new View.OnClickListener() {
@@ -153,11 +158,14 @@ public class AddTripActivity extends AppCompatActivity
                 DatePickerDialog datePickerDialog=new DatePickerDialog(AddTripActivity.this,
                         new DatePickerDialog.OnDateSetListener()
                         {
+                            @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth)
                             {
-                                       //set choosen date to datetext
-                                       dateText.setText( dayOfMonth+"/"+month+"/"+"/"+year);
+                                //set choosen date to datetext
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+                                LocalDate date = LocalDate.parse(dayOfMonth+"/"+(month + 1)+"/"+year,formatter);
+                                dateText.setText(date.toString());
                             }
                         },currentYear,currentMonth,currentDay);
 
@@ -176,15 +184,18 @@ public class AddTripActivity extends AppCompatActivity
                 currentMinute=calendar.get(Calendar.MINUTE);
                 //lunch timepicker
                 TimePickerDialog timePickerDialog=new TimePickerDialog(AddTripActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute)
                     {
-                        timeText.setText(hourOfDay+":"+minute);
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:m");
+                        LocalTime time = LocalTime.parse(hourOfDay+":"+minute,formatter);
+                        timeText.setText(time.toString());
 
                     }
                 },currentHour,currentMinute,false);
 
-                  timePickerDialog.show();
+                timePickerDialog.show();
             }
         });
     }
@@ -209,7 +220,7 @@ public class AddTripActivity extends AppCompatActivity
                 //check points request
                 switch(point){
                     case "start":startPoint.setText(place.getAddress());
-                                     break;
+                        break;
                     case "end":endPoint.setText(place.getAddress());
                         break;
                 }

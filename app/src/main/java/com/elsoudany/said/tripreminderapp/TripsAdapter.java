@@ -103,8 +103,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             convertView = itemView;
-            startBtn = convertView.findViewById(R.id.startBtn);
-            cancelBtn = convertView.findViewById(R.id.cancelBtn);
+//            startBtn = convertView.findViewById(R.id.startBtn);
+//            cancelBtn = convertView.findViewById(R.id.cancelBtn);
             nameField = convertView.findViewById(R.id.trip_name);
             startingPointField = convertView.findViewById(R.id.startPointField);
             endPointField = convertView.findViewById(R.id.endPointField);

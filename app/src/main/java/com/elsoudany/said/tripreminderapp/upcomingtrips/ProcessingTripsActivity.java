@@ -1,5 +1,6 @@
 package com.elsoudany.said.tripreminderapp.upcomingtrips;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
@@ -50,12 +53,14 @@ public class ProcessingTripsActivity extends AppCompatActivity {
     UserTripDAO userTripDAO;
     FloatingActionButton fab;
     String id;
+    MyHandler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_processing_trips);
-
+        handler = new MyHandler();
         processingTripListView = findViewById(R.id.processingTripList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -125,7 +130,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                             return !trip.status.equals("processing");
                         }
                     });
-                    tripsAdapter.notifyDataSetChanged();
+                    handler.sendEmptyMessage(1);
                 }
             }.start();
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -189,6 +194,14 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                     }
                 }.start();
             }
+        }
+    }
+
+    private class MyHandler extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            tripsAdapter.notifyDataSetChanged();
         }
     }
 }

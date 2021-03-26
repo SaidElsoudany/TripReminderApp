@@ -31,8 +31,10 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def room_version = "2.2.6"
     def versions_work = "2.3.3"
+    implementation "androidx.fragment:fragment:1.2.5"
     implementation "androidx.work:work-runtime:$versions_work"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

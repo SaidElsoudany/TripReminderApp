@@ -7,19 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.elsoudany.said.tripreminderapp.AddNotes.AddNoteActivity;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
 import com.google.firebase.auth.FirebaseAuth;
 
+
 import java.util.List;
 import java.util.zip.Inflater;
+
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
     Context context;
@@ -82,6 +86,12 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
 
         });
+        holder.btnAddNotes.setOnClickListener(view -> {
+            Intent intent =new Intent(context, AddNoteActivity.class);
+            context.startActivity(intent);
+
+
+        });
 
     }
 
@@ -99,6 +109,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         public View convertView;
         public Button startBtn;
         public Button cancelBtn;
+        public ImageView btnAddNotes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,6 +121,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             endPointField = convertView.findViewById(R.id.endPointField);
             dateField = convertView.findViewById(R.id.dateField);
             timeField = convertView.findViewById(R.id.timeField);
+            btnAddNotes=convertView.findViewById(R.id.btn_addNotes);
         }
     }
 }

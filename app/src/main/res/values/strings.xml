@@ -45,5 +45,10 @@
     <string name="start">START</string>
     <string name="name">Name</string>
     <string name="todo">TODO</string>
+    <string name="new_note">NEW NOTE</string>
+    <string name="write_note">WRITE A NOTE</string>
+    <string name="add_note">ADD</string>
+    <string name="cancel_note">CANCEL</string>
+    <string name="at">AT</string>
 
 </resources>

@@ -53,8 +53,11 @@ public class ProcessingTripsActivity extends AppCompatActivity {
     UserTripDAO userTripDAO;
     FloatingActionButton fab;
     String id;
+    //get trip name to send it to notification
+    String tripName;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_processing_trips);
 
@@ -164,15 +167,15 @@ public class ProcessingTripsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                String result = data.getStringExtra("radio");
+                String tripDirection = data.getStringExtra("radio");
                 String start = data.getStringExtra("startPoint");
                 String end = data.getStringExtra("endPoint");
                 String date = data.getStringExtra("date");
                 String time = data.getStringExtra("time");
-                String name = data.getStringExtra("tripName");
+                 tripName = data.getStringExtra("tripName");
                 String userid = data.getStringExtra("userId");
                 String status = data.getStringExtra("status");
-                Trip addedTrip = new Trip(name,start,end,date,time,userid,status,result);
+                Trip addedTrip = new Trip(tripName,start,end,date,time,userid,status,tripDirection);
                 processingTripList.add(addedTrip);
                 tripsAdapter.notifyDataSetChanged();
 
@@ -190,6 +193,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                         Log.i(TAG, "onCreate: "+ duration);
                         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(ReminderWorker.class)
                                 .setInputData(new Data.Builder().putLong("tripUid", addedTrip.uid).build())
+                                .setInputData(new Data.Builder().putString("tripName",tripName).build())
                                 .setInitialDelay(duration)
                                 .build();
 

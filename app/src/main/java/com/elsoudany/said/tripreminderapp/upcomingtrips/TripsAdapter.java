@@ -49,6 +49,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         holder.endPointField.setText(list.get(position).endPoint);
         holder.dateField.setText(list.get(position).date);
         holder.timeField.setText(list.get(position).time);
+
         holder.startBtn.setOnClickListener(view -> {
             list.get(position).status = "started";
             Trip trip = list.get(position);

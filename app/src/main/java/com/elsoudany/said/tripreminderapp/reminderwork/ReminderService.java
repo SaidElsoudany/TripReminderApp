@@ -76,7 +76,7 @@ public class ReminderService extends Service {
                 .setSmallIcon(R.drawable.ic_notification)
                 .addAction(R.drawable.ic_notification,"START",null)
                 .addAction(R.drawable.ic_notification,"CANCEL",null)
-                .setColor(ContextCompat.getColor(ReminderService.this, R.color.colorPrimaryDark))
+                .setColor(ContextCompat.getColor(ReminderService.this, R.color.black))
                 .setSmallIcon(R.drawable.ic_notification);
         notificationManager.notify(1, notification.build());
     }
@@ -115,7 +115,7 @@ public class ReminderService extends Service {
             Button cancelBtn = dialog.findViewById(R.id.cancelBtn);
             Button snoozeBtn = dialog.findViewById(R.id.snooze);
             snoozeBtn.setOnClickListener(view -> {
-                displayNotification( "snoozed");
+                displayNotification( trip.tripName+ " "+ "snoozed");
                 dialog.dismiss();
             });
             startBtn.setOnClickListener(new View.OnClickListener() {

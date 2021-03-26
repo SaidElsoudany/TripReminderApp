@@ -10,6 +10,6 @@ import java.util.List;
 public interface TripNoteDao {
     @Transaction
     @Query("Select * From trips WHERE uid = :id")
-    public List<TripNote> getAllNotes(String id);
+    public List<TripNote> getAllNotes(long id);
 }
 

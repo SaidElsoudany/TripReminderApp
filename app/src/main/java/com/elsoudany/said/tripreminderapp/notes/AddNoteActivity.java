@@ -1,12 +1,12 @@
-package com.elsoudany.said.tripreminderapp.AddNotes;
+package com.elsoudany.said.tripreminderapp.notes;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +17,13 @@ import android.widget.Toast;
 
 
 import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.room.AppDatabase;
+import com.elsoudany.said.tripreminderapp.room.Note;
+import com.elsoudany.said.tripreminderapp.room.NoteDao;
+import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class AddNoteActivity extends AppCompatActivity {
     Button  btnAddNoteDialog,btnCancelNoteDialog;
@@ -32,16 +33,31 @@ public class AddNoteActivity extends AppCompatActivity {
     EditText addNoteText;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
-    List<String> notes;
+    List<Note> notes;
+    long tripUid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
-      notes=new ArrayList<>();
+        Intent intent = getIntent();
+        tripUid = intent.getLongExtra("TripUid",0);
+        notes=new ArrayList<>();
         recyclerView=findViewById(R.id.noteRecyclerView);
-
+        adapter=new NoteAdapter(AddNoteActivity.this,notes);
+        recyclerView.setLayoutManager(new LinearLayoutManager(AddNoteActivity.this));
+        recyclerView.setAdapter(adapter);
         btnAddNotes=findViewById(R.id.btn_addNewNote);
         backButton=findViewById(R.id.back_btn);
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
+        new Thread()
+        {
+            @Override
+            public void run() {
+                TripNoteDao tripNoteDao = db.tripNoteDao();
+                notes.addAll(tripNoteDao.getAllNotes(tripUid).get(0).noteList);
+                adapter.notifyDataSetChanged();
+            }
+        }.start();
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +69,7 @@ public class AddNoteActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 alertDialog = new AlertDialog.Builder(AddNoteActivity.this).create();
-                  inflater = LayoutInflater.from(getApplicationContext());
+                inflater = LayoutInflater.from(getApplicationContext());
                 View dialogView = inflater.inflate(R.layout.add_note_dialog, null);
                 btnAddNoteDialog= dialogView.findViewById(R.id.btn_addNoteDialog);
                 btnCancelNoteDialog=dialogView.findViewById(R.id.btn_cancelNoteDialog);
@@ -61,12 +77,19 @@ public class AddNoteActivity extends AppCompatActivity {
                 btnAddNoteDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        notes.add(addNoteText.getText().toString());
-                        adapter=new NoteAdapter(AddNoteActivity.this,notes);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(AddNoteActivity.this));
-                        recyclerView.setAdapter(adapter);
-
                         Toast.makeText(AddNoteActivity.this, ""+addNoteText.getText(), Toast.LENGTH_SHORT).show();
+                        Note addedNote = new Note(addNoteText.getText().toString(),tripUid);
+                        new Thread()
+                        {
+                            @Override
+                            public void run() {
+
+                                NoteDao noteDao = db.noteDao();
+                                noteDao.insertAll(addedNote);
+                            }
+                        }.start();
+                        notes.add(addedNote);
+                        adapter.notifyDataSetChanged();
                         alertDialog.cancel();
                     }
                 });
@@ -82,5 +105,6 @@ public class AddNoteActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }

@@ -12,6 +12,4 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TripNoteDao tripNoteDao();
     public abstract NoteDao noteDao();
 
-
-
 }

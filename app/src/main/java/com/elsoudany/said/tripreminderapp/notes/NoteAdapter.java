@@ -1,26 +1,29 @@
-package com.elsoudany.said.tripreminderapp.AddNotes;
+package com.elsoudany.said.tripreminderapp.notes;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.room.AppDatabase;
+import com.elsoudany.said.tripreminderapp.room.Note;
+import com.elsoudany.said.tripreminderapp.room.NoteDao;
 
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHold>
 {
     private Context context;
-    List<String> notes;
+    List<Note> notes;
 
-    public NoteAdapter(Context context, List<String> notes) {
+    public NoteAdapter(Context context, List<Note> notes) {
         this.context = context;
         this.notes = notes;
     }
@@ -39,12 +42,21 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHold>
     @Override
     public void onBindViewHolder(@NonNull ViewHold holder, int position)
     {
-        holder.noteValue.setText(notes.get(position));
+        holder.noteValue.setText(notes.get(position).noteBody);
         holder.deleteNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Note note = notes.get(position);
                 notes.remove(position);
                 notifyItemRemoved(position);
+                new Thread() {
+                    @Override
+                    public void run() {
+                        AppDatabase db = Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"DataBase-name").build();
+                        NoteDao noteDao = db.noteDao();
+                        noteDao.delete(note);
+                    }
+                }.start();
             }
         });
 

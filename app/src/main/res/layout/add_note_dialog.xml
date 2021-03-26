@@ -5,43 +5,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="265dp">
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="23dp"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
     <Button
         android:id="@+id/btn_cancelNoteDialog"
         android:layout_width="104dp"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+
         android:background="@drawable/btn_bg"
         android:radius="80dp"
         android:text="@string/cancel_note"
-
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toStartOf="@+id/btn_addNoteDialog"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_addNoteDialog"
         app:layout_constraintTop_toBottomOf="@+id/txt_addNoteDialog" />
 
     <Button
         android:id="@+id/btn_addNoteDialog"
         android:layout_width="104dp"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="32dp"
         android:background="@drawable/btn_bg"
+
         android:radius="80dp"
         android:text="@string/add_note"
-
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.748"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_addNoteDialog" />
+        app:layout_constraintStart_toEndOf="@+id/btn_cancelNoteDialog"
+        app:layout_constraintTop_toTopOf="@+id/btn_cancelNoteDialog" />
 
     <EditText
         android:id="@+id/txt_addNoteDialog"
         android:layout_width="300dp"
         android:layout_height="58dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_edittext"
         android:drawableEnd="@drawable/ic_trip_name"
         android:ems="10"
@@ -52,20 +60,32 @@
         android:paddingEnd="20dp"
         android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="285dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="281dp"
+        android:layout_height="32dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/new_note"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
+        app:layout_constraintHorizontal_bias="0.292"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:layout_width="401dp"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addNoteDialog">
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

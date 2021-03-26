@@ -1,4 +1,4 @@
-package com.elsoudany.said.tripreminderapp;
+package com.elsoudany.said.tripreminderapp.auth;
 
 import android.content.Context;
 import android.content.SharedPreferences;

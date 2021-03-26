@@ -1,4 +1,4 @@
-package com.elsoudany.said.tripreminderapp;
+package com.elsoudany.said.tripreminderapp.upcomingtrips;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -11,16 +11,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.elsoudany.said.tripreminderapp.R;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -129,7 +126,6 @@ public class AddTripActivity extends AppCompatActivity
                 {
                     radio="round";
 
-
                 }
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("radio",radio);
@@ -140,6 +136,7 @@ public class AddTripActivity extends AppCompatActivity
                 returnIntent.putExtra("time",timeText.getText().toString());
                 returnIntent.putExtra("userId",userId);
                 returnIntent.putExtra("status","processing");
+
                 Toast.makeText(AddTripActivity.this, ""+userId, Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();

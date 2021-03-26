@@ -1,4 +1,4 @@
-package com.elsoudany.said.tripreminderapp;
+package com.elsoudany.said.tripreminderapp.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.elsoudany.said.tripreminderapp.MainActivity;
+import com.elsoudany.said.tripreminderapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;

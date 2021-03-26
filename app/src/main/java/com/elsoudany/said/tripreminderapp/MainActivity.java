@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elsoudany.said.tripreminderapp.auth.Login;
+import com.elsoudany.said.tripreminderapp.upcomingtrips.AddTripActivity;
+import com.elsoudany.said.tripreminderapp.upcomingtrips.ProcessingTripsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -44,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
         buttonDrawer=findViewById(R.id.drawer);
         btn = findViewById(R.id.RecyclerViewBtn);
         btn.setOnClickListener(view -> {
-            Intent intent = new Intent(this,ProcessingTripsActivity.class);
+            Intent intent = new Intent(this, ProcessingTripsActivity.class);
             startActivity(intent);
         });
         btnMayar.setOnClickListener(view ->{
-            Intent intent = new Intent(this,AddTripActivity.class);
+            Intent intent = new Intent(this, AddTripActivity.class);
 //            startActivity(intent);
             startActivityForResult(intent,100);
 

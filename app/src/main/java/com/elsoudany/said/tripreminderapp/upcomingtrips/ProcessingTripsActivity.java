@@ -1,6 +1,5 @@
-package com.elsoudany.said.tripreminderapp;
+package com.elsoudany.said.tripreminderapp.upcomingtrips;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +16,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.elsoudany.said.tripreminderapp.ReminderWork.ReminderWorker;
+import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.reminderwork.ReminderWorker;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
@@ -47,14 +45,11 @@ public class ProcessingTripsActivity extends AppCompatActivity {
     ArrayList<Trip> processingTripList = new ArrayList<>();
     RecyclerView processingTripListView;
     TripsAdapter tripsAdapter;
-    MyHandler handler;
     TripDAO tripDAO;
     UserDAO userDAO;
     UserTripDAO userTripDAO;
     FloatingActionButton fab;
     String id;
-    //get trip name to send it to notification
-    String tripName;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -78,7 +73,6 @@ public class ProcessingTripsActivity extends AppCompatActivity {
         userDAO = db.userDAO();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         id = firebaseAuth.getCurrentUser().getUid();
-        handler = new MyHandler();
         new Thread(){
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -97,7 +91,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                         return !trip.status.equals("processing");
                     }
                 });
-                handler.sendEmptyMessage(1);
+                tripsAdapter.notifyDataSetChanged();
             }
         }.start();
     }
@@ -131,7 +125,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                             return !trip.status.equals("processing");
                         }
                     });
-                    handler.sendEmptyMessage(1);
+                    tripsAdapter.notifyDataSetChanged();
                 }
             }.start();
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -153,14 +147,6 @@ public class ProcessingTripsActivity extends AppCompatActivity {
 
     }
 
-    public class MyHandler extends Handler{
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            tripsAdapter.notifyDataSetChanged();
-        }
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -172,10 +158,10 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                 String end = data.getStringExtra("endPoint");
                 String date = data.getStringExtra("date");
                 String time = data.getStringExtra("time");
-                 tripName = data.getStringExtra("tripName");
-                String userid = data.getStringExtra("userId");
+                String tripName = data.getStringExtra("tripName");
+                String userId = data.getStringExtra("userId");
                 String status = data.getStringExtra("status");
-                Trip addedTrip = new Trip(tripName,start,end,date,time,userid,status,tripDirection);
+                Trip addedTrip = new Trip(tripName,start,end,date,time,userId,status,tripDirection);
                 processingTripList.add(addedTrip);
                 tripsAdapter.notifyDataSetChanged();
 
@@ -192,8 +178,9 @@ public class ProcessingTripsActivity extends AppCompatActivity {
 
                         Log.i(TAG, "onCreate: "+ duration);
                         OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(ReminderWorker.class)
-                                .setInputData(new Data.Builder().putLong("tripUid", addedTrip.uid).build())
-                                .setInputData(new Data.Builder().putString("tripName",tripName).build())
+                                .setInputData(new Data.Builder().putLong("tripUid", addedTrip.uid).
+                                        putString("tripName",addedTrip.tripName)
+                                        .build())
                                 .setInitialDelay(duration)
                                 .build();
 

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="0dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp"
@@ -19,7 +19,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/btn_deleteNote2"
@@ -34,108 +34,82 @@
             android:id="@+id/cancelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="92dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/btn_bg"
             android:radius="80dp"
             android:text="@string/cancel"
             android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/startBtn" />
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/timeField" />
 
         <Button
             android:id="@+id/startBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="72dp"
+            android:layout_marginStart="32dp"
             android:background="@drawable/btn_bg"
             android:radius="80dp"
             android:text="@string/start"
             android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/cancelBtn"
+            app:layout_constraintStart_toEndOf="@+id/cancelBtn" />
 
         <TextView
             android:id="@+id/timeField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
+            android:layout_marginTop="12dp"
             android:text="@string/time"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/cancelBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.372"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/dateField"
+            app:layout_constraintTop_toBottomOf="@+id/dateField" />
 
         <TextView
             android:id="@+id/dateField"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
             android:text="@string/date"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/timeField"
-            app:layout_constraintEnd_toStartOf="@+id/btn_deleteNote2"
-            app:layout_constraintHorizontal_bias="0.218"
-            app:layout_constraintStart_toEndOf="@+id/textView4" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
+            app:layout_constraintStart_toStartOf="@+id/endPointField" />
 
         <TextView
             android:id="@+id/trip_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="4dp"
             android:text="@string/name"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/btn_addNotes"
-            app:layout_constraintHorizontal_bias="0.235"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/endPointField"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="128dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="152dp"
+            android:layout_height="39dp"
             android:text="@string/endPoint"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/dateField"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/startPointField"
-            android:layout_width="92dp"
-            android:layout_height="23dp"
-            android:layout_marginEnd="116dp"
-            android:drawablePadding="10dp"
-            android:text="@string/StartPoint"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/endPointField"
-            app:layout_constraintEnd_toStartOf="@+id/btn_addNotes"
-            app:layout_constraintTop_toBottomOf="@+id/trip_name"
-            app:layout_constraintVertical_bias="0.282" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
+            app:layout_constraintStart_toStartOf="@+id/startPointField" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="58dp"
             android:layout_height="88dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="72dp"
-            app:layout_constraintEnd_toStartOf="@+id/textView2"
-            app:layout_constraintHorizontal_bias="1.0"
+            android:layout_marginTop="52dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/road" />
@@ -163,30 +137,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
             android:text="@string/From"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/startPointField"
-            app:layout_constraintTop_toBottomOf="@+id/trip_name" />
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/startPointField"
+            android:layout_width="150dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:drawablePadding="10dp"
+            android:text="@string/StartPoint"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+            app:layout_constraintStart_toEndOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="44dp"
             android:text="@string/to"
-            app:layout_constraintEnd_toStartOf="@+id/endPointField"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:text="@string/at"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.elsoudany.said.tripreminderapp.ReminderWork;
+package com.elsoudany.said.tripreminderapp.reminderwork;
 
 import android.app.Dialog;
 import android.app.NotificationChannel;
@@ -7,8 +7,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Handler;
@@ -18,7 +16,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,8 +27,6 @@ import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
-
-import org.w3c.dom.Text;
 
 public class ReminderService extends Service {
     DialogHandler dialogHandler;
@@ -78,7 +73,6 @@ public class ReminderService extends Service {
         }
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "simplifiedcoding")
                 .setContentTitle(tripName)
-
                 .setSmallIcon(R.drawable.ic_notification)
                 .addAction(R.drawable.ic_notification,"START",null)
                 .addAction(R.drawable.ic_notification,"CANCEL",null)
@@ -117,8 +111,6 @@ public class ReminderService extends Service {
             endPoint.setText(trip.endPoint);
             dialog.show();
 
-
-//            windowManager.addView(dialog,parameters);
             Button startBtn = dialog.findViewById(R.id.startBtn);
             Button cancelBtn = dialog.findViewById(R.id.cancelBtn);
             Button snoozeBtn = dialog.findViewById(R.id.snooze);

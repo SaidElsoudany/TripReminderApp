@@ -27,13 +27,15 @@
 
         <TextView
             android:id="@+id/txt_noteValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="204dp"
+            android:layout_height="42dp"
             android:layout_marginStart="60dp"
-            android:layout_marginTop="8dp"
 
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_deleteNote"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="note value" />
@@ -42,10 +44,9 @@
             android:id="@+id/btn_deleteNote"
             android:layout_width="48dp"
             android:layout_height="56dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.859"
-            app:layout_constraintStart_toEndOf="@+id/txt_noteValue"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_delete" />
 

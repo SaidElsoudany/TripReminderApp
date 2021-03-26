@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.elsoudany.said.tripreminderapp.auth.Login;
+import com.elsoudany.said.tripreminderapp.upcomingtrips.ProcessingTripsActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -73,7 +74,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             case R.id.nav_Upcoming:
                 // Show Upcoming Trips Page
                 Toast.makeText(this, "nav_Upcoming", Toast.LENGTH_SHORT).show();
-                Intent intentUpcomingTrips=new Intent(Drawer.this,ProcessingTripsActivity.class);
+                Intent intentUpcomingTrips=new Intent(Drawer.this, ProcessingTripsActivity.class);
                 startActivity(intentUpcomingTrips);
                 break;
             case R.id.nav_history:

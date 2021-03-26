@@ -35,8 +35,8 @@
 
             <ImageButton
                 android:id="@+id/btn_addNewNote"
-                android:layout_width="53dp"
-                android:layout_height="28dp"
+                android:layout_width="32dp"
+                android:layout_height="33dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_add"
                 android:textColorHighlight="@color/colorWhite"
@@ -48,9 +48,9 @@
 
             <ImageButton
                 android:id="@+id/back_btn"
-                android:layout_width="58dp"
+                android:layout_width="40dp"
 
-                android:layout_height="32dp"
+                android:layout_height="33dp"
 
 
                 android:background="@drawable/ic_back"
@@ -58,8 +58,8 @@
 
 
                 app:iconTint="@color/colorWhite"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="-3dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

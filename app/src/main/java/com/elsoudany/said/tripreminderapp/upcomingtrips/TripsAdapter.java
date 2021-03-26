@@ -1,4 +1,4 @@
-package com.elsoudany.said.tripreminderapp;
+package com.elsoudany.said.tripreminderapp.upcomingtrips;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,15 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import com.elsoudany.said.tripreminderapp.AddNotes.AddNoteActivity;
+import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.notes.AddNoteActivity;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
@@ -87,7 +86,9 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
         });
         holder.btnAddNotes.setOnClickListener(view -> {
+
             Intent intent =new Intent(context, AddNoteActivity.class);
+            intent.putExtra("TripUid",list.get(position).uid);
             context.startActivity(intent);
 
 

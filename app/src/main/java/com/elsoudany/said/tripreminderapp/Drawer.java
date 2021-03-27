@@ -17,7 +17,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.elsoudany.said.tripreminderapp.auth.Login;
+import com.elsoudany.said.tripreminderapp.history.HistoryFragment;
 import com.elsoudany.said.tripreminderapp.upcomingtrips.ProcessingTripsActivity;
+import com.elsoudany.said.tripreminderapp.upcomingtrips.UpcomingTripsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -32,6 +34,18 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        // shared........27/3
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null)
+        {
+            FirebaseAuth.getInstance().signOut();
+            SharedPreferences preferencesConfig = getSharedPreferences("status", MODE_PRIVATE);
+            preferencesConfig.edit().clear().commit();
+            Intent intent = new Intent(Drawer.this, Login.class);
+            startActivity(intent);
+            finish();
+        }
 
        firebaseAuth = FirebaseAuth.getInstance();
        email = firebaseAuth.getCurrentUser().getEmail();
@@ -52,8 +66,9 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
         //selected item
         if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new UpcomingTripsFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_Upcoming);
-
         }
     }
 
@@ -72,16 +87,14 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_Upcoming:
-                // Show Upcoming Trips Page
-                Toast.makeText(this, "nav_Upcoming", Toast.LENGTH_SHORT).show();
-                Intent intentUpcomingTrips=new Intent(Drawer.this, ProcessingTripsActivity.class);
-                startActivity(intentUpcomingTrips);
+                // Show Upcoming Trips Fragment
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new UpcomingTripsFragment()).commit();
                 break;
             case R.id.nav_history:
-                // Show History Trips Page
-                Toast.makeText(this, "nav_history", Toast.LENGTH_SHORT).show();
-                Intent intentHistoryTrips=new Intent(Drawer.this,History.class);
-                startActivity(intentHistoryTrips);
+                // Show History Trips Fragment
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new HistoryFragment()).commit();
                 break;
             case R.id.nav_sync:
                 // Sync to firebase
@@ -96,7 +109,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 dialog.show();
                 TextView textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
                 TextView textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
-
                 textViewYesLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -115,6 +127,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                         dialog.dismiss();
                     }
                 });
+
+
 
                 break;
         }

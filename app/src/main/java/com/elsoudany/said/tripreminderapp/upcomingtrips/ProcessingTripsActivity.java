@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -43,7 +44,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class ProcessingTripsActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 1005;
+    private static final int ADD_NEW_TRIP_CODE = 1005;
+    private static final int EDIT_TRIP_CODE = 1234;
+    private static final int BACK_PRESSED = 61;
     private static final String TAG = "MYTAG";
     ArrayList<Trip> processingTripList = new ArrayList<>();
     RecyclerView processingTripListView;
@@ -70,7 +73,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
         fab = findViewById(R.id.addBtn);
 
         fab.setOnClickListener(view ->{
-            startActivityForResult(new Intent(this,AddTripActivity.class),REQUEST_CODE);
+            startActivityForResult(new Intent(this,AddTripActivity.class),ADD_NEW_TRIP_CODE);
         });
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
         tripDAO = db.tripDAO();
@@ -156,8 +159,9 @@ public class ProcessingTripsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == ADD_NEW_TRIP_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+
                 String tripDirection = data.getStringExtra("radio");
                 String start = data.getStringExtra("startPoint");
                 String end = data.getStringExtra("endPoint");
@@ -167,6 +171,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                 String userId = data.getStringExtra("userId");
                 String status = data.getStringExtra("status");
                 Trip addedTrip = new Trip(tripName,start,end,date,time,userId,status,tripDirection);
+
                 processingTripList.add(addedTrip);
                 tripsAdapter.notifyDataSetChanged();
 
@@ -189,10 +194,59 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                                 .setInitialDelay(duration)
                                 .build();
 
-                        mWorkManger.enqueue(oneTimeWorkRequest);
+                        mWorkManger.enqueueUniqueWork(""+addedTrip.uid, ExistingWorkPolicy.REPLACE,oneTimeWorkRequest);
+
 
                     }
                 }.start();
+            }
+        }
+        else if(requestCode == EDIT_TRIP_CODE)
+        {
+            if (resultCode == Activity.RESULT_OK) {
+                long tripUid = data.getLongExtra("tripUid", 0);
+                String tripDirection = data.getStringExtra("radio");
+                String start = data.getStringExtra("startPoint");
+                String end = data.getStringExtra("endPoint");
+                String date = data.getStringExtra("date");
+                String time = data.getStringExtra("time");
+                String tripName = data.getStringExtra("tripName");
+                String userId = data.getStringExtra("userId");
+                String status = data.getStringExtra("status");
+                Trip addedTrip = new Trip(tripName, start, end, date, time, userId, status, tripDirection);
+                int position = data.getIntExtra("position", 0);
+                addedTrip.uid = tripUid;
+                processingTripList.add(position, addedTrip);
+                tripsAdapter.notifyDataSetChanged();
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        addedTrip.uid = tripDAO.insert(addedTrip);
+                        Log.i(TAG, addedTrip.toString());
+                        WorkManager mWorkManger = WorkManager.getInstance(getApplicationContext());
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(date + " " + time, formatter);
+                        Duration duration = Duration.between(LocalDateTime.now(), dateTime);
+
+                        Log.i(TAG, "onCreate: " + duration);
+                        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(ReminderWorker.class)
+                                .setInputData(new Data.Builder().putLong("tripUid", addedTrip.uid).
+                                        putString("tripName", addedTrip.tripName)
+                                        .build())
+                                .setInitialDelay(duration)
+                                .build();
+
+                        mWorkManger.enqueueUniqueWork(""+addedTrip.uid, ExistingWorkPolicy.REPLACE,oneTimeWorkRequest);
+
+                    }
+                }.start();
+            }
+            else if(resultCode == BACK_PRESSED){
+                int position = data.getIntExtra("position", 0);
+                Trip trip = (Trip) data.getSerializableExtra("tripData");
+                processingTripList.add(position, trip);
             }
         }
     }

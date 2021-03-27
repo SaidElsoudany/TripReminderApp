@@ -201,6 +201,7 @@ public class UpcomingTripsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
+                long tripUid = data.getLongExtra("tripUid",0);
                 String tripDirection = data.getStringExtra("radio");
                 String start = data.getStringExtra("startPoint");
                 String end = data.getStringExtra("endPoint");
@@ -209,7 +210,8 @@ public class UpcomingTripsFragment extends Fragment {
                 String tripName = data.getStringExtra("tripName");
                 String userId = data.getStringExtra("userId");
                 String status = data.getStringExtra("status");
-                Trip addedTrip = new Trip(tripName, start, end, date, time, userId, status, tripDirection);
+                Trip addedTrip = new Trip(tripName,start,end,date,time,userId,status,tripDirection);
+                addedTrip.uid = tripUid;
                 processingTripList.add(addedTrip);
                 tripsAdapter.notifyDataSetChanged();
 

@@ -1,5 +1,6 @@
 package com.elsoudany.said.tripreminderapp.upcomingtrips;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,8 +12,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.work.WorkManager;
 
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.notes.AddNoteActivity;
@@ -25,6 +29,7 @@ import java.util.List;
 
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
+    private static final int EDIT_TRIP_CODE = 1234;
     Context context;
     List<Trip> list;
 
@@ -51,6 +56,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         holder.timeField.setText(list.get(position).time);
 
         holder.startBtn.setOnClickListener(view -> {
+            WorkManager mWorkManger = WorkManager.getInstance(context.getApplicationContext());
+            mWorkManger.cancelUniqueWork(""+list.get(position).uid);
             list.get(position).status = "started";
             Trip trip = list.get(position);
             list.remove(position);
@@ -69,6 +76,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             context.startActivity(intent);
         });
         holder.cancelBtn.setOnClickListener(view -> {
+            WorkManager mWorkManger = WorkManager.getInstance(context.getApplicationContext());
+            mWorkManger.cancelUniqueWork(""+list.get(position).uid);
             list.get(position).status = "cancelled";
             Trip trip = list.get(position);
             list.remove(position);
@@ -94,6 +103,14 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
 
 
         });
+        holder.editTripBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AddTripActivity.class);
+            intent.putExtra("tripData",list.get(position));
+            intent.putExtra("editTrip",true);
+            intent.putExtra("position",position);
+            list.remove(list.get(position));
+            ((AppCompatActivity)context).startActivityForResult(intent,EDIT_TRIP_CODE);
+        });
 
     }
 
@@ -111,6 +128,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         public View convertView;
         public Button startBtn;
         public Button cancelBtn;
+        public ImageView editTripBtn;
         public ImageView btnAddNotes;
 
         public ViewHolder(@NonNull View itemView) {
@@ -123,7 +141,8 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             endPointField = convertView.findViewById(R.id.endPointField);
             dateField = convertView.findViewById(R.id.dateField);
             timeField = convertView.findViewById(R.id.timeField);
-            btnAddNotes=convertView.findViewById(R.id.btn_addNotes);
+            btnAddNotes = convertView.findViewById(R.id.btn_addNotes);
+            editTripBtn = convertView.findViewById(R.id.editTripBtn);
         }
     }
 }

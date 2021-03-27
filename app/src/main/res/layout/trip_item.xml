@@ -27,7 +27,7 @@
             android:layout_height="53dp"
             android:layout_marginTop="55dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView4"
+            app:layout_constraintTop_toTopOf="@+id/editTripBtn"
             app:srcCompat="@drawable/ic_delete" />
 
         <Button
@@ -115,7 +115,7 @@
             app:srcCompat="@drawable/road" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/editTripBtn"
             android:layout_width="40dp"
             android:layout_height="50dp"
             android:layout_marginTop="50dp"

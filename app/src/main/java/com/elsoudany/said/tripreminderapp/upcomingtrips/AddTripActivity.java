@@ -18,6 +18,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -37,6 +38,7 @@ import java.util.List;
 
 public class AddTripActivity extends AppCompatActivity
 {
+    private static final int BACK_PRESSED = 61;
     //radio buttons
     RadioButton oneDirectionRadio,roundedRadio;
     //date edit text
@@ -53,6 +55,7 @@ public class AddTripActivity extends AppCompatActivity
     int currentYear,currentMonth,currentDay;
     //current time
     int currentHour,currentMinute;
+    long tripUid = 0;
 
     //points
     EditText startPoint,endPoint;
@@ -64,6 +67,9 @@ public class AddTripActivity extends AppCompatActivity
     FirebaseAuth firebaseAuth;
     String userId ;
 
+    //position for editing trip
+    int position;
+    Boolean comingToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -75,6 +81,7 @@ public class AddTripActivity extends AppCompatActivity
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_add_trip);
+
         //radio buttons
         oneDirectionRadio =findViewById(R.id.radio_oneDirection);
         roundedRadio=findViewById(R.id.radio_roundTrip);
@@ -91,6 +98,25 @@ public class AddTripActivity extends AppCompatActivity
         userId = firebaseAuth.getCurrentUser().getUid();
         //instance from calendar to get current date and time
         calendar=Calendar.getInstance();
+        //check if coming from edit Trip
+        Intent intent = getIntent();
+        comingToEdit = intent.getBooleanExtra("editTrip",false);
+        if(comingToEdit)
+        {
+            Trip editingTrip = (Trip) intent.getSerializableExtra("tripData");
+            tripUid = editingTrip.uid;
+            tripName.setText(editingTrip.tripName);
+            startPoint.setText(editingTrip.startPoint);
+            endPoint.setText(editingTrip.endPoint);
+            dateText.setText(editingTrip.date);
+            timeText.setText(editingTrip.time);
+            if(editingTrip.tripType.equals("one"))
+                oneDirectionRadio.setChecked(true);
+            else
+                roundedRadio.setChecked(true);
+            position = intent.getIntExtra("position",0);
+
+        }
         /*-----------------------------------------start point --------------------------*/
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), "AIzaSyCdXqSieoMfWeS3GunOh0FKQzKJnsCWIGM");
@@ -120,14 +146,15 @@ public class AddTripActivity extends AppCompatActivity
             {
                 String radio="";
                 if(oneDirectionRadio.isChecked()){
-                    radio="one";
+                    radio = "one";
                 }
                 if(roundedRadio.isChecked())
                 {
-                    radio="round";
+                    radio = "round";
 
                 }
                 Intent returnIntent = new Intent();
+                returnIntent.putExtra("tripUid",tripUid);
                 returnIntent.putExtra("radio",radio);
                 returnIntent.putExtra("tripName",tripName.getText().toString());
                 returnIntent.putExtra("startPoint",startPoint.getText().toString());
@@ -136,7 +163,7 @@ public class AddTripActivity extends AppCompatActivity
                 returnIntent.putExtra("time",timeText.getText().toString());
                 returnIntent.putExtra("userId",userId);
                 returnIntent.putExtra("status","processing");
-
+                returnIntent.putExtra("position",position);
                 Toast.makeText(AddTripActivity.this, ""+userId, Toast.LENGTH_SHORT).show();
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
@@ -234,5 +261,16 @@ public class AddTripActivity extends AppCompatActivity
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(comingToEdit) {
+            Intent returnIntent = getIntent();
+            setResult(BACK_PRESSED,returnIntent);
+            finish();
+        }
+        else
+            super.onBackPressed();
     }
 }

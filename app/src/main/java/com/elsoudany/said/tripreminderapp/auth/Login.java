@@ -193,4 +193,13 @@ public class Login extends AppCompatActivity {
 
                 });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(fAuth.getCurrentUser() != null)
+        {
+            finish();
+        }
+    }
 }

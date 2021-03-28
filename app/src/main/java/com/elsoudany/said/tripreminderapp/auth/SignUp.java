@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elsoudany.said.tripreminderapp.Drawer;
 import com.elsoudany.said.tripreminderapp.MainActivity;
 import com.elsoudany.said.tripreminderapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,7 +44,7 @@ public class SignUp extends AppCompatActivity {
 
         preferencesConfig = new SharedPreferencesConfig(getApplicationContext());
         if (preferencesConfig.readUserLoginStatus()) {
-            Intent intent = new Intent(SignUp.this, MainActivity.class);
+            Intent intent = new Intent(SignUp.this, Drawer.class);
             startActivity(intent);
             finish();
         }
@@ -98,14 +99,14 @@ public class SignUp extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 Toast.makeText(SignUp.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 if (!task.isSuccessful()) {
-                                    editTextEmail.setText(" ");
-                                    editTextUserName.setText(" ");
-                                    editTextPassword.setText(" ");
-                                    editTextConfirmPassword.setText(" ");
-                                    Toast.makeText(SignUp.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
+                                    editTextEmail.setText("");
+                                    editTextUserName.setText("");
+                                    editTextPassword.setText("");
+                                    editTextConfirmPassword.setText("");
+                                    //     Toast.makeText(SignUp.this, "Authentication failed." + task.getException(),Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUp.this, "Authentication failed",Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Intent intent=new Intent(SignUp.this,MainActivity.class);
+                                    Intent intent=new Intent(SignUp.this, Drawer.class);
                                     preferencesConfig.writeUserLoginStatus(true);
                                     startActivity(intent);
                                     finish();

@@ -19,43 +19,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="256dp">
 
         <ImageView
-            android:id="@+id/btn_deleteNote2"
+            android:id="@+id/delete"
             android:layout_width="39dp"
             android:layout_height="53dp"
-            android:layout_marginTop="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTripBtn"
-            app:srcCompat="@drawable/ic_delete" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_delete"
+            tools:ignore="VectorDrawableCompat" />
 
-        <Button
-            android:id="@+id/cancelBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/btn_bg"
-            android:radius="80dp"
-            android:text="@string/cancel"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/timeField" />
-
-        <Button
-            android:id="@+id/startBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:background="@drawable/btn_bg"
-            android:radius="80dp"
-            android:text="@string/start"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBaseline_toBaselineOf="@+id/cancelBtn"
-            app:layout_constraintStart_toEndOf="@+id/cancelBtn" />
 
         <TextView
-            android:id="@+id/timeField"
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -64,11 +42,11 @@
             android:textColorHint="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/dateField"
-            app:layout_constraintTop_toBottomOf="@+id/dateField" />
+            app:layout_constraintStart_toStartOf="@+id/date"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
 
         <TextView
-            android:id="@+id/dateField"
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date"
@@ -77,13 +55,26 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-            app:layout_constraintStart_toStartOf="@+id/endPointField" />
+            app:layout_constraintStart_toStartOf="@+id/endPoint" />
 
         <TextView
-            android:id="@+id/trip_name"
+            android:id="@+id/tripStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="67dp"
+            android:layout_marginLeft="67dp"
+            android:layout_marginTop="4dp"
+            android:text="status"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/tripName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tripName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
             android:layout_marginTop="4dp"
             android:text="@string/name"
             android:textColor="@color/black"
@@ -94,7 +85,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/endPointField"
+            android:id="@+id/endPoint"
             android:layout_width="152dp"
             android:layout_height="39dp"
             android:text="@string/endPoint"
@@ -103,7 +94,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
-            app:layout_constraintStart_toStartOf="@+id/startPointField" />
+            app:layout_constraintStart_toStartOf="@+id/startPoint" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -114,23 +105,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/road" />
 
-        <ImageView
-            android:id="@+id/editTripBtn"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/ic_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btn_addNotes" />
-
-        <ImageView
-            android:id="@+id/btn_addNotes"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="4dp"
-            android:src="@drawable/ic_notes"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
@@ -143,10 +117,11 @@
             app:layout_constraintTop_toTopOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/startPointField"
+            android:id="@+id/startPoint"
             android:layout_width="150dp"
             android:layout_height="42dp"
             android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:drawablePadding="10dp"
             android:text="@string/StartPoint"
             android:textColor="@color/black"
@@ -174,6 +149,8 @@
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.cardview.widget.CardView>

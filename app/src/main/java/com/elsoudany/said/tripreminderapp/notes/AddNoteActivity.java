@@ -1,5 +1,6 @@
 package com.elsoudany.said.tripreminderapp.notes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,8 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +34,7 @@ public class AddNoteActivity extends AppCompatActivity {
     AlertDialog alertDialog;
     LayoutInflater inflater;
     EditText addNoteText;
+    NoteHandler noteHandler;
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
     List<Note> notes;
@@ -39,6 +43,7 @@ public class AddNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
+        noteHandler = new NoteHandler();
         Intent intent = getIntent();
         tripUid = intent.getLongExtra("TripUid",0);
         notes=new ArrayList<>();
@@ -55,7 +60,7 @@ public class AddNoteActivity extends AppCompatActivity {
             public void run() {
                 TripNoteDao tripNoteDao = db.tripNoteDao();
                 notes.addAll(tripNoteDao.getAllNotes(tripUid).get(0).noteList);
-                adapter.notifyDataSetChanged();
+                noteHandler.sendEmptyMessage(1);
             }
         }.start();
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -106,5 +111,13 @@ public class AddNoteActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private class NoteHandler extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            adapter.notifyDataSetChanged();
+        }
     }
 }

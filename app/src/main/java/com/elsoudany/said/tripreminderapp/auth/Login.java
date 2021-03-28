@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elsoudany.said.tripreminderapp.Drawer;
 import com.elsoudany.said.tripreminderapp.MainActivity;
 import com.elsoudany.said.tripreminderapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -53,7 +54,7 @@ public class Login extends AppCompatActivity {
 
         preferencesConfig = new SharedPreferencesConfig(getApplicationContext());
         if (preferencesConfig.readUserLoginStatus()) {
-            Intent intent = new Intent(Login.this, MainActivity.class);
+            Intent intent = new Intent(Login.this, Drawer.class);
             startActivity(intent);
             finish();
         }
@@ -99,7 +100,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Intent intent=new Intent(Login.this,MainActivity.class);
+                            Intent intent=new Intent(Login.this, Drawer.class);
                             preferencesConfig.writeUserLoginStatus(true);
                             startActivity(intent);
                             finish();
@@ -128,18 +129,6 @@ public class Login extends AppCompatActivity {
         });
 
     }
-
-    // login.............
-    private void loginUser(String email,String password){
-        fAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                Intent intent=new Intent(Login.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
 
     void SignInGoogle(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -175,7 +164,7 @@ public class Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            Intent intent=new Intent(Login.this,MainActivity.class);
+                            Intent intent=new Intent(Login.this,Drawer.class);
                             preferencesConfig.writeUserLoginStatus(true);
                             startActivity(intent);
                             FirebaseUser user = fAuth.getCurrentUser();
@@ -192,5 +181,14 @@ public class Login extends AppCompatActivity {
                     }
 
                 });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(fAuth.getCurrentUser() != null)
+        {
+            finish();
+        }
     }
 }

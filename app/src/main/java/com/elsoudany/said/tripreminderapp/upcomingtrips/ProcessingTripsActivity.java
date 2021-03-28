@@ -96,7 +96,8 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                         return !trip.status.equals("processing");
                     }
                 });
-                tripsAdapter.notifyDataSetChanged();
+//                tripsAdapter.notifyDataSetChanged();
+                handler.sendEmptyMessage(1);
             }
         }.start();
     }

@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
-        <activity android:name=".ForgetPassword"></activity>
+        <activity android:name=".auth.ForgetPassword"></activity>
         <activity android:name=".notes.AddNoteActivity" />
 
         <service

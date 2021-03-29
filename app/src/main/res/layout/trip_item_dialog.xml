@@ -27,7 +27,9 @@
             android:id="@+id/snooze"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Snooze" />
+            android:text="Snooze"
+
+          />
 
         <LinearLayout
             android:layout_width="match_parent"

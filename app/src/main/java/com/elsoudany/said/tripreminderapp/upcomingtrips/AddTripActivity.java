@@ -8,12 +8,16 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -75,11 +79,6 @@ public class AddTripActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-//        getSupportActionBar().hide(); // hide the title bar
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         setContentView(R.layout.activity_add_trip);
 
         //radio buttons
@@ -144,29 +143,44 @@ public class AddTripActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                String radio="";
-                if(oneDirectionRadio.isChecked()){
-                    radio = "one";
-                }
-                if(roundedRadio.isChecked())
-                {
-                    radio = "round";
+                //check if user not fill all the data
+                if(TextUtils.isEmpty(tripName.getText())||TextUtils.isEmpty(startPoint.getText())
+                 ||TextUtils.isEmpty(endPoint.getText())||TextUtils.isEmpty(dateText.getText())
+               || TextUtils.isEmpty(timeText.getText())){
 
+                 Toast toast=   Toast.makeText(AddTripActivity.this, "PLEASE FILL ALL TRIP INFORMATION", Toast.LENGTH_SHORT);
+                    // change the Background of Toast
+                    View viewToast = toast.getView();
+                    viewToast.setBackgroundColor(Color.BLACK);
+                    viewToast.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+                    //Change toast text color
+                    TextView toastText = viewToast.findViewById(android.R.id.message);
+                    toastText.setTextColor(Color.WHITE);
+                           toast.show();
                 }
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("tripUid",tripUid);
-                returnIntent.putExtra("radio",radio);
-                returnIntent.putExtra("tripName",tripName.getText().toString());
-                returnIntent.putExtra("startPoint",startPoint.getText().toString());
-                returnIntent.putExtra("endPoint",endPoint.getText().toString());
-                returnIntent.putExtra("date",dateText.getText().toString());
-                returnIntent.putExtra("time",timeText.getText().toString());
-                returnIntent.putExtra("userId",userId);
-                returnIntent.putExtra("status","processing");
-                returnIntent.putExtra("position",position);
-                Toast.makeText(AddTripActivity.this, ""+userId, Toast.LENGTH_SHORT).show();
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+                else {
+                    String radio = "";
+                    if (oneDirectionRadio.isChecked()) {
+                        radio = "one";
+                    }
+                    if (roundedRadio.isChecked()) {
+                        radio = "round";
+
+                    }
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("tripUid", tripUid);
+                    returnIntent.putExtra("radio", radio);
+                    returnIntent.putExtra("tripName", tripName.getText().toString());
+                    returnIntent.putExtra("startPoint", startPoint.getText().toString());
+                    returnIntent.putExtra("endPoint", endPoint.getText().toString());
+                    returnIntent.putExtra("date", dateText.getText().toString());
+                    returnIntent.putExtra("time", timeText.getText().toString());
+                    returnIntent.putExtra("userId", userId);
+                    returnIntent.putExtra("status", "processing");
+                    returnIntent.putExtra("position", position);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+                }
             }
         });
 

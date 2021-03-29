@@ -156,9 +156,10 @@ public class ReminderService extends Service {
         PendingIntent pendingCancelIntent = PendingIntent.getService(ReminderService.this, 2, notificationCancelIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
-
+        Log.i(TAG, "displayNotification: "+ tripName);
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), "notification")
-                .setContentTitle(tripName)
+                .setContentTitle(tripName + "  "+"SNOOZED")
+                .setContentText(tripName)
                 .setSmallIcon(R.drawable.ic_notification)
                 .addAction(R.drawable.ic_notification,"START",pendingStartIntent)
                 .addAction(R.drawable.ic_notification,"CANCEL",pendingCancelIntent)
@@ -190,7 +191,7 @@ public class ReminderService extends Service {
             Dialog dialog = new Dialog(ReminderService.this);
             dialog.getWindow().setAttributes(parameters);
             dialog.setCancelable(false);
-            
+
             dialog.setContentView(R.layout.trip_item_dialog);
             dialog.setTitle("Trip Reminder");
             name = dialog.findViewById(R.id.trip_name);
@@ -205,7 +206,7 @@ public class ReminderService extends Service {
             Button cancelBtn = dialog.findViewById(R.id.cancelBtn);
             Button snoozeBtn = dialog.findViewById(R.id.snooze);
             snoozeBtn.setOnClickListener(view -> {
-                displayNotification( trip.tripName+ " "+ "snoozed");
+                displayNotification( trip.tripName);
                 dialog.dismiss();
             });
             startBtn.setOnClickListener(new View.OnClickListener() {

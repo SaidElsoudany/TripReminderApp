@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elsoudany.said.tripreminderapp.Drawer;
+import com.elsoudany.said.tripreminderapp.ForgetPassword;
 import com.elsoudany.said.tripreminderapp.MainActivity;
 import com.elsoudany.said.tripreminderapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -34,7 +35,7 @@ public class Login extends AppCompatActivity {
 
     EditText editTextEmail,editTextPassword;
     Button buttonLogin,buttonSignInWithGoogle;
-    TextView textViewSignUp;
+    TextView textViewSignUp,textViewForgetPassword;;
     FirebaseAuth fAuth;
     GoogleSignInClient mGoogleSignInClient;
     static final int GOOGLE_SIGN_IN = 123;
@@ -51,6 +52,15 @@ public class Login extends AppCompatActivity {
         buttonLogin=findViewById(R.id.btnlogin);
         buttonSignInWithGoogle=findViewById(R.id.btnGoogle);
         textViewSignUp=findViewById(R.id.textViewSignUp);
+        textViewForgetPassword=findViewById(R.id.forgotPassword);
+
+        // if forget password...
+        textViewForgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, ForgetPassword.class));
+            }
+        });
 
         preferencesConfig = new SharedPreferencesConfig(getApplicationContext());
         if (preferencesConfig.readUserLoginStatus()) {

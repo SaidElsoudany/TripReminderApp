@@ -82,29 +82,31 @@ public class UpcomingTripsFragment extends Fragment {
             @Override
             public void onWindowFocusChanged(final boolean hasFocus) {
                 // do your stuff here
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("checkingComingFromService", getActivity().MODE_PRIVATE);
-                boolean comingFromService = sharedPreferences.getBoolean("comingFromService", false);
-                if (hasFocus == true && comingFromService) {
-                    Log.i(TAG, "onWindowFocusChanged: ");
-                    new Thread() {
-                        @RequiresApi(api = Build.VERSION_CODES.N)
-                        @Override
-                        public void run() {
+                if (hasFocus == true) {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("checkingComingFromService", getActivity().MODE_PRIVATE);
+                    boolean comingFromService = sharedPreferences.getBoolean("comingFromService", false);
+                    if (comingFromService) {
+                        Log.i(TAG, "onWindowFocusChanged: ");
+                        new Thread() {
+                            @RequiresApi(api = Build.VERSION_CODES.N)
+                            @Override
+                            public void run() {
 
-                            List<UserTrip> tripList = userTripDAO.getAllTrips(id);
-                            processingTripList.clear();
-                            processingTripList.addAll((ArrayList<Trip>) tripList.get(0).tripList);
-                            processingTripList.removeIf(new Predicate<Trip>() {
-                                @Override
-                                public boolean test(Trip trip) {
-                                    return !trip.status.equals("processing");
-                                }
-                            });
-                            handler.sendEmptyMessage(1);
-                        }
-                    }.start();
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("comingFromService", false).commit();
+                                List<UserTrip> tripList = userTripDAO.getAllTrips(id);
+                                processingTripList.clear();
+                                processingTripList.addAll((ArrayList<Trip>) tripList.get(0).tripList);
+                                processingTripList.removeIf(new Predicate<Trip>() {
+                                    @Override
+                                    public boolean test(Trip trip) {
+                                        return !trip.status.equals("processing");
+                                    }
+                                });
+                                handler.sendEmptyMessage(1);
+                            }
+                        }.start();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean("comingFromService", false).commit();
+                    }
                 }
             }
 

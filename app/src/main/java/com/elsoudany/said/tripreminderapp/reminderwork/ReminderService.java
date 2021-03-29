@@ -76,7 +76,7 @@ public class ReminderService extends Service {
 /*--------------------------start button in notification --------------------------*/
         if (intent.hasExtra("startButton") ) {
             String endPoint=intent.getStringExtra("endPoint");
-            Log.i(TAG, "point: "+endPoint);
+            Log.i(TAG, "point: "+trip.endPoint);
             Log.i(TAG, "onCreate: " + "notif");
             trip.status = "started";
             Intent googleIntent = new Intent(android.content.Intent.ACTION_VIEW,

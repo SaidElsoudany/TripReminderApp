@@ -150,12 +150,12 @@ public class AddTripActivity extends AppCompatActivity
 
                  Toast toast=   Toast.makeText(AddTripActivity.this, "PLEASE FILL ALL TRIP INFORMATION", Toast.LENGTH_SHORT);
                     // change the Background of Toast
-                    View viewToast = toast.getView();
-                    viewToast.setBackgroundColor(Color.BLACK);
-                    viewToast.setBackground(getResources().getDrawable(R.drawable.btn_bg));
-                    //Change toast text color
-                    TextView toastText = viewToast.findViewById(android.R.id.message);
-                    toastText.setTextColor(Color.WHITE);
+//                    View viewToast = toast.getView();
+//                    viewToast.setBackgroundColor(Color.BLACK);
+//                    viewToast.setBackground(getResources().getDrawable(R.drawable.btn_bg));
+//                    //Change toast text color
+//                    TextView toastText = viewToast.findViewById(android.R.id.message);
+//                    toastText.setTextColor(Color.WHITE);
                            toast.show();
                 }
                 else {

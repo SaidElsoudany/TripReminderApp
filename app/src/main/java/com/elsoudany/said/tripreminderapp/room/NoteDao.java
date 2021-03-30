@@ -14,7 +14,7 @@ public interface NoteDao {
     List<Note> getAll();
 
     @Query("SELECT * FROM note WHERE uid = :id")
-    Trip getNote(Long id);
+    Note getNote(Long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Note... notes);

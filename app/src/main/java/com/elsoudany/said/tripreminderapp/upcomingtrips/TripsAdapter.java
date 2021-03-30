@@ -64,7 +64,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             this.notifyItemRemoved(position);
             new Thread(){
                 @Override
-                public void run() {
+                synchronized public void run() {
                     AppDatabase db = Room.databaseBuilder(context,AppDatabase.class,"DataBase-name").build();
                     TripDAO tripDAO = db.tripDAO();
                     tripDAO.insertAll(trip);
@@ -84,7 +84,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             this.notifyItemRemoved(position);
             new Thread(){
                 @Override
-                public void run() {
+                synchronized public void run() {
                     AppDatabase db = Room.databaseBuilder(context,AppDatabase.class,"DataBase-name").build();
                     TripDAO tripDAO = db.tripDAO();
                     tripDAO.insertAll(trip);
@@ -109,6 +109,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             intent.putExtra("editTrip",true);
             intent.putExtra("position",position);
             list.remove(list.get(position));
+            notifyItemRemoved(position);
             ((AppCompatActivity)context).startActivityForResult(intent,EDIT_TRIP_CODE);
         });
 

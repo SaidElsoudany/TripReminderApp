@@ -4,37 +4,67 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import com.elsoudany.said.tripreminderapp.auth.Login;
 import com.elsoudany.said.tripreminderapp.history.HistoryFragment;
+import com.elsoudany.said.tripreminderapp.room.AppDatabase;
+import com.elsoudany.said.tripreminderapp.room.Note;
+import com.elsoudany.said.tripreminderapp.room.NoteDao;
+import com.elsoudany.said.tripreminderapp.room.Trip;
+import com.elsoudany.said.tripreminderapp.room.TripDAO;
+import com.elsoudany.said.tripreminderapp.room.TripNote;
+import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
+import com.elsoudany.said.tripreminderapp.room.UserTrip;
+import com.elsoudany.said.tripreminderapp.room.UserTripDAO;
 import com.elsoudany.said.tripreminderapp.upcomingtrips.ProcessingTripsActivity;
 import com.elsoudany.said.tripreminderapp.upcomingtrips.UpcomingTripsFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    private static final String TAG = "MYTAG2";
     private DrawerLayout drawer;
     Toolbar toolbar;
-   TextView userEmail;
-   View headerView;
+    UpcomingTripsFragment upcomingTripsFragment;
+    TextView userEmail;
+    View headerView;
     String email;
+    Snackbar bar;
+    SyncHandler handler;
     FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-
+        handler = new SyncHandler();
         // shared........27/3
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null)
@@ -46,9 +76,18 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             startActivity(intent);
             finish();
         }
+        if(savedInstanceState == null)
+        {
+            upcomingTripsFragment = new UpcomingTripsFragment();
+            getSupportFragmentManager().beginTransaction().add(upcomingTripsFragment,"upComingTrip").commit();
+        }
+        else
+        {
+            upcomingTripsFragment = (UpcomingTripsFragment) getSupportFragmentManager().findFragmentByTag("upComingTrip");
+        }
 
-       firebaseAuth = FirebaseAuth.getInstance();
-       email = firebaseAuth.getCurrentUser().getEmail();
+        firebaseAuth = FirebaseAuth.getInstance();
+        email = firebaseAuth.getCurrentUser().getEmail();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -67,7 +106,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         //selected item
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new UpcomingTripsFragment()).commit();
+                    upcomingTripsFragment).commit();
             navigationView.setCheckedItem(R.id.nav_Upcoming);
         }
     }
@@ -88,8 +127,9 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         switch (item.getItemId()) {
             case R.id.nav_Upcoming:
                 // Show Upcoming Trips Fragment
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new UpcomingTripsFragment()).commit();
+                        upcomingTripsFragment,"upComingTrip").commit();
                 break;
             case R.id.nav_history:
                 // Show History Trips Fragment
@@ -97,7 +137,42 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                         new HistoryFragment()).commit();
                 break;
             case R.id.nav_sync:
+                //show Snackbar
+                LinearLayout linearLayout = findViewById(R.id.linearLayout);
+                bar = Snackbar.make(linearLayout,"Syncing...", Snackbar.LENGTH_INDEFINITE);
+                ViewGroup contentLay = (ViewGroup) bar.getView();
+                ProgressBar progressBar = new ProgressBar(getApplicationContext());
+                progressBar.setPadding(800,0,0,0);
+                contentLay.addView(progressBar);
+                bar.show();
                 // Sync to firebase
+                new Thread ()
+                {
+                    @Override
+                    synchronized public void  run() {
+                        super.run();
+                        AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
+                        DatabaseReference mDatabase;
+                        mDatabase = FirebaseDatabase.getInstance().getReference();
+                        UserTripDAO userTripDAO = db.userTripDAO();
+                        TripNoteDao tripNoteDao = db.tripNoteDao();
+                        String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        List<UserTrip> userTripList = userTripDAO.getAllTrips(uid);
+                        ArrayList<Trip> tripList = (ArrayList<Trip>) userTripList.get(0).tripList;
+                        for(Trip trip : tripList)
+                        {
+                            List<TripNote> tripNotesList = tripNoteDao.getAllNotes(trip.uid);
+                            List<Note> noteList = tripNotesList.get(0).noteList;
+                            mDatabase.child("users").child(uid).child("trips").child(""+trip.uid).setValue(trip);
+                            for(Note note : noteList) {
+                                mDatabase.child("users").child(uid).child("notes").child(""+ note.uid).setValue(note);
+                            }
+                        }
+                        handler.sendEmptyMessage(1);
+                    }
+                }.start();
+
+
                 Toast.makeText(this, "nav_sync", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
@@ -135,5 +210,20 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    class SyncHandler extends Handler{
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            bar.dismiss();
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("upComingTrip");
+        fragment.onActivityResult(requestCode, resultCode, data);
     }
 }

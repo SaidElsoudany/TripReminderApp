@@ -7,85 +7,84 @@
     tools:context=".upcomingtrips.AddTripActivity">
 
 
-
     <EditText
         android:id="@+id/txt_time"
-        android:layout_width="361dp"
-        android:layout_height="58dp"
+        android:layout_width="320dp"
+        android:layout_height="59dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/rounded_edittext"
         android:drawableEnd="@drawable/ic_time"
         android:ems="10"
         android:focusable="false"
         android:hint="@string/time"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_date"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_date" />
 
     <EditText
         android:id="@+id/txt_date"
-        android:layout_width="361dp"
-        android:layout_height="58dp"
+        android:layout_width="320dp"
+        android:layout_height="59dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/rounded_edittext"
-        android:focusable="false"
         android:drawableEnd="@drawable/ic_date"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/date"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_endPoint"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_endPoint" />
 
     <EditText
         android:id="@+id/txt_endPoint"
-        android:layout_width="361dp"
+        android:layout_width="320dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_edittext"
         android:drawableEnd="@drawable/ic_pin"
-        android:focusable="false"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/end_point"
-        android:inputType="textPersonName"
+        android:importantForAutofill="no"
 
+        android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_startPoint"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_startPoint" />
 
     <EditText
         android:id="@+id/txt_startPoint"
-        android:layout_width="361dp"
+        android:layout_width="320dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_edittext"
         android:drawableEnd="@drawable/ic_pin"
         android:ems="10"
+        android:focusable="false"
         android:hint="@string/start_point"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:focusable="false"
         android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_tripName"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_tripName" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -101,13 +100,14 @@
 
     <EditText
         android:id="@+id/txt_tripName"
-        android:layout_width="361dp"
+        android:layout_width="320dp"
         android:layout_height="58dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_edittext"
         android:drawableEnd="@drawable/ic_trip_name"
         android:ems="10"
         android:hint="@string/trip_name"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
@@ -115,8 +115,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_addTrip"

@@ -47,7 +47,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
     private static final int ADD_NEW_TRIP_CODE = 1005;
     private static final int EDIT_TRIP_CODE = 1234;
     private static final int BACK_PRESSED = 61;
-    private static final String TAG = "MYTAG";
+    private static final String TAG = "MYTAG4";
     ArrayList<Trip> processingTripList = new ArrayList<>();
     RecyclerView processingTripListView;
     TripsAdapter tripsAdapter;
@@ -162,7 +162,7 @@ public class ProcessingTripsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_NEW_TRIP_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-
+                Log.i(TAG, "onActivityResult: " );
                 String tripDirection = data.getStringExtra("radio");
                 String start = data.getStringExtra("startPoint");
                 String end = data.getStringExtra("endPoint");

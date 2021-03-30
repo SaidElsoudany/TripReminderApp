@@ -34,8 +34,11 @@ public class ReminderWorker extends Worker {
     @Override
     public Result doWork() {
         Intent intent = new Intent(context,ReminderService.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         intent.putExtra("tripUid",uid);
         context.startService(intent);
+//        context.sendBroadcast(intent);
         return Result.success(); //true - success / false - failure
     }
 

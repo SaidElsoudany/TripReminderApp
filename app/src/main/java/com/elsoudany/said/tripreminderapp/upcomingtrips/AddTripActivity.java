@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ import java.util.List;
 public class AddTripActivity extends AppCompatActivity
 {
     private static final int BACK_PRESSED = 61;
+    private static final String TAG = "AddActivity";
     //radio buttons
     RadioButton oneDirectionRadio,roundedRadio;
     //date edit text
@@ -102,6 +104,7 @@ public class AddTripActivity extends AppCompatActivity
         comingToEdit = intent.getBooleanExtra("editTrip",false);
         if(comingToEdit)
         {
+            Log.i(TAG, "onCreate: ");
             Trip editingTrip = (Trip) intent.getSerializableExtra("tripData");
             tripUid = editingTrip.uid;
             tripName.setText(editingTrip.tripName);

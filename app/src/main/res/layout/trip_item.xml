@@ -95,8 +95,8 @@
 
         <TextView
             android:id="@+id/endPointField"
-            android:layout_width="154dp"
-            android:layout_height="51dp"
+            android:layout_width="188dp"
+            android:layout_height="54dp"
             android:text="@string/endPoint"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
@@ -144,8 +144,8 @@
 
         <TextView
             android:id="@+id/startPointField"
-            android:layout_width="153dp"
-            android:layout_height="50dp"
+            android:layout_width="185dp"
+            android:layout_height="54dp"
             android:layout_marginStart="16dp"
             android:drawablePadding="10dp"
             android:text="@string/StartPoint"

@@ -85,6 +85,7 @@ public class UpcomingTripsFragment extends Fragment {
             @Override
             public void onWindowFocusChanged(final boolean hasFocus) {
                 // do your stuff here
+                Log.i(TAG, "onWindowFocusChanged: ");
                 if (hasFocus == true && getActivity() != null) {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences("checkingComingFromService", getActivity().MODE_PRIVATE);
                     boolean comingFromService = sharedPreferences.getBoolean("comingFromService", false);
@@ -195,6 +196,29 @@ public class UpcomingTripsFragment extends Fragment {
             myIntent.setData(Uri.parse("package:" + getActivity().getPackageName()));
             startActivityForResult(myIntent, REQUEST_CODE);
         }
+//        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("checkingComingFromService", getActivity().MODE_PRIVATE);
+//        boolean comingFromService = sharedPreferences.getBoolean("comingFromService", false);
+//        if (comingFromService) {
+//            new Thread() {
+//                @RequiresApi(api = Build.VERSION_CODES.N)
+//                @Override
+//                public void run() {
+//
+//                    List<UserTrip> tripList = userTripDAO.getAllTrips(id);
+//                    processingTripList.clear();
+//                    processingTripList.addAll((ArrayList<Trip>) tripList.get(0).tripList);
+//                    processingTripList.removeIf(new Predicate<Trip>() {
+//                        @Override
+//                        public boolean test(Trip trip) {
+//                            return !trip.status.equals("processing");
+//                        }
+//                    });
+//                    handler.sendEmptyMessage(1);
+//                }
+//            }.start();
+//            SharedPreferences.Editor editor = sharedPreferences.edit();
+//            editor.putBoolean("comingFromService", false).commit();
+//        }
 
     }
 

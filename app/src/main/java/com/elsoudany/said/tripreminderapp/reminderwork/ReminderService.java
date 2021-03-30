@@ -54,9 +54,9 @@ public class ReminderService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand: ");
-        if(intent.hasExtra("tripUid"))
-        //long uid = intent.getLongExtra("tripUid",60);
 
+        //long uid = intent.getLongExtra("tripUid",60);
+        if(intent != null && intent.hasExtra("tripUid"))
         {
             long uid = intent.getLongExtra("tripUid",60);
             new Thread() {
@@ -74,7 +74,10 @@ public class ReminderService extends Service {
         }
 
 /*--------------------------start button in notification --------------------------*/
-        if (intent.hasExtra("startButton") ) {
+        if (intent != null && intent.hasExtra("startButton") ) {
+            SharedPreferences sharedPreferences = getSharedPreferences("checkingComingFromService",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("comingFromService",true).commit();
             String endPoint=intent.getStringExtra("endPoint");
             Log.i(TAG, "point: "+trip.endPoint);
             Log.i(TAG, "onCreate: " + "notif");
@@ -84,7 +87,7 @@ public class ReminderService extends Service {
 
             googleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(googleIntent);
-            notificationManager.cancel(1);
+//            notificationManager.cancel(1);
             Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             this.sendBroadcast(closeIntent);
 
@@ -96,21 +99,27 @@ public class ReminderService extends Service {
 
                     tripDAO.insert(trip);
                     Log.i(TAG, "trip  from start: "+trip);
+                    stopSelf();
                 }
 
             }.start();
         }
         /*--------------------------cancel button in notification --------------------------*/
-        if(intent.hasExtra("cancelButton"))
+        if(intent != null && intent.hasExtra("cancelButton"))
         {
+            SharedPreferences sharedPreferences = getSharedPreferences("checkingComingFromService",MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("comingFromService",true).commit();
             Log.i(TAG, "cancel button ");
             trip.status = "cancelled";
-            notificationManager.cancel(1);
+//            notificationManager.cancel(1);
+
             new Thread(){
                 @Override
                 public void run() {
                     super.run();
                     tripDAO.insert(trip);
+                    stopSelf();
                 }
             }.start();
 
@@ -131,17 +140,18 @@ public class ReminderService extends Service {
 //    }
 
     private void displayNotification(String tripName) {
+
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("notification", "notificationChannel", NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }
         //when press notification open processing trip activity
-        Intent notificationTripsIntent=new Intent(getApplicationContext(), ProcessingTripsActivity.class);
-        notificationTripsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingStartTripsActivity = PendingIntent.getActivity(ReminderService.this, 0, notificationTripsIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent notificationTripsIntent=new Intent(getApplicationContext(), ProcessingTripsActivity.class);
+//        notificationTripsIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingStartTripsActivity = PendingIntent.getActivity(ReminderService.this, 0, notificationTripsIntent,
+//                PendingIntent.FLAG_UPDATE_CURRENT);
         //start button
         Intent notificationStartIntent = new Intent(getApplicationContext(), ReminderService.class);
         notificationStartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -165,10 +175,10 @@ public class ReminderService extends Service {
                 .addAction(R.drawable.ic_notification,"CANCEL",pendingCancelIntent)
                 .setColor(ContextCompat.getColor(ReminderService.this, R.color.black))
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentIntent(pendingStartTripsActivity)
+//                .setContentIntent(pendingStartTripsActivity)
                 .setStyle( new NotificationCompat.InboxStyle())
                 .setAutoCancel(true);
-        notificationManager.notify(1, notification.build());
+        startForeground(1, notification.build());
     }
 
     private class DialogHandler extends Handler {

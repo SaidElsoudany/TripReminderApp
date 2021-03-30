@@ -136,6 +136,14 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HistoryFragment()).commit();
                 break;
+
+            case R.id.nav_map:
+                // Show History Trips Fragment
+                Toast.makeText(this, "open map", Toast.LENGTH_SHORT).show();
+                Intent map=new Intent(Drawer.this, MapsActivity.class);
+                startActivity(map);
+                break;
+
             case R.id.nav_sync:
                 //show Snackbar
                 LinearLayout linearLayout = findViewById(R.id.linearLayout);

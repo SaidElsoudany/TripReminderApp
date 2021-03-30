@@ -293,36 +293,39 @@ public class Login extends AppCompatActivity {
     }
 
     private ArrayList<Trip> parseTripData(Object value) {
-        Log.i(TAG, "parseNoteData: "+value);
-        HashMap<String,Object> data = (HashMap<String, Object>) value;
-        ArrayList<HashMap<String,Object>> tripsData = (ArrayList<HashMap<String, Object>>) data.get("trips");
-        ArrayList<Trip> trips = new ArrayList<>();
-        for(HashMap<String,Object> item : tripsData)
-        {
-            if(item != null) {
-                Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
-                trip.uid = (Long) item.get("uid");
-                trips.add(trip);
-            }
+        if(value != null) {
+            Log.i(TAG, "parseNoteData: " + value);
+            HashMap<String, Object> data = (HashMap<String, Object>) value;
+            ArrayList<HashMap<String, Object>> tripsData = (ArrayList<HashMap<String, Object>>) data.get("trips");
+            ArrayList<Trip> trips = new ArrayList<>();
+            for (HashMap<String, Object> item : tripsData) {
+                if (item != null) {
+                    Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
+                    trip.uid = (Long) item.get("uid");
+                    trips.add(trip);
+                }
 
+            }
+            return trips;
         }
-        return trips;
+        return new ArrayList<>();
     }
     private ArrayList<Note> parseNoteData(Object value) {
+        if(value != null) {
+            HashMap<String, Object> data = (HashMap<String, Object>) value;
+            ArrayList<HashMap<String, Object>> notesData = (ArrayList<HashMap<String, Object>>) data.get("notes");
+            ArrayList<Note> notes = new ArrayList<>();
+            for (HashMap<String, Object> item : notesData) {
+                if (item != null) {
+                    Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
+                    note.uid = (Long) item.get("uid");
+                    notes.add(note);
+                }
 
-        HashMap<String,Object> data = (HashMap<String, Object>) value;
-        ArrayList<HashMap<String,Object>> notesData = (ArrayList<HashMap<String, Object>>) data.get("notes");
-        ArrayList<Note> notes = new ArrayList<>();
-        for(HashMap<String,Object> item : notesData)
-        {
-            if(item != null) {
-                Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
-                note.uid = (Long) item.get("uid");
-                notes.add(note);
             }
-
+            return notes;
         }
-        return notes;
+        return new ArrayList<>();
     }
 
     @Override

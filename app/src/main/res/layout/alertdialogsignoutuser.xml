@@ -1,50 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <TextView
-        android:id="@+id/text_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="@string/want_logout"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+    android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_logout"
-        android:layout_marginTop="10dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal"
-        android:padding="16dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
-        <TextView
-            android:id="@+id/text_no_logout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="@android:string/no"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+    <Button
+        android:id="@+id/text_no_logout"
+        android:layout_width="104dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_bg"
+        android:radius="80dp"
+        android:text="@string/no"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toStartOf="@+id/textViewMsg"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMsg" />
 
-        <TextView
-            android:id="@+id/text_yes_logout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="@android:string/yes"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+    <Button
+        android:id="@+id/text_yes_logout"
+        android:layout_width="104dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/btn_bg"
 
+        android:radius="80dp"
+        android:text="@string/yes"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintStart_toEndOf="@+id/text_no_logout"
+        app:layout_constraintTop_toTopOf="@+id/text_no_logout" />
+
+
+    <TextView
+        android:id="@+id/textViewMsg"
+        android:layout_width="281dp"
+        android:layout_height="32dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/want_logout"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <LinearLayout
+        android:layout_width="401dp"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_no_logout">
 
     </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

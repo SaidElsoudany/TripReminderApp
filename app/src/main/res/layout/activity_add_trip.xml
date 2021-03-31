@@ -132,7 +132,7 @@
         android:focusable="true" />
 
     <RadioGroup
-        android:layout_width="354dp"
+        android:layout_width="330dp"
         android:layout_height="56dp"
         android:layout_marginTop="0dp"
         android:orientation="horizontal"
@@ -155,5 +155,19 @@
             android:text="@string/round_trip"
             android:textSize="18sp" />
     </RadioGroup>
+
+    <ImageView
+        android:id="@+id/back_trips"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="76dp"
+        app:layout_constraintBottom_toTopOf="@+id/txt_tripName"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.471"
+        app:srcCompat="@drawable/back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

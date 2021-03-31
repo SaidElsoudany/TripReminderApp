@@ -48,9 +48,16 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, int position) {
 
         holder.tripName.setText(list.get(position).tripName);
-        holder.startPoint.setText(list.get(position).startPoint);
-        holder.endPoint.setText(list.get(position).endPoint);
+      //  holder.startPoint.setText(list.get(position).startPoint);
+      //  holder.endPoint.setText(list.get(position).endPoint);
         holder.tripStatus.setText(list.get(position).status);
+      //  holder.tripType.setText(list.get(position).tripType);
+        if(list.get(position).tripType.equals("one")){
+            holder.tripType.setText("One Direction");
+        }
+        if(list.get(position).tripType.equals("round")) {
+            holder.tripType.setText("Round Trip");
+        }
         MapsApi mapsApi = RetrofitInstance.getRetrofitInstance().create(MapsApi.class);
         Call<MapResponse> call = mapsApi.getDirections(list.get(position).startPoint,list.get(position).endPoint);
         call.enqueue(new Callback<MapResponse>() {
@@ -91,6 +98,7 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         TextView startPoint;
         TextView endPoint;
         TextView tripStatus;
+        TextView tripType;
         ImageView delete;
         ImageView mapImageView;
 
@@ -98,10 +106,11 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tripName = itemView.findViewById(R.id.tripName);
-            startPoint = itemView.findViewById(R.id.startPoint);
-            endPoint = itemView.findViewById(R.id.endPoint);
+          //  startPoint = itemView.findViewById(R.id.startPoint);
+         //   endPoint = itemView.findViewById(R.id.endPoint);
             delete = itemView.findViewById(R.id.delete);
             tripStatus=itemView.findViewById(R.id.tripStatus);
+            tripType=itemView.findViewById(R.id.tripType);
             mapImageView = itemView.findViewById(R.id.mapImage);
 
         }

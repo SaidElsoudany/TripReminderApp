@@ -26,15 +26,14 @@
 
     <TextView
         android:id="@+id/topText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
         android:layout_marginTop="52dp"
-        android:gravity="center"
         android:text="@string/Login"
         android:textColor="@android:color/white"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/topView"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,7 +126,7 @@
 
         <Button
             android:id="@+id/btnGoogle"
-            android:layout_width="295dp"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginTop="16dp"
@@ -136,7 +135,6 @@
             android:drawableLeft="@drawable/ic_google"
             android:drawablePadding="10dp"
             android:text="@string/SignIn_Google"
-            android:textColor="@color/white"
             android:textAllCaps="false"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -159,19 +157,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/linearLayout2"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-        <TextView
-            android:id="@+id/gotoRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/dont_have_account"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/gotoRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/dont_have_account"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textViewSignUp"
@@ -184,12 +182,5 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/snackbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

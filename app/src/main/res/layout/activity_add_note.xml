@@ -49,14 +49,9 @@
             <ImageButton
                 android:id="@+id/back_btn"
                 android:layout_width="40dp"
-
                 android:layout_height="33dp"
-
-
                 android:background="@drawable/ic_back"
                 android:padding="0dp"
-
-
                 app:iconTint="@color/colorWhite"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

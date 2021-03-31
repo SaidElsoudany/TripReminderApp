@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        setTitle("Upcoming Trips");
         handler = new SyncHandler();
         // shared........27/3
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -123,18 +125,19 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         switch (item.getItemId()) {
             case R.id.nav_Upcoming:
                 // Show Upcoming Trips Fragment
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         upcomingTripsFragment,"upComingTrip").commit();
+                setTitle("Upcoming Trips");
                 break;
             case R.id.nav_history:
                 // Show History Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HistoryFragment()).commit();
+                setTitle("History");
                 break;
 
             case R.id.nav_map:
-                // Show History Trips Fragment
+                // Open Map
                 Toast.makeText(this, "open map", Toast.LENGTH_SHORT).show();
                 Intent map=new Intent(Drawer.this, MapsActivity.class);
                 startActivity(map);
@@ -193,8 +196,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 dialog.setContentView(R.layout.alertdialogsignoutuser);
                 dialog.setCancelable(false);
                 dialog.show();
-                TextView textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
-                TextView textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
+                Button textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
+                Button textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
                 textViewYesLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

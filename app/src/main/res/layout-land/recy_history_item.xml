@@ -27,7 +27,7 @@
             android:id="@+id/tripName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="128dp"
             android:layout_marginLeft="56dp"
             android:layout_marginTop="4dp"
             android:text="@string/name"
@@ -43,7 +43,7 @@
             android:id="@+id/tripType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="150dp"
             android:layout_marginTop="8dp"
             android:text="@string/tripType"
             app:layout_constraintStart_toEndOf="@+id/tripName"
@@ -54,7 +54,7 @@
             android:id="@+id/tripStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="128dp"
             android:layout_marginBottom="4dp"
             android:text="@string/status"
             android:layout_marginTop="4dp"
@@ -79,45 +79,46 @@
 
 
 
-     <!--   <TextView
-            android:id="@+id/startPoint"
-            android:layout_width="116dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="20dp"
-            android:drawablePadding="10dp"
-            android:text="@string/StartPoint"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mapImage" />
+        <!--   <TextView
+               android:id="@+id/startPoint"
+               android:layout_width="116dp"
+               android:layout_height="100dp"
+               android:layout_marginStart="20dp"
+               android:drawablePadding="10dp"
+               android:text="@string/StartPoint"
+               android:textColor="@color/black"
+               android:textColorHint="@color/black"
+               android:textSize="14sp"
+               android:textStyle="bold"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/mapImage" />
 
-        <TextView
-            android:id="@+id/endPoint"
-            android:layout_width="117dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="24dp"
-            android:text="@string/endPoint"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/startPoint"
-            app:layout_constraintStart_toEndOf="@+id/startPoint" />
--->
+           <TextView
+               android:id="@+id/endPoint"
+               android:layout_width="117dp"
+               android:layout_height="100dp"
+               android:layout_marginStart="24dp"
+               android:text="@string/endPoint"
+               android:textColor="@color/black"
+               android:textColorHint="@color/black"
+               android:textSize="14sp"
+               android:textStyle="bold"
+               app:layout_constraintBaseline_toBaselineOf="@+id/startPoint"
+               app:layout_constraintStart_toEndOf="@+id/startPoint" />
+   -->
 
         <TextView
             android:id="@+id/text_dis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="128dp"
             android:drawablePadding="10dp"
             android:text="@string/distance"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mapImage" />
 
@@ -139,7 +140,7 @@
             android:id="@+id/text_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="128dp"
             android:drawablePadding="10dp"
             android:text="@string/duration"
             android:textColor="@color/black"

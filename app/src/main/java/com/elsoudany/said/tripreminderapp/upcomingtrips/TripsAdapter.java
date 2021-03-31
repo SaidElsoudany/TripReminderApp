@@ -54,6 +54,14 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         holder.endPointField.setText(list.get(position).endPoint);
         holder.dateField.setText(list.get(position).date);
         holder.timeField.setText(list.get(position).time);
+        //holder.tripTypeField.setText(list.get(position).tripType);
+        if(list.get(position).tripType.equals("one")){
+            holder.tripTypeField.setText("One Direction");
+        }
+        if(list.get(position).tripType.equals("round")) {
+            holder.tripTypeField.setText("Round Trip");
+        }
+
 
         holder.startBtn.setOnClickListener(view -> {
             WorkManager mWorkManger = WorkManager.getInstance(context.getApplicationContext());
@@ -126,6 +134,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         public TextView endPointField;
         public TextView dateField;
         public TextView timeField;
+        public TextView tripTypeField;
         public View convertView;
         public Button startBtn;
         public Button cancelBtn;
@@ -142,8 +151,10 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             endPointField = convertView.findViewById(R.id.endPointField);
             dateField = convertView.findViewById(R.id.dateField);
             timeField = convertView.findViewById(R.id.timeField);
+            tripTypeField=convertView.findViewById(R.id.tripTypeUpcoming);
             btnAddNotes = convertView.findViewById(R.id.btn_addNotes);
             editTripBtn = convertView.findViewById(R.id.editTripBtn);
+
         }
     }
 }

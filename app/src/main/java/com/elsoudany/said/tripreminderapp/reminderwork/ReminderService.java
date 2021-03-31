@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -25,6 +27,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.room.Room;
 
+import com.elsoudany.said.tripreminderapp.FloatingWidget.FloatingViewService;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Trip;
@@ -40,6 +43,7 @@ public class ReminderService extends Service {
     Trip trip;
     AppDatabase db;
     TripDAO tripDAO;
+    long uid;
     NotificationManager notificationManager;
     public ReminderService() {
         dialogHandler = new DialogHandler();
@@ -53,12 +57,10 @@ public class ReminderService extends Service {
     }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand: ");
 
-        //long uid = intent.getLongExtra("tripUid",60);
         if(intent != null && intent.hasExtra("tripUid"))
         {
-            long uid = intent.getLongExtra("tripUid",60);
+             uid = intent.getLongExtra("tripUid",60);
             new Thread() {
                 @Override
                 public void run() {
@@ -82,27 +84,51 @@ public class ReminderService extends Service {
             Log.i(TAG, "point: "+trip.endPoint);
             Log.i(TAG, "onCreate: " + "notif");
             trip.status = "started";
-            Intent googleIntent = new Intent(android.content.Intent.ACTION_VIEW,
-                    Uri.parse("http://maps.google.com/maps?daddr=" + endPoint));
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                Intent googleIntent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?daddr=" + endPoint));
 
-            googleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(googleIntent);
+                googleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(googleIntent);
 //            notificationManager.cancel(1);
-            Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-            this.sendBroadcast(closeIntent);
+                Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+                this.sendBroadcast(closeIntent);
+               displayBubble();
+               // finish();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
 
+                        tripDAO.insert(trip);
+                        Log.i(TAG, "trip  from start: " + trip);
+                        stopSelf();
+                    }
 
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
+                }.start();
+            }
+            else if (Settings.canDrawOverlays(ReminderService.this)) {
+                Intent googleIntent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?daddr=" + endPoint));
 
-                    tripDAO.insert(trip);
-                    Log.i(TAG, "trip  from start: "+trip);
-                    stopSelf();
-                }
+                googleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(googleIntent);
+//            notificationManager.cancel(1);
+                Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+                this.sendBroadcast(closeIntent);
+              displayBubble();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
 
-            }.start();
+                        tripDAO.insert(trip);
+                        Log.i(TAG, "trip  from start: " + trip);
+                        stopSelf();
+                    }
+
+                }.start();
+            }
         }
         /*--------------------------cancel button in notification --------------------------*/
         if(intent != null && intent.hasExtra("cancelButton"))
@@ -126,19 +152,14 @@ public class ReminderService extends Service {
         }
         return super.onStartCommand(intent, flags, startId);
     }
-//
-//    @Override
-//    public void onCreate() {
-//        super.onCreate();
-//        Log.i(TAG, "onCreate: serive notif");
-//
-//
-//
-//        }
-//
-//
-//    }
-
+private void displayBubble()
+{
+    Intent floatingService= new Intent(this,FloatingViewService.class);
+    floatingService.putExtra("tripUid",uid);
+    Log.i(TAG, "reminder: "+uid);
+    startService(floatingService);
+    stopSelf();
+}
     private void displayNotification(String tripName) {
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -228,6 +249,7 @@ public class ReminderService extends Service {
                             Uri.parse("http://maps.google.com/maps?daddr=" + trip.endPoint));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                    displayBubble();
                     dialog.dismiss();
                     new Thread(){
                         @Override

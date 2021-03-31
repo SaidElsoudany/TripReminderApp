@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/appstore"
@@ -13,14 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
         <activity android:name=".auth.ForgetPassword"></activity>
-        <activity android:name=".notes.AddNoteActivity" />
+        <activity android:name=".notes.AddNoteActivity"
+            />
 
         <service
             android:name=".reminderwork.ReminderService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".upcomingtrips.ProcessingTripsActivity" />
+        <activity android:name=".upcomingtrips.ProcessingTripsActivity"
+            android:theme="@style/Theme.Design.NoActionBar"
+
+            android:allowEmbedded="true"
+            android:resizeableActivity="true"/>
         <activity android:name=".Drawer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +38,10 @@
         <activity android:name=".auth.Login" />
         <activity android:name=".upcomingtrips.AddTripActivity" />
         <activity android:name=".MainActivity"></activity>
+        <service
+            android:name=".FloatingWidget.FloatingViewService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -103,6 +103,13 @@ public class ProcessingTripsActivity extends AppCompatActivity {
                 handler.sendEmptyMessage(1);
             }
         }.start();
+
+        //bubble permission
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, 2084);
+        }
     }
 
     @Override

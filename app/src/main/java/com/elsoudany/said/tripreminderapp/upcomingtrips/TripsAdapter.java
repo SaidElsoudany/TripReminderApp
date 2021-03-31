@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.work.WorkManager;
 
+import com.elsoudany.said.tripreminderapp.FloatingWidget.FloatingViewService;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.notes.AddNoteActivity;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
@@ -74,6 +76,11 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                     Uri.parse("http://maps.google.com/maps?daddr=" + trip.endPoint));
             context.startActivity(intent);
+            Intent floatingService= new Intent(context, FloatingViewService.class);
+            floatingService.putExtra("tripUid",trip.uid);
+
+            context.startService(floatingService);
+//            context..stopSelf();
         });
         holder.cancelBtn.setOnClickListener(view -> {
             WorkManager mWorkManger = WorkManager.getInstance(context.getApplicationContext());

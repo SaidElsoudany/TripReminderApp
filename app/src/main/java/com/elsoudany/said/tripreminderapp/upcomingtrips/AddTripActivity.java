@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -77,6 +78,9 @@ public class AddTripActivity extends AppCompatActivity
     int position;
     Boolean comingToEdit;
 
+    //backButton
+    ImageView backToTrips;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -94,6 +98,7 @@ public class AddTripActivity extends AppCompatActivity
         tripName=findViewById(R.id.txt_tripName);
         startPoint=findViewById(R.id.txt_startPoint);
         endPoint=findViewById(R.id.txt_endPoint);
+        backToTrips=findViewById(R.id.back_trips);
         //get userid from firebase
         firebaseAuth = FirebaseAuth.getInstance();
         userId = firebaseAuth.getCurrentUser().getUid();
@@ -239,6 +244,15 @@ public class AddTripActivity extends AppCompatActivity
                 },currentHour,currentMinute,false);
 
                 timePickerDialog.show();
+            }
+        });
+
+        // backToTrips........
+        backToTrips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new UpcomingTripsFragment()).commit();
             }
         });
     }

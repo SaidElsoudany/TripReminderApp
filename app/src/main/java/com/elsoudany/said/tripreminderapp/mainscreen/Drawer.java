@@ -1,4 +1,4 @@
-package com.elsoudany.said.tripreminderapp;
+package com.elsoudany.said.tripreminderapp.mainscreen;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -6,11 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,24 +20,22 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.auth.Login;
 import com.elsoudany.said.tripreminderapp.history.HistoryFragment;
+import com.elsoudany.said.tripreminderapp.mapactivity.MapsActivity;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Note;
-import com.elsoudany.said.tripreminderapp.room.NoteDao;
 import com.elsoudany.said.tripreminderapp.room.Trip;
-import com.elsoudany.said.tripreminderapp.room.TripDAO;
 import com.elsoudany.said.tripreminderapp.room.TripNote;
 import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
 import com.elsoudany.said.tripreminderapp.room.UserTrip;
 import com.elsoudany.said.tripreminderapp.room.UserTripDAO;
-import com.elsoudany.said.tripreminderapp.upcomingtrips.ProcessingTripsActivity;
 import com.elsoudany.said.tripreminderapp.upcomingtrips.UpcomingTripsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -64,6 +61,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        setTitle("Upcoming Trips");
         handler = new SyncHandler();
         // shared........27/3
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -127,15 +125,24 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         switch (item.getItemId()) {
             case R.id.nav_Upcoming:
                 // Show Upcoming Trips Fragment
-
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         upcomingTripsFragment,"upComingTrip").commit();
+                setTitle("Upcoming Trips");
                 break;
             case R.id.nav_history:
                 // Show History Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HistoryFragment()).commit();
+                setTitle("History");
                 break;
+
+            case R.id.nav_map:
+                // Open Map
+                Toast.makeText(this, "open map", Toast.LENGTH_SHORT).show();
+                Intent map=new Intent(Drawer.this, MapsActivity.class);
+                startActivity(map);
+                break;
+
             case R.id.nav_sync:
                 //show Snackbar
                 LinearLayout linearLayout = findViewById(R.id.linearLayout);
@@ -151,6 +158,13 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                     @Override
                     synchronized public void  run() {
                         super.run();
+                        ArrayList<Trip> defaultTripList = new ArrayList<>();
+                        defaultTripList.add(new Trip());
+                        defaultTripList.add(new Trip());
+                        ArrayList<Note> defaultNoteList = new ArrayList<>();
+                        defaultNoteList.add(new Note());
+                        defaultNoteList.add(new Note());
+
                         AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
                         DatabaseReference mDatabase;
                         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -182,8 +196,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 dialog.setContentView(R.layout.alertdialogsignoutuser);
                 dialog.setCancelable(false);
                 dialog.show();
-                TextView textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
-                TextView textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
+                Button textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
+                Button textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
                 textViewYesLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

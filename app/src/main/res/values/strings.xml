@@ -53,5 +53,14 @@
     <string name="at">AT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="map">map</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="tripType">tripType</string>
+    <string name="status">status</string>
+    <string name="distance">Distance : </string>
+    <string name="dis">distance</string>
+    <string name="duration">Duration : </string>
+    <string name="dur">duration </string>
+    <string name="or">OR</string>
 
 </resources>

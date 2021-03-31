@@ -6,71 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".upcomingtrips.AddTripActivity">
 
-
-    <EditText
-        android:id="@+id/txt_time"
-        android:layout_width="320dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:drawableEnd="@drawable/ic_time"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="@string/time"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textColorHint="@color/black"
+    <View
+        android:id="@+id/topView"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_date" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txt_date"
-        android:layout_width="320dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/rounded_edittext"
-        android:drawableEnd="@drawable/ic_date"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="@string/date"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:textColorHint="@color/black"
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@drawable/wave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_endPoint" />
+        app:layout_constraintTop_toBottomOf="@+id/topView" />
+
+
+    <ImageView
+        android:id="@+id/topText"
+        android:layout_width="150dp"
+        android:layout_height="123dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/topView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/todo" />
+
 
     <EditText
-        android:id="@+id/txt_endPoint"
-        android:layout_width="320dp"
+        android:id="@+id/txt_tripName"
+        android:layout_width="0dp"
         android:layout_height="58dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_edittext"
-        android:drawableEnd="@drawable/ic_pin"
+        android:drawableEnd="@drawable/ic_trip_name"
         android:ems="10"
-        android:focusable="false"
-        android:hint="@string/end_point"
+        android:hint="@string/trip_name"
         android:importantForAutofill="no"
-
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:textColorHint="@color/black"
+        android:textColorHint="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_startPoint" />
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
+
 
     <EditText
         android:id="@+id/txt_startPoint"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="58dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_edittext"
         android:drawableEnd="@drawable/ic_pin"
         android:ems="10"
@@ -86,50 +83,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_tripName" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="123dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        android:contentDescription="@string/todo" />
 
     <EditText
-        android:id="@+id/txt_tripName"
-        android:layout_width="320dp"
+        android:id="@+id/txt_endPoint"
+        android:layout_width="0dp"
         android:layout_height="58dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_edittext"
-        android:drawableEnd="@drawable/ic_trip_name"
+        android:drawableEnd="@drawable/ic_pin"
         android:ems="10"
-        android:hint="@string/trip_name"
+        android:focusable="false"
+        android:hint="@string/end_point"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:textColorHint="#000000"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_startPoint" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_addTrip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <EditText
+        android:id="@+id/txt_date"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#5d9e43"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/rounded_edittext"
+        android:drawableEnd="@drawable/ic_date"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/date"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add_trip"
-        android:contentDescription="@string/todo"
-        android:focusable="true" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_endPoint" />
+
+    <EditText
+        android:id="@+id/txt_time"
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_edittext"
+        android:drawableEnd="@drawable/ic_time"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="@string/time"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_date" />
+
 
     <RadioGroup
         android:layout_width="330dp"
@@ -140,14 +159,12 @@
         app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_time">
-
         <RadioButton
             android:id="@+id/radio_oneDirection"
             android:layout_width="185dp"
             android:layout_height="61dp"
             android:text="@string/one_direction_trip"
             android:textSize="18sp" />
-
         <RadioButton
             android:id="@+id/radio_roundTrip"
             android:layout_width="177dp"
@@ -156,18 +173,34 @@
             android:textSize="18sp" />
     </RadioGroup>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_addTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#FFC400"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_trip"
+        android:contentDescription="@string/todo"
+        android:focusable="true" />
+
     <ImageView
         android:id="@+id/back_trips"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="35dp"
+        android:layout_width="70dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="76dp"
         app:layout_constraintBottom_toTopOf="@+id/txt_tripName"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.337"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.471"
-        app:srcCompat="@drawable/back" />
+        app:layout_constraintVertical_bias="0.155"
+        app:srcCompat="@drawable/undo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

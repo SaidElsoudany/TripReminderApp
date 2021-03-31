@@ -11,18 +11,24 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/appstore"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
+        <!--Start Application -->
+        <activity android:name=".splashscreen.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".auth.ForgetPassword"></activity>
-        <activity android:name=".notes.AddNoteActivity"
-            />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
+        </activity>
+
+        <activity android:name=".auth.ForgetPassword" />
+        <activity android:name=".notes.AddNoteActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,40 +45,33 @@
             android:name=".mapactivity.MapsActivity"
             android:label="@string/title_activity_maps" />
 
-
-
-
         <service
             android:name=".reminderwork.ReminderService"
             android:enabled="true"
             android:exported="true" />
 
-
-        <activity android:name=".upcomingtrips.ProcessingTripsActivity"
-            android:theme="@style/Theme.Design.NoActionBar"
+        <activity
+            android:name=".upcomingtrips.ProcessingTripsActivity"
             android:allowEmbedded="true"
-            android:resizeableActivity="true"/>
-
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.Design.NoActionBar" />
 
         <activity android:name=".mainscreen.Drawer">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
+
         <activity android:name=".auth.SignUp" />
         <activity android:name=".auth.Login" />
         <activity android:name=".upcomingtrips.AddTripActivity" />
+        <activity android:name=".MainActivity" />
 
-        <activity android:name=".MainActivity"></activity>
         <service
             android:name=".FloatingWidget.FloatingViewService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
-        <activity android:name=".MainActivity" />
 
     </application>
 

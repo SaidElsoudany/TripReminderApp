@@ -62,5 +62,7 @@
     <string name="duration">Duration : </string>
     <string name="dur">duration </string>
     <string name="or">OR</string>
+    <string name="trip">TRIPON</string>
+    <string name="letsgo">Let\'s go</string>
 
 </resources>

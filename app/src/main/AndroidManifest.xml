@@ -23,7 +23,6 @@
         <activity android:name=".notes.AddNoteActivity"
             />
 
-        <activity android:name=".MainActivity2"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -39,8 +38,8 @@
         <activity
             android:name=".mapactivity.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".auth.ForgetPassword" />
-        <activity android:name=".notes.AddNoteActivity" />
+
+
 
 
         <service
@@ -51,12 +50,10 @@
 
         <activity android:name=".upcomingtrips.ProcessingTripsActivity"
             android:theme="@style/Theme.Design.NoActionBar"
-
             android:allowEmbedded="true"
             android:resizeableActivity="true"/>
-        <activity android:name=".Drawer">
 
-        <activity android:name=".upcomingtrips.ProcessingTripsActivity" />
+
         <activity android:name=".mainscreen.Drawer">
 
             <intent-filter>

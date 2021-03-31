@@ -139,15 +139,18 @@ public class UpcomingTripsFragment extends Fragment {
 
 
                 List<UserTrip> tripList = userTripDAO.getAllTrips(id);
-                processingTripList.clear();
-                processingTripList.addAll((ArrayList<Trip>) tripList.get(0).tripList);
-                processingTripList.removeIf(new Predicate<Trip>() {
-                    @Override
-                    public boolean test(Trip trip) {
-                        return !trip.status.equals("processing");
-                    }
-                });
-                handler.sendEmptyMessage(1);
+                if(tripList != null) {
+                    processingTripList.clear();
+
+                    processingTripList.addAll((ArrayList<Trip>) tripList.get(0).tripList);
+                    processingTripList.removeIf(new Predicate<Trip>() {
+                        @Override
+                        public boolean test(Trip trip) {
+                            return !trip.status.equals("processing");
+                        }
+                    });
+                    handler.sendEmptyMessage(1);
+                }
             }
 
         }.start();
@@ -315,6 +318,7 @@ public class UpcomingTripsFragment extends Fragment {
                 int position = data.getIntExtra("position", 0);
                 Trip trip = (Trip) data.getSerializableExtra("tripData");
                 processingTripList.add(position, trip);
+                tripsAdapter.notifyDataSetChanged();
             }
         }
     }

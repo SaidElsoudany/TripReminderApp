@@ -63,15 +63,11 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         call.enqueue(new Callback<MapResponse>() {
             @Override
             public void onResponse(Call<MapResponse> call, Response<MapResponse> response) {
-
                 if(response.body().routes.size() != 0) {
                     String encodedPath = response.body().routes.get(0).overview_polyline.points;
-                    List<LatLng> decodedPolyLine = PolyUtil.decode(encodedPath);
                     Glide.with(context).load("https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C\""
-                            + decodedPolyLine.get(decodedPolyLine.size()-1).latitude
-                            + "," + decodedPolyLine.get(decodedPolyLine.size()-1).longitude
-                            + "\"|\"" + decodedPolyLine.get(0).latitude
-                            + "," + decodedPolyLine.get(0).longitude
+                            +list.get(position).startPoint
+                            +"|"+list.get(position).endPoint
                             + "\"&size=800x400&path=color:0x212121|weight:5%7Cenc:"
                             + encodedPath
                             + "&key=AIzaSyCdXqSieoMfWeS3GunOh0FKQzKJnsCWIGM")

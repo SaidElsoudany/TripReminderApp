@@ -2,9 +2,11 @@ package com.elsoudany.said.tripreminderapp.auth;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,10 @@ import android.widget.Toast;
 
 import com.elsoudany.said.tripreminderapp.mainscreen.Drawer;
 import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.room.AppDatabase;
+import com.elsoudany.said.tripreminderapp.room.NoteDao;
+import com.elsoudany.said.tripreminderapp.room.User;
+import com.elsoudany.said.tripreminderapp.room.UserDAO;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -96,21 +102,37 @@ public class SignUp extends AppCompatActivity {
                         .addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignUp.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
                                 if (!task.isSuccessful()) {
                                     editTextEmail.setText("");
                                     editTextUserName.setText("");
                                     editTextPassword.setText("");
                                     editTextConfirmPassword.setText("");
+
                                     //     Toast.makeText(SignUp.this, "Authentication failed." + task.getException(),Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(SignUp.this, "Authentication failed",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUp.this, "Authentication failed"+task.getException(),Toast.LENGTH_SHORT).show();
+
                                 } else {
-                                    Intent intent=new Intent(SignUp.this, Drawer.class);
-                                    preferencesConfig.writeUserLoginStatus(true);
+
+                                    Intent intent=new Intent(SignUp.this, Login.class);
+//                                            preferencesConfig.writeUserLoginStatus(true);
+                                    Toast.makeText(SignUp.this, "Email Verification is sent to your Email", Toast.LENGTH_SHORT).show();
+                                    FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification();
+
+                                    FirebaseAuth.getInstance().signOut();
+
+
+//                                            AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
+//                                            UserDAO userDAO = db.userDAO();
+//                                            User user1 = new User(uid);
+//                                            userDAO.insertAll(user1);
+
                                     startActivity(intent);
                                     finish();
                                 }
+
+
                             }
+
                         });
 
             }

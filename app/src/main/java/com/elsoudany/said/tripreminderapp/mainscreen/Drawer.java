@@ -74,6 +74,10 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             startActivity(intent);
             finish();
         }
+        else
+        {
+            email = firebaseAuth.getCurrentUser().getEmail();
+        }
         if(savedInstanceState == null)
         {
             upcomingTripsFragment = new UpcomingTripsFragment();
@@ -83,9 +87,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         {
             upcomingTripsFragment = (UpcomingTripsFragment) getSupportFragmentManager().findFragmentByTag("upComingTrip");
         }
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        email = firebaseAuth.getCurrentUser().getEmail();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -201,6 +202,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 textViewYesLogout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        dialog.dismiss();
                         FirebaseAuth.getInstance().signOut();
                         SharedPreferences preferencesConfig = getSharedPreferences("status", MODE_PRIVATE);
                         preferencesConfig.edit().clear().commit();

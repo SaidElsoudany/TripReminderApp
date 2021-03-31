@@ -136,7 +136,13 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            getDataFromFireBase();
+                            if(fAuth.getCurrentUser().isEmailVerified()){
+                                getDataFromFireBase();
+                            }
+                            else {
+                                fAuth.getCurrentUser().sendEmailVerification();
+                                Toast.makeText(Login.this, "Email Verification is sent to your Email", Toast.LENGTH_SHORT).show();
+                            }
                         }
                         else {
                             Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

@@ -73,6 +73,8 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
                             + "&key=AIzaSyCdXqSieoMfWeS3GunOh0FKQzKJnsCWIGM")
                             .placeholder(R.drawable.placeholder)
                             .into(holder.mapImageView);
+                    holder.duration.setText(response.body().routes.get(0).legs.get(0).duration.text);
+                    holder.distance.setText(response.body().routes.get(0).legs.get(0).distance.text);
                 }
             }
 
@@ -97,13 +99,16 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         TextView tripType;
         ImageView delete;
         ImageView mapImageView;
-
+        TextView distance;
+        TextView duration;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tripName = itemView.findViewById(R.id.tripName);
           //  startPoint = itemView.findViewById(R.id.startPoint);
          //   endPoint = itemView.findViewById(R.id.endPoint);
+            distance = itemView.findViewById(R.id.distance);
+            duration = itemView.findViewById(R.id.duration);
             delete = itemView.findViewById(R.id.delete);
             tripStatus=itemView.findViewById(R.id.tripStatus);
             tripType=itemView.findViewById(R.id.tripType);

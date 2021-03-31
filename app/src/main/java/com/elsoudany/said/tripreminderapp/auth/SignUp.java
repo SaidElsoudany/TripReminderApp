@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elsoudany.said.tripreminderapp.Drawer;
-import com.elsoudany.said.tripreminderapp.MainActivity;
+import com.elsoudany.said.tripreminderapp.mainscreen.Drawer;
 import com.elsoudany.said.tripreminderapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

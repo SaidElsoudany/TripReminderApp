@@ -9,6 +9,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,7 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.elsoudany.said.tripreminderapp.Drawer;
+import com.elsoudany.said.tripreminderapp.mainscreen.Drawer;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.reminderwork.ReminderWorker;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
@@ -30,12 +31,8 @@ import com.elsoudany.said.tripreminderapp.room.Note;
 import com.elsoudany.said.tripreminderapp.room.NoteDao;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
-import com.elsoudany.said.tripreminderapp.room.TripNote;
-import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
 import com.elsoudany.said.tripreminderapp.room.User;
 import com.elsoudany.said.tripreminderapp.room.UserDAO;
-import com.elsoudany.said.tripreminderapp.room.UserTrip;
-import com.elsoudany.said.tripreminderapp.room.UserTripDAO;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
@@ -45,7 +42,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -58,7 +54,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class Login extends AppCompatActivity {
@@ -249,13 +244,14 @@ public class Login extends AppCompatActivity {
                         new Thread(){
                             @Override
                             synchronized public void run() {
+                                Log.i(TAG, "run: "+ task.getResult().getValue());
                                 ArrayList<Trip> trips = parseTripData(task.getResult().getValue());
                                 for(Trip trip : trips)
                                 {
 
                                     WorkManager mWorkManger = WorkManager.getInstance(getApplicationContext());
                                     DateTimeFormatter formatter = null;
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                         formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                         LocalDateTime dateTime = LocalDateTime.parse(trip.date + " " + trip.time, formatter);
                                         Duration duration = Duration.between(LocalDateTime.now(), dateTime);
@@ -294,36 +290,39 @@ public class Login extends AppCompatActivity {
 
     private ArrayList<Trip> parseTripData(Object value) {
         if(value != null) {
-            Log.i(TAG, "parseNoteData: " + value);
             HashMap<String, Object> data = (HashMap<String, Object>) value;
-            ArrayList<HashMap<String, Object>> tripsData = (ArrayList<HashMap<String, Object>>) data.get("trips");
-            ArrayList<Trip> trips = new ArrayList<>();
-            for (HashMap<String, Object> item : tripsData) {
-                if (item != null) {
-                    Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
-                    trip.uid = (Long) item.get("uid");
-                    trips.add(trip);
-                }
+            if(data.get("trips") != null) {
+                ArrayList<HashMap<String, Object>> tripsData = (ArrayList<HashMap<String, Object>>) data.get("trips");
+                ArrayList<Trip> trips = new ArrayList<>();
+                for (HashMap<String, Object> item : tripsData) {
+                    if (item != null) {
+                        Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
+                        trip.uid = (Long) item.get("uid");
+                        trips.add(trip);
+                    }
 
+                }
+                return trips;
             }
-            return trips;
         }
         return new ArrayList<>();
     }
     private ArrayList<Note> parseNoteData(Object value) {
         if(value != null) {
             HashMap<String, Object> data = (HashMap<String, Object>) value;
-            ArrayList<HashMap<String, Object>> notesData = (ArrayList<HashMap<String, Object>>) data.get("notes");
-            ArrayList<Note> notes = new ArrayList<>();
-            for (HashMap<String, Object> item : notesData) {
-                if (item != null) {
-                    Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
-                    note.uid = (Long) item.get("uid");
-                    notes.add(note);
-                }
+            if (data.get("notes") != null) {
+                ArrayList<HashMap<String, Object>> notesData = (ArrayList<HashMap<String, Object>>) data.get("notes");
+                ArrayList<Note> notes = new ArrayList<>();
+                for (HashMap<String, Object> item : notesData) {
+                    if (item != null) {
+                        Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
+                        note.uid = (Long) item.get("uid");
+                        notes.add(note);
+                    }
 
+                }
+                return notes;
             }
-            return notes;
         }
         return new ArrayList<>();
     }
@@ -344,10 +343,7 @@ public class Login extends AppCompatActivity {
             Intent intent=new Intent(Login.this, Drawer.class);
             preferencesConfig.writeUserLoginStatus(true);
             startActivity(intent);
-
-
-
-
+            
         }
     }
 }

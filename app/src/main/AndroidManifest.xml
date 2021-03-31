@@ -32,7 +32,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".mapactivity.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity android:name=".auth.ForgetPassword" />
         <activity android:name=".notes.AddNoteActivity" />
@@ -43,7 +43,7 @@
             android:exported="true" />
 
         <activity android:name=".upcomingtrips.ProcessingTripsActivity" />
-        <activity android:name=".Drawer">
+        <activity android:name=".mainscreen.Drawer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

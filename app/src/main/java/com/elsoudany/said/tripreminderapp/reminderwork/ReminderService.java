@@ -60,7 +60,7 @@ public class ReminderService extends Service {
 
         if(intent != null && intent.hasExtra("tripUid"))
         {
-             uid = intent.getLongExtra("tripUid",60);
+            uid = intent.getLongExtra("tripUid",60);
             new Thread() {
                 @Override
                 public void run() {
@@ -75,7 +75,7 @@ public class ReminderService extends Service {
             }.start();
         }
 
-/*--------------------------start button in notification --------------------------*/
+        /*--------------------------start button in notification --------------------------*/
         if (intent != null && intent.hasExtra("startButton") ) {
             SharedPreferences sharedPreferences = getSharedPreferences("checkingComingFromService",MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -93,8 +93,8 @@ public class ReminderService extends Service {
 //            notificationManager.cancel(1);
                 Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
                 this.sendBroadcast(closeIntent);
-               displayBubble();
-               // finish();
+                displayBubble();
+                // finish();
                 new Thread() {
                     @Override
                     public void run() {
@@ -116,7 +116,7 @@ public class ReminderService extends Service {
 //            notificationManager.cancel(1);
                 Intent closeIntent = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
                 this.sendBroadcast(closeIntent);
-              displayBubble();
+                displayBubble();
                 new Thread() {
                     @Override
                     public void run() {
@@ -152,14 +152,14 @@ public class ReminderService extends Service {
         }
         return super.onStartCommand(intent, flags, startId);
     }
-private void displayBubble()
-{
-    Intent floatingService= new Intent(this,FloatingViewService.class);
-    floatingService.putExtra("tripUid",uid);
-    Log.i(TAG, "reminder: "+uid);
-    startService(floatingService);
-    stopSelf();
-}
+    private void displayBubble()
+    {
+        Intent floatingService= new Intent(this,FloatingViewService.class);
+        floatingService.putExtra("tripUid",uid);
+        Log.i(TAG, "reminder: "+uid);
+        startService(floatingService);
+        stopSelf();
+    }
     private void displayNotification(String tripName) {
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);

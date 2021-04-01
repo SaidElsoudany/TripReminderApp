@@ -3,10 +3,12 @@ package com.elsoudany.said.tripreminderapp.auth;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -45,6 +47,9 @@ public class ForgetPassword extends AppCompatActivity {
     }
 
     private void resetPassword(){
+        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(getCurrentFocus() != null)
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
         String email=editTextEmail.getText().toString().trim();
 
         if (email.isEmpty()){

@@ -161,13 +161,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                     @Override
                     synchronized public void  run() {
                         super.run();
-                        ArrayList<Trip> defaultTripList = new ArrayList<>();
-                        defaultTripList.add(new Trip());
-                        defaultTripList.add(new Trip());
-                        ArrayList<Note> defaultNoteList = new ArrayList<>();
-                        defaultNoteList.add(new Note());
-                        defaultNoteList.add(new Note());
-
                         AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
                         DatabaseReference mDatabase;
                         mDatabase = FirebaseDatabase.getInstance().getReference();

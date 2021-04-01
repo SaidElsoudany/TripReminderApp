@@ -2,6 +2,9 @@ package com.elsoudany.said.tripreminderapp.history;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -57,7 +61,15 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         holder.tripName.setText(list.get(position).tripName);
       //  holder.startPoint.setText(list.get(position).startPoint);
       //  holder.endPoint.setText(list.get(position).endPoint);
-        holder.tripStatus.setText(list.get(position).status);
+        String status = list.get(position).status;
+        if(status.equals("cancelled")) {
+            holder.tripStatus.setTextColor(Color.RED);
+        }
+        else {
+            holder.tripStatus.setTextColor(Color.GREEN);
+        }
+        holder.tripStatus.setText(status);
+
       //  holder.tripType.setText(list.get(position).tripType);
         if(list.get(position).tripType.equals("one")){
             holder.tripType.setText("One Direction");
@@ -130,6 +142,16 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
                 }
             });
         });
+        if(holder.itemLayout != null) {
+            holder.itemLayout.setOnClickListener(view -> {
+                if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    Intent intent = new Intent(context, TripDetailsActivity.class);
+                    intent.putExtra("tripDetails", list.get(position));
+                    context.startActivity(intent);
+                }
+
+            });
+        }
 
     }
 
@@ -140,14 +162,15 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tripName;
-        TextView startPoint;
-        TextView endPoint;
+//        TextView startPoint;
+//        TextView endPoint;
         TextView tripStatus;
         TextView tripType;
         ImageView delete;
         ImageView mapImageView;
         TextView distance;
         TextView duration;
+        ConstraintLayout itemLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -160,6 +183,7 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
             tripStatus=itemView.findViewById(R.id.tripStatus);
             tripType=itemView.findViewById(R.id.tripType);
             mapImageView = itemView.findViewById(R.id.mapImage);
+            itemLayout = itemView.findViewById(R.id.itemLayout);
 
         }
     }

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,13 +128,13 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 // Show Upcoming Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new UpcomingTripsFragment(),"upComingTrip").commit();
-                setTitle("Upcoming Trips");
+
                 break;
             case R.id.nav_history:
                 // Show History Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HistoryFragment()).commit();
-                setTitle("History");
+
                 break;
 
             case R.id.nav_map:
@@ -232,6 +233,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("upComingTrip");
+        Log.i(TAG, "onActivityResult: ");
         fragment.onActivityResult(requestCode, resultCode, data);
     }
 }

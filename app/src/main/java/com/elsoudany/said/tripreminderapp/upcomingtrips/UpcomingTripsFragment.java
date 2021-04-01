@@ -189,6 +189,12 @@ public class UpcomingTripsFragment extends Fragment {
 //    }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().setTitle("Upcoming Trips");
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");

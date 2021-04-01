@@ -253,7 +253,15 @@ public class AddTripActivity extends AppCompatActivity
             public void onClick(View v) {
 //                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
 //                        new UpcomingTripsFragment()).commit();
-                finish();
+                if(comingToEdit) {
+                    Intent returnIntent = getIntent();
+                    setResult(BACK_PRESSED,returnIntent);
+                    finish();
+                }
+                else{
+                    finish();
+
+                }
             }
         });
     }

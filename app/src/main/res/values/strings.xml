@@ -65,5 +65,6 @@
     <string name="or">OR</string>
     <string name="trip">TRIPON</string>
     <string name="letsgo">Let\'s go</string>
+    <string name="historymap">Show History Map</string>
 
 </resources>

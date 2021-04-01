@@ -80,7 +80,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         else {
             email = firebaseAuth.getCurrentUser().getEmail();
             ImageView userImage = headerView.findViewById(R.id.userImage);
-            Glide.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).circleCrop().into(userImage);
+            Glide.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).circleCrop().placeholder(R.drawable.user).into(userImage);
         }
         if(savedInstanceState == null) {
             upcomingTripsFragment = new UpcomingTripsFragment();

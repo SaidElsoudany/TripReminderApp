@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/detailsMapImage"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="300dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -216,7 +216,6 @@
             android:textSize="20sp"
             android:textColor="@color/colorRed"
             />
-
 
         <TextView
             android:id="@+id/detailsType"

@@ -9,18 +9,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/detailsMapImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/placeholder"
+            android:layout_height="280dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.137"
+            app:srcCompat="@drawable/placeholder" />
 
         <ImageView
             android:id="@+id/detailsBackBtn"
@@ -33,67 +33,203 @@
             app:srcCompat="@drawable/back" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/detailTripName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="10dp"
-        android:layout_weight="1"
-        android:text="TextView" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
-    <TextView
-        android:id="@+id/detailsStatus"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="10dp"
-        android:layout_weight="1"
-        android:text="TextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip Name  : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"
+            />
 
-    <TextView
-        android:id="@+id/detailsStartPoint"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:paddingStart="20dp"
-        android:paddingEnd="10dp"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/detailTripName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            android:text="TextView"
+            android:textColor="@color/black"/>
 
-    <TextView
-        android:id="@+id/detailsEndPoint"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:paddingEnd="10dp"
-        android:paddingStart="20dp"
-        android:text="TextView" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/detailsTime"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingEnd="10dp"
-        android:paddingStart="20dp"
-        android:text="TextView" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
-    <TextView
-        android:id="@+id/detailsDate"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="10dp"
-        android:layout_weight="1"
-        android:text="TextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip Status : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"/>
 
-    <TextView
-        android:id="@+id/detailsType"
+
+        <TextView
+            android:id="@+id/detailsStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="TextView" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingEnd="10dp"
-        android:paddingStart="20dp"
-        android:layout_weight="1"
-        android:text="TextView" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Point : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"/>
+
+
+        <TextView
+            android:id="@+id/detailsStartPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            android:text="TextView"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End Point   : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"/>
+
+
+        <TextView
+            android:id="@+id/detailsEndPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            android:paddingStart="20dp"
+            android:text="TextView"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time           : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"/>
+
+
+        <TextView
+            android:id="@+id/detailsTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            android:paddingStart="20dp"
+            android:text="TextView"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date            : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"/>
+
+
+        <TextView
+            android:id="@+id/detailsDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            android:text="TextView"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip Type   : "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorRed"
+            />
+
+
+        <TextView
+            android:id="@+id/detailsType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:paddingStart="20dp"
+            android:textSize="20sp"
+            android:text="TextView"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

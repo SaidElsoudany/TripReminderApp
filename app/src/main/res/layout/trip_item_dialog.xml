@@ -59,6 +59,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
                         android:paddingRight="10dp"
+                        android:textStyle="bold"
                         android:text="@string/name" />
 
                     <ImageView
@@ -70,8 +71,8 @@
 
                     <TextView
                         android:id="@+id/trip_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
                         android:text="@string/name" />
@@ -93,6 +94,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
                         android:paddingRight="5dp"
+                        android:textStyle="bold"
                         android:text="@string/From" />
 
                     <ImageView
@@ -104,8 +106,8 @@
 
                     <TextView
                         android:id="@+id/startPointField"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
                         android:drawablePadding="10dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
@@ -128,6 +130,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
                         android:paddingRight="10dp"
+                        android:textStyle="bold"
                         android:text="@string/to" />
 
                     <ImageView
@@ -139,8 +142,8 @@
 
                     <TextView
                         android:id="@+id/endPointField"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="265dp"
+                        android:layout_height="50dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="20dp"
                         android:text="@string/endPoint" />
@@ -163,6 +166,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:backgroundTint="@android:color/holo_red_dark"
                 android:text="@string/cancel" />
 
@@ -172,6 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/teal_200"
                 android:text="@string/start" />
         </LinearLayout>

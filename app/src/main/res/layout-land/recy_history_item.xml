@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="128dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:drawablePadding="10dp"
             android:text="@string/distance"
             android:textColor="@color/black"
@@ -134,21 +134,21 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/text_dis"
             app:layout_constraintStart_toEndOf="@+id/text_dis" />
 
+
         <TextView
             android:id="@+id/text_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="128dp"
-            android:layout_marginTop="16dp"
             android:drawablePadding="10dp"
+            android:layout_marginTop="4dp"
             android:text="@string/duration"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_dis" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/distance"
+            app:layout_constraintTop_toBottomOf="@+id/mapImage" />
 
         <TextView
             android:id="@+id/duration"

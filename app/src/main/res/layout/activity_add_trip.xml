@@ -164,13 +164,15 @@
             android:layout_width="185dp"
             android:layout_height="61dp"
             android:text="@string/one_direction_trip"
+            android:buttonTint="#FFC400"
             android:textSize="18sp" />
         <RadioButton
             android:id="@+id/radio_roundTrip"
             android:layout_width="177dp"
             android:layout_height="60dp"
             android:text="@string/round_trip"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:buttonTint="#FFC400"/>
     </RadioGroup>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

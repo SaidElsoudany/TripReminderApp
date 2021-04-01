@@ -63,7 +63,7 @@ public class TripDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<MapResponse> call, Response<MapResponse> response) {
                 if(response.body().routes.size() != 0) {
                     String encodedPath = response.body().routes.get(0).overview_polyline.points;
-                    Glide.with(TripDetailsActivity.this).load("https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C\""
+                    Glide.with(getApplicationContext()).load("https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C\""
                             +trip.startPoint
                             +"|"+trip.endPoint
                             + "\"&size=800x400&path=color:0x212121|weight:5%7Cenc:"
@@ -88,5 +88,16 @@ public class TripDetailsActivity extends AppCompatActivity {
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             finish();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

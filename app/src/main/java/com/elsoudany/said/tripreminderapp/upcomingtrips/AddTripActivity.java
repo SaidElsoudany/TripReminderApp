@@ -90,6 +90,7 @@ public class AddTripActivity extends AppCompatActivity
         //radio buttons
         oneDirectionRadio =findViewById(R.id.radio_oneDirection);
         roundedRadio=findViewById(R.id.radio_roundTrip);
+
         //set one direction as default
         oneDirectionRadio.setChecked(true);
         addTripButton =findViewById(R.id.btn_addTrip);

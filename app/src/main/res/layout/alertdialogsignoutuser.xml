@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="23dp"
+        android:layout_width="411dp"
+        android:layout_height="18dp"
         android:layout_marginTop="4dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,8 +26,8 @@
         android:radius="80dp"
         android:text="@string/no"
         android:textColor="@color/colorWhite"
-        app:layout_constraintStart_toStartOf="@+id/textViewMsg"
-        app:layout_constraintTop_toBottomOf="@+id/textViewMsg" />
+        app:layout_constraintStart_toStartOf="@+id/alertViewMsg"
+        app:layout_constraintTop_toBottomOf="@+id/alertViewMsg" />
 
     <Button
         android:id="@+id/text_yes_logout"
@@ -43,22 +44,23 @@
 
 
     <TextView
-        android:id="@+id/textViewMsg"
-        android:layout_width="281dp"
-        android:layout_height="32dp"
+        android:id="@+id/alertViewMsg"
+        android:layout_width="284dp"
+        android:layout_height="59dp"
         android:fontFamily="sans-serif-black"
+        android:gravity="center"
         android:text="@string/want_logout"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/text_no_logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <LinearLayout
-        android:layout_width="401dp"
-        android:layout_height="20dp"
+        android:layout_width="408dp"
+        android:layout_height="31dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

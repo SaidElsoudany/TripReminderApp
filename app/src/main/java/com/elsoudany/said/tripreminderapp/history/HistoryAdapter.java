@@ -1,21 +1,28 @@
 package com.elsoudany.said.tripreminderapp.history;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
 import com.elsoudany.said.tripreminderapp.retrofit.MapsApi;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.retrofit.RetrofitInstance;
 import com.elsoudany.said.tripreminderapp.models.MapResponse;
+import com.elsoudany.said.tripreminderapp.room.AppDatabase;
+import com.elsoudany.said.tripreminderapp.room.NoteDao;
 import com.elsoudany.said.tripreminderapp.room.Trip;
+import com.elsoudany.said.tripreminderapp.room.TripDAO;
+import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -82,6 +89,46 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
             public void onFailure(Call<MapResponse> call, Throwable t) {
 
             }
+        });
+        holder.delete.setOnClickListener(view -> {
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.alertdialogsignoutuser);
+            dialog.setCancelable(false);
+            ((TextView) dialog.findViewById(R.id.alertViewMsg)).setText(R.string.want_delete);
+
+            dialog.show();
+            Button textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
+            Button textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
+            textViewYesLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Trip trip = list.get(position);
+                    new Thread(){
+                        @Override
+                        synchronized public void run() {
+                            AppDatabase db = Room.databaseBuilder(context,AppDatabase.class,"DataBase-name").build();
+                            TripDAO tripDAO = db.tripDAO();
+                            TripNoteDao tripNoteDao = db.tripNoteDao();
+                            NoteDao noteDao = db.noteDao();
+                            if(tripNoteDao.getAllNotes(trip.uid).get(0) != null) {
+                                noteDao.deleteAll(tripNoteDao.getAllNotes(trip.uid).get(0).noteList);
+                            }
+                            tripDAO.delete(trip);
+
+                        }
+                    }.start();
+                    list.remove(position);
+                    notifyItemRemoved(position);
+
+                }
+            });
+            textViewNoLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
         });
 
     }

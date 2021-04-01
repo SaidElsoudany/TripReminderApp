@@ -211,7 +211,7 @@ public class AddTripActivity extends AppCompatActivity
                             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth)
                             {
                                 //set choosen date to datetext
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/M/yyyy");
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
                                 LocalDate date = LocalDate.parse(dayOfMonth+"/"+(month + 1)+"/"+year,formatter);
                                 dateText.setText(date.toString());
                             }
@@ -251,8 +251,9 @@ public class AddTripActivity extends AppCompatActivity
         backToTrips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new UpcomingTripsFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new UpcomingTripsFragment()).commit();
+                finish();
             }
         });
     }

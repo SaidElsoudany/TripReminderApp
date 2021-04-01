@@ -1,8 +1,10 @@
 package com.elsoudany.said.tripreminderapp.upcomingtrips;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +23,16 @@ import androidx.work.WorkManager;
 
 import com.elsoudany.said.tripreminderapp.FloatingWidget.FloatingViewService;
 import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.auth.Login;
+import com.elsoudany.said.tripreminderapp.mainscreen.Drawer;
 import com.elsoudany.said.tripreminderapp.notes.AddNoteActivity;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
+import com.elsoudany.said.tripreminderapp.room.NoteDao;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
+import com.elsoudany.said.tripreminderapp.room.TripNote;
+import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 import java.util.List;
@@ -127,7 +135,46 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             notifyItemRemoved(position);
             ((AppCompatActivity)context).startActivityForResult(intent,EDIT_TRIP_CODE);
         });
+        holder.deleteBtn.setOnClickListener(view -> {
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.alertdialogsignoutuser);
+            dialog.setCancelable(false);
+            ((TextView) dialog.findViewById(R.id.alertViewMsg)).setText(R.string.want_delete);
 
+            dialog.show();
+            Button textViewYesLogout = dialog.findViewById(R.id.text_yes_logout);
+            Button textViewNoLogout = dialog.findViewById(R.id.text_no_logout);
+            textViewYesLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    Trip trip = list.get(position);
+                    new Thread(){
+                        @Override
+                        synchronized public void run() {
+                            AppDatabase db = Room.databaseBuilder(context,AppDatabase.class,"DataBase-name").build();
+                            TripDAO tripDAO = db.tripDAO();
+                            TripNoteDao tripNoteDao = db.tripNoteDao();
+                            NoteDao noteDao = db.noteDao();
+                            if(tripNoteDao.getAllNotes(trip.uid).get(0) != null) {
+                                noteDao.deleteAll(tripNoteDao.getAllNotes(trip.uid).get(0).noteList);
+                            }
+                            tripDAO.delete(trip);
+
+                        }
+                    }.start();
+                    list.remove(position);
+                    notifyItemRemoved(position);
+
+                }
+            });
+            textViewNoLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+        });
     }
 
     @Override
@@ -147,6 +194,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         public Button cancelBtn;
         public ImageView editTripBtn;
         public ImageView btnAddNotes;
+        public ImageView deleteBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -161,6 +209,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             tripTypeField=convertView.findViewById(R.id.tripTypeUpcoming);
             btnAddNotes = convertView.findViewById(R.id.btn_addNotes);
             editTripBtn = convertView.findViewById(R.id.editTripBtn);
+            deleteBtn = convertView.findViewById(R.id.btn_deleteNote2);
 
         }
     }

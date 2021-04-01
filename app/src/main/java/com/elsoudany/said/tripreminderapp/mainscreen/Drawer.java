@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import com.bumptech.glide.Glide;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.auth.Login;
 import com.elsoudany.said.tripreminderapp.history.HistoryFragment;
@@ -61,12 +63,13 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        headerView=navigationView.getHeaderView(0);
         setTitle("Upcoming Trips");
         handler = new SyncHandler();
         // shared........27/3
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() == null)
-        {
+        if(firebaseAuth.getCurrentUser() == null) {
             FirebaseAuth.getInstance().signOut();
             SharedPreferences preferencesConfig = getSharedPreferences("status", MODE_PRIVATE);
             preferencesConfig.edit().clear().commit();
@@ -74,27 +77,26 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             startActivity(intent);
             finish();
         }
-        else
-        {
+        else {
             email = firebaseAuth.getCurrentUser().getEmail();
+            ImageView userImage = headerView.findViewById(R.id.userImage);
+            Glide.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).circleCrop().into(userImage);
         }
-        if(savedInstanceState == null)
-        {
+        if(savedInstanceState == null) {
             upcomingTripsFragment = new UpcomingTripsFragment();
             getSupportFragmentManager().beginTransaction().add(upcomingTripsFragment,"upComingTrip").commit();
         }
-        else
-        {
+        else {
             upcomingTripsFragment = (UpcomingTripsFragment) getSupportFragmentManager().findFragmentByTag("upComingTrip");
         }
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_id);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
         //access header view in navigation
-        headerView=navigationView.getHeaderView(0);
-        userEmail=headerView.findViewById(R.id.txt_userEmail);
+
+        userEmail = headerView.findViewById(R.id.txt_userEmail);
         userEmail.setText(email);
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,

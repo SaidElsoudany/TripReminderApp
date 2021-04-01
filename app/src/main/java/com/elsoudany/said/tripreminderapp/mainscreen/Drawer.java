@@ -3,6 +3,7 @@ package com.elsoudany.said.tripreminderapp.mainscreen;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -82,13 +83,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             ImageView userImage = headerView.findViewById(R.id.userImage);
             Glide.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).circleCrop().placeholder(R.drawable.user).into(userImage);
         }
-        if(savedInstanceState == null) {
-            upcomingTripsFragment = new UpcomingTripsFragment();
-            getSupportFragmentManager().beginTransaction().add(upcomingTripsFragment,"upComingTrip").commit();
-        }
-        else {
-            upcomingTripsFragment = (UpcomingTripsFragment) getSupportFragmentManager().findFragmentByTag("upComingTrip");
-        }
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -106,6 +101,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
         //selected item
         if (savedInstanceState == null) {
+            upcomingTripsFragment = new UpcomingTripsFragment();
+            getSupportFragmentManager().beginTransaction().add(upcomingTripsFragment,"upComingTrip").commit();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     upcomingTripsFragment).commit();
             navigationView.setCheckedItem(R.id.nav_Upcoming);
@@ -129,7 +126,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             case R.id.nav_Upcoming:
                 // Show Upcoming Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        upcomingTripsFragment,"upComingTrip").commit();
+                        new UpcomingTripsFragment(),"upComingTrip").commit();
                 setTitle("Upcoming Trips");
                 break;
             case R.id.nav_history:

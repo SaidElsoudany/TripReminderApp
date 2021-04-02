@@ -59,15 +59,17 @@
     <string name="title_activity_maps">Map</string>
     <string name="tripType">tripType</string>
     <string name="status">status</string>
-    <string name="distance">Distance : </string>
+    <string name="distance">Distance  : </string>
     <string name="dis">distance</string>
-    <string name="duration">Duration : </string>
+    <string name="duration">Duration  : </string>
     <string name="dur">duration </string>
     <string name="or">OR</string>
     <string name="trip">TRIPON</string>
     <string name="letsgo">Let\'s go</string>
     <string name="todo">TODO</string>
     <string name="prev">Prev</string>
+    <string name="txtTripType">Trip Type : </string>
+    <string name="txtStatus">Status : </string>
 
 
 </resources>

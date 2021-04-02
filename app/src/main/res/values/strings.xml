@@ -1,6 +1,6 @@
 <resources>
     <!--app name -->
-    <string name="app_name">TripReminderApp</string>
+    <string name="app_name">Triplt</string>
 
     <!--processing trip -->
     <string name="StartPoint">Starting Point</string>
@@ -64,7 +64,7 @@
     <string name="duration">Duration  : </string>
     <string name="dur">Unknown </string>
     <string name="or">OR</string>
-    <string name="trip">TRIPON</string>
+    <string name="trip">TRIPLT</string>
     <string name="letsgo">Let\'s go</string>
     <string name="todo">TODO</string>
     <string name="prev">Prev</string>

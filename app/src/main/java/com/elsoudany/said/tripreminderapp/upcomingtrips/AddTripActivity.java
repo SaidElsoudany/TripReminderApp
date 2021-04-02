@@ -45,6 +45,8 @@ import java.util.List;
 public class AddTripActivity extends AppCompatActivity
 {
     private static final int BACK_PRESSED = 61;
+    private static final int RESULT_RETRIP = 3698;
+
     private static final String TAG = "AddActivity";
     //radio buttons
     RadioButton oneDirectionRadio,roundedRadio;
@@ -77,7 +79,7 @@ public class AddTripActivity extends AppCompatActivity
     //position for editing trip
     int position;
     Boolean comingToEdit;
-
+    Boolean comingToRetrip;
     //backButton
     ImageView backToTrips;
 
@@ -108,6 +110,7 @@ public class AddTripActivity extends AppCompatActivity
         //check if coming from edit Trip
         Intent intent = getIntent();
         comingToEdit = intent.getBooleanExtra("editTrip",false);
+        comingToRetrip = intent.getBooleanExtra("retrip",false);
         if(comingToEdit)
         {
             Log.i(TAG, "onCreate: ");
@@ -124,6 +127,13 @@ public class AddTripActivity extends AppCompatActivity
                 roundedRadio.setChecked(true);
             position = intent.getIntExtra("position",0);
 
+        }
+        else if(comingToRetrip) {
+            Trip reTrip = (Trip) intent.getSerializableExtra("tripData");
+            tripUid = reTrip.uid;
+            tripName.setText(reTrip.tripName);
+            startPoint.setText(reTrip.startPoint);
+            endPoint.setText(reTrip.endPoint);
         }
         /*-----------------------------------------start point --------------------------*/
         if (!Places.isInitialized()) {
@@ -187,7 +197,12 @@ public class AddTripActivity extends AppCompatActivity
                     returnIntent.putExtra("userId", userId);
                     returnIntent.putExtra("status", "processing");
                     returnIntent.putExtra("position", position);
-                    setResult(Activity.RESULT_OK, returnIntent);
+                    if(comingToRetrip){
+                        setResult(RESULT_RETRIP, returnIntent);
+
+                    }else {
+                        setResult(Activity.RESULT_OK, returnIntent);
+                    }
                     finish();
                 }
             }

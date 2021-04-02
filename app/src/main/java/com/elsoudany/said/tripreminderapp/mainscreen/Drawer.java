@@ -1,5 +1,6 @@
 package com.elsoudany.said.tripreminderapp.mainscreen;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,15 +28,21 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.bumptech.glide.Glide;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.auth.Login;
 import com.elsoudany.said.tripreminderapp.history.HistoryFragment;
 import com.elsoudany.said.tripreminderapp.mapactivity.MapsActivity;
+import com.elsoudany.said.tripreminderapp.reminderwork.ReminderWorker;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Note;
 import com.elsoudany.said.tripreminderapp.room.Trip;
+import com.elsoudany.said.tripreminderapp.room.TripDAO;
 import com.elsoudany.said.tripreminderapp.room.TripNote;
 import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
 import com.elsoudany.said.tripreminderapp.room.UserTrip;
@@ -47,11 +54,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "MYTAG2";
+    private static final int RESULT_RETRIP = 3698;
     private DrawerLayout drawer;
     Toolbar toolbar;
     UpcomingTripsFragment upcomingTripsFragment;
@@ -214,6 +225,53 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("upComingTrip");
-        fragment.onActivityResult(requestCode, resultCode, data);
+        if(fragment == null) {
+            if (resultCode == RESULT_RETRIP) {
+                String tripDirection = data.getStringExtra("radio");
+                String start = data.getStringExtra("startPoint");
+                String end = data.getStringExtra("endPoint");
+                String date = data.getStringExtra("date");
+                String time = data.getStringExtra("time");
+                String tripName = data.getStringExtra("tripName");
+                String userId = data.getStringExtra("userId");
+                String status = data.getStringExtra("status");
+                Trip addedTrip = new Trip(tripName,start,end,date,time,userId,status,tripDirection);
+                AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "DataBase-name").build();
+                TripDAO tripDAO = db.tripDAO();
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        addedTrip.uid = tripDAO.insert(addedTrip);
+                        WorkManager mWorkManger = WorkManager.getInstance(getApplicationContext());
+                        DateTimeFormatter formatter = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                            LocalDateTime dateTime = LocalDateTime.parse(date + " " + time, formatter);
+                            Duration duration = Duration.between(LocalDateTime.now(), dateTime);
+
+                            Log.i(TAG, "onCreate: " + duration);
+                            OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(ReminderWorker.class)
+                                    .setInputData(new Data.Builder().putLong("tripUid", addedTrip.uid).
+                                            putString("tripName", addedTrip.tripName)
+                                            .build())
+                                    .setInitialDelay(duration)
+                                    .build();
+
+                            mWorkManger.enqueueUniqueWork("" + addedTrip.uid, ExistingWorkPolicy.REPLACE, oneTimeWorkRequest);
+                        }
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new UpcomingTripsFragment(),"upComingTrip").commit();
+
+                    }
+                }.start();
+            }
+        }
+        else {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+
+
+
+
     }
 }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -28,6 +29,7 @@ import com.elsoudany.said.tripreminderapp.room.NoteDao;
 import com.elsoudany.said.tripreminderapp.room.Trip;
 import com.elsoudany.said.tripreminderapp.room.TripDAO;
 import com.elsoudany.said.tripreminderapp.room.TripNoteDao;
+import com.elsoudany.said.tripreminderapp.upcomingtrips.AddTripActivity;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.PolyUtil;
 
@@ -38,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
-
+    private static final int ADD_NEW_TRIP_CODE = 1005;
     Context context;
     List<Trip> list;
     RequestManager glide;
@@ -152,6 +154,12 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
                 context.startActivity(intent);
             }
         });
+        holder.reTrip.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AddTripActivity.class);
+            intent.putExtra("tripData",list.get(position));
+            intent.putExtra("retrip",true);
+            ((AppCompatActivity)context).startActivityForResult(intent,ADD_NEW_TRIP_CODE);
+        });
 
 
     }
@@ -172,6 +180,7 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         TextView distance;
         TextView duration;
         ConstraintLayout itemLayout;
+        ImageView reTrip;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -185,6 +194,7 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
             tripType=itemView.findViewById(R.id.tripType);
             mapImageView = itemView.findViewById(R.id.mapImage);
             itemLayout = itemView.findViewById(R.id.itemLayout);
+            reTrip = itemView.findViewById(R.id.reTrip);
 
         }
     }

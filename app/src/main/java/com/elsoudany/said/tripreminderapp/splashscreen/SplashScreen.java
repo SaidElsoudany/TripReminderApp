@@ -25,27 +25,28 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
-        topAnim= AnimationUtils.loadAnimation(this,R.anim.top_animation);
-        bottomAnim=AnimationUtils.loadAnimation(this,R.anim.bottom_animation);
+        topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
-        imgLogo=findViewById(R.id.imgLogo);
-        logoTitle=findViewById(R.id.logoTitle);
-        logoDesc=findViewById(R.id.logoDesc);
+        imgLogo = findViewById(R.id.imgLogo);
+        logoTitle = findViewById(R.id.logoTitle);
+        logoDesc = findViewById(R.id.logoDesc);
 
         imgLogo.setAnimation(topAnim);
         logoTitle.setAnimation(bottomAnim);
         logoDesc.setAnimation(bottomAnim);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent=new Intent(SplashScreen.this, Drawer.class);
-                startActivity(intent);
-                finish();
-            }
-        },Splash_Screen);
+        if (savedInstanceState == null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashScreen.this, Drawer.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, Splash_Screen);
+        }
     }
 }

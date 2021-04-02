@@ -46,11 +46,14 @@ public class FloatingViewService extends Service implements View.OnClickListener
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-        //get uid from reminderservice
+
         if (intent != null && intent.hasExtra("tripUid"))
         {
             Log.i(TAG, "uid from start: "+tripUid);
+            //get uid from reminder service
             tripUid=intent.getLongExtra("tripUid",60);
+
+            //get notes from room
             new Thread() {
                 @Override
                 public void run() {

@@ -46,7 +46,7 @@
     <string name="cancel">Cancel</string>
     <string name="start">START</string>
     <string name="name">Name</string>
-    <string name="todo">TODO</string>
+
     <string name="new_note">NEW NOTE</string>
     <string name="write_note">WRITE A NOTE</string>
     <string name="add_note">ADD</string>
@@ -65,5 +65,7 @@
     <string name="or">OR</string>
     <string name="trip">TRIPON</string>
     <string name="letsgo">Let\'s go</string>
+    <string name="todo">TODO</string>
+
 
 </resources>

@@ -29,6 +29,7 @@
     <string name="dont_have_account">Don\'t have an Account?</string>
     <string name="SignUp">SignUp</string>
     <string name="SignIn_Google">SignIn With Google</string>
+    <string name="next">Next</string>
     <!--alert -->
     <string name="want_logout">Do you want to logout?</string>
     <string name="want_delete">Do you want to delete this trip?</string>
@@ -66,6 +67,7 @@
     <string name="trip">TRIPON</string>
     <string name="letsgo">Let\'s go</string>
     <string name="todo">TODO</string>
+    <string name="prev">Prev</string>
 
 
 </resources>

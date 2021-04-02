@@ -66,5 +66,7 @@
     <string name="trip">TRIPON</string>
     <string name="letsgo">Let\'s go</string>
     <string name="historymap">Show History Map</string>
+    <string name="next">Next</string>
+    <string name="prev">Prev</string>
 
 </resources>

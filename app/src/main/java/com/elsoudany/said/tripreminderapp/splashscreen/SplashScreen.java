@@ -16,7 +16,7 @@ import com.elsoudany.said.tripreminderapp.mainscreen.Drawer;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static int Splash_Screen =5000;
+    private static int Splash_Screen = 3000;
 
     Animation topAnim,bottomAnim;
     ImageView imgLogo;

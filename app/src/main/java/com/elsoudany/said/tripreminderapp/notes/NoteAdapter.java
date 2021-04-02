@@ -48,7 +48,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHold>
             public void onClick(View view) {
                 Note note = notes.get(position);
                 notes.remove(position);
-                notifyItemRemoved(position);
+                notifyDataSetChanged();
                 new Thread() {
                     @Override
                     public void run() {

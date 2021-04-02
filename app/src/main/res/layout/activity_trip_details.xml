@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/detailsMapImage"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_width="410dp"
+            android:layout_height="255dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
             app:srcCompat="@drawable/placeholder" />
 
         <ImageView
-            android:id="@+id/detailsBackBtn"
+            android:id="@+id/detailsBackPressed"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"

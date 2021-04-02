@@ -124,6 +124,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 buttonLogin.setClickable(false);
+                buttonSignInWithGoogle.setClickable(false);
                 InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if(getCurrentFocus() != null)
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
@@ -132,13 +133,11 @@ public class Login extends AppCompatActivity {
                 if (email.isEmpty()) {
                     editTextEmail.setError("Enter your email");
                     editTextEmail.requestFocus();
-                    buttonLogin.setClickable(true);
                     return;
                 }
                 if (password.isEmpty()) {
                     editTextPassword.setError("Enter your password");
                     editTextPassword.requestFocus();
-                    buttonLogin.setClickable(true);
                     return;
                 }
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -153,6 +152,7 @@ public class Login extends AppCompatActivity {
                                 fAuth.getCurrentUser().sendEmailVerification();
                                 Toast.makeText(Login.this, "Email Verification is sent to your Email", Toast.LENGTH_SHORT).show();
                                 buttonLogin.setClickable(true);
+                                buttonSignInWithGoogle.setClickable(true);
                             }
                         }
                         else {
@@ -160,6 +160,7 @@ public class Login extends AppCompatActivity {
                             editTextEmail.setText("");
                             editTextPassword.setText("");
                             buttonLogin.setClickable(true);
+                            buttonSignInWithGoogle.setClickable(true);
 
                         }
                     }
@@ -175,6 +176,7 @@ public class Login extends AppCompatActivity {
         buttonSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonLogin.setClickable(false);
                 buttonSignInWithGoogle.setClickable(false);
                 SignInGoogle();
             }
@@ -199,6 +201,7 @@ public class Login extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
+                buttonLogin.setClickable(true);
                 buttonSignInWithGoogle.setClickable(true);
                 Log.w(TAG, "Google sign in failed", e);
 
@@ -227,6 +230,7 @@ public class Login extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
+                            buttonLogin.setClickable(true);
                             buttonSignInWithGoogle.setClickable(true);
 
                         }

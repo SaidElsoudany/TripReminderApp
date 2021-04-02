@@ -119,6 +119,9 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
                 public void onClick(View view) {
                     dialog.dismiss();
                     Trip trip = list.get(position);
+                    list.remove(position);
+                    notifyDataSetChanged();
+
                     new Thread(){
                         @Override
                         synchronized public void run() {
@@ -133,9 +136,6 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
                         }
                     }.start();
-                    list.remove(position);
-                    notifyItemRemoved(position);
-
                 }
             });
             textViewNoLogout.setOnClickListener(new View.OnClickListener() {

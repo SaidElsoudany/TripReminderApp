@@ -2,11 +2,8 @@ package com.elsoudany.said.tripreminderapp.history;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.telecom.Conference;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +40,7 @@ public class TripDetailsActivity extends AppCompatActivity {
         tripStatus = findViewById(R.id.detailsStatus);
         tripType = findViewById(R.id.detailsType);
         date = findViewById(R.id.detailsDate);
-        backBtn = findViewById(R.id.detailsBackBtn);
+        backBtn = findViewById(R.id.detailsBackPressed);
         time = findViewById(R.id.detailsTime);
         Trip trip = (Trip) getIntent().getSerializableExtra("tripDetails");
         tripName.setText(trip.tripName);

@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.mainscreen.Drawer;
 
+import java.util.Locale;
+
 public class SplashScreen extends AppCompatActivity {
 
     private static int Splash_Screen = 3000;
@@ -27,6 +29,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+        getResources().getConfiguration().setLocale(Locale.US);
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);

@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Predicate;
 
 import retrofit2.Call;
@@ -77,6 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        getResources().getConfiguration().setLocale(Locale.US);
         tripsList = new ArrayList<>();
         if(savedInstanceState == null) {
             tripTurn = 0;

@@ -57,6 +57,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Drawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "MYTAG2";
@@ -73,6 +74,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+        getResources().getConfiguration().setLocale(Locale.US);
         NavigationView navigationView = findViewById(R.id.nav_view);
         headerView=navigationView.getHeaderView(0);
         setTitle("Upcoming Trips");

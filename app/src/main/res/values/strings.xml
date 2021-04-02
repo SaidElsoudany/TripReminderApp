@@ -1,6 +1,6 @@
 <resources>
     <!--app name -->
-    <string name="app_name">Triplt</string>
+    <string name="app_name">TripIt</string>
 
     <!--processing trip -->
     <string name="StartPoint">Starting Point</string>
@@ -64,13 +64,13 @@
     <string name="duration">Duration  : </string>
     <string name="dur">Unknown </string>
     <string name="or">OR</string>
-    <string name="trip">TRIPLT</string>
+    <string name="trip">TRIPIT</string>
     <string name="letsgo">Let\'s go</string>
     <string name="todo">TODO</string>
     <string name="prev">Prev</string>
     <string name="txtTripType">Trip Type : </string>
     <string name="txtStatus">Status : </string>
-    <string name="goToMapActivity">Go To Map </string>
+    <string name="goToMapActivity">Navigate Through Your Trips </string>
 
 
 </resources>

@@ -57,6 +57,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Login extends AppCompatActivity {
@@ -83,6 +84,7 @@ public class Login extends AppCompatActivity {
         textViewSignUp=findViewById(R.id.textViewSignUp);
         textViewForgetPassword=findViewById(R.id.forgotPassword);
         handler = new SyncHandler();
+        getResources().getConfiguration().setLocale(Locale.US);
         // if forget password...
         textViewForgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,7 +279,6 @@ public class Login extends AppCompatActivity {
                                 ArrayList<Trip> trips = parseTripData(task.getResult().getValue());
                                 for(Trip trip : trips)
                                 {
-
                                     WorkManager mWorkManger = WorkManager.getInstance(getApplicationContext());
                                     DateTimeFormatter formatter = null;
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -43,6 +45,7 @@ public class ReminderService extends Service {
     Trip trip;
     AppDatabase db;
     TripDAO tripDAO;
+    Ringtone r;
     long uid;
     NotificationManager notificationManager;
     public ReminderService() {
@@ -212,7 +215,9 @@ public class ReminderService extends Service {
                     500, 200, WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                     WindowManager.LayoutParams.FLAG_LOCAL_FOCUS_MODE,
                     PixelFormat.TRANSPARENT);
-
+            Uri ringTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            r = RingtoneManager.getRingtone(getApplicationContext(), ringTone);
+            r.play();
             parameters.gravity = Gravity.CENTER | Gravity.CENTER;
             parameters.x = 0;
             parameters.y = 0;
@@ -222,7 +227,6 @@ public class ReminderService extends Service {
             Dialog dialog = new Dialog(ReminderService.this);
             dialog.getWindow().setAttributes(parameters);
             dialog.setCancelable(false);
-
             dialog.setContentView(R.layout.trip_item_dialog);
             dialog.setTitle("Trip Reminder");
             name = dialog.findViewById(R.id.trip_name);
@@ -237,13 +241,14 @@ public class ReminderService extends Service {
             Button cancelBtn = dialog.findViewById(R.id.cancelBtn);
             Button snoozeBtn = dialog.findViewById(R.id.snooze);
             snoozeBtn.setOnClickListener(view -> {
+                r.stop();
                 displayNotification( trip.tripName);
                 dialog.dismiss();
             });
             startBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    r.stop();
                     trip.status = "started";
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                             Uri.parse("http://maps.google.com/maps?daddr=" + trip.endPoint));
@@ -267,7 +272,7 @@ public class ReminderService extends Service {
             cancelBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    r.stop();
                     trip.status = "cancelled";
                     dialog.dismiss();
                     new Thread(){
@@ -282,5 +287,10 @@ public class ReminderService extends Service {
             });
 
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

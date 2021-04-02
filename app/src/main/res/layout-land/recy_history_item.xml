@@ -69,10 +69,19 @@
 
 
         <TextView
+            android:id="@+id/tripStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:text="@string/status"
+            app:layout_constraintBaseline_toBaselineOf="@+id/txt_status"
+            app:layout_constraintStart_toEndOf="@+id/txt_status" />
+
+        <TextView
             android:id="@+id/txt_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
+            android:layout_marginStart="44dp"
             android:layout_marginTop="54dp"
             android:layout_marginBottom="24dp"
             android:drawablePadding="10dp"
@@ -83,27 +92,13 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/txt_tripType"
             app:layout_constraintStart_toEndOf="@+id/mapImage"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tripStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="95dp"
-            android:layout_marginBottom="193dp"
-            android:text="@string/status"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/txt_status"
-            app:layout_constraintStart_toStartOf="@+id/txt_status" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/txt_tripType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
             android:layout_marginBottom="24dp"
             android:drawablePadding="10dp"
             android:text="@string/txtTripType"
@@ -112,19 +107,16 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/text_dis"
-            app:layout_constraintStart_toEndOf="@+id/mapImage" />
+            app:layout_constraintStart_toStartOf="@+id/txt_status" />
 
         <TextView
             android:id="@+id/tripType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="148dp"
             android:text="@string/tripType"
             android:textColor="@color/black"
             app:layout_constraintBaseline_toBaselineOf="@+id/txt_tripType"
-            app:layout_constraintBottom_toTopOf="@+id/text_dis"
-            app:layout_constraintStart_toEndOf="@+id/mapImage"
-            app:layout_constraintVertical_bias="0.576" />
+            app:layout_constraintStart_toStartOf="@+id/tripStatus" />
 
         <ImageView
             android:id="@+id/mapImage"
@@ -145,7 +137,6 @@
             android:id="@+id/text_dis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
             android:layout_marginBottom="24dp"
             android:drawablePadding="10dp"
             android:text="@string/distance"
@@ -154,25 +145,23 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/text_duration"
-            app:layout_constraintStart_toEndOf="@+id/mapImage" />
+            app:layout_constraintStart_toStartOf="@+id/txt_tripType" />
 
         <TextView
             android:id="@+id/distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
             android:text="@string/dis"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_dis"
-            app:layout_constraintStart_toEndOf="@+id/text_dis" />
+            app:layout_constraintStart_toStartOf="@+id/tripType" />
 
         <TextView
             android:id="@+id/text_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="52dp"
             android:layout_marginBottom="64dp"
             android:drawablePadding="10dp"
             android:text="@string/duration"
@@ -181,19 +170,18 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/mapImage" />
+            app:layout_constraintStart_toStartOf="@+id/text_dis" />
 
         <TextView
             android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
             android:text="@string/dur"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/text_duration"
-            app:layout_constraintStart_toEndOf="@+id/text_duration" />
+            app:layout_constraintStart_toStartOf="@+id/distance" />
 
         <ImageView
             android:id="@+id/reTrip"

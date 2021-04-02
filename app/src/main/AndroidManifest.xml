@@ -17,8 +17,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.TripReminderApp">
-        <activity android:name=".history.TripDetailsActivity"></activity>
-        <!-- Start Application -->
+        <activity android:name=".splashscreen.SplachMapScreen"></activity>
+        <activity android:name=".history.TripDetailsActivity" /> <!-- Start Application -->
         <activity android:name=".splashscreen.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +54,7 @@
             android:allowEmbedded="true"
             android:resizeableActivity="true"
             android:theme="@style/Theme.Design.NoActionBar" />
-        <activity android:name=".mainscreen.Drawer"></activity>
+        <activity android:name=".mainscreen.Drawer" />
         <activity android:name=".auth.SignUp" />
         <activity android:name=".auth.Login" />
         <activity android:name=".upcomingtrips.AddTripActivity" />

@@ -1,10 +1,8 @@
 package com.elsoudany.said.tripreminderapp.mainscreen;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,9 +33,9 @@ import androidx.work.WorkManager;
 
 import com.bumptech.glide.Glide;
 import com.elsoudany.said.tripreminderapp.R;
+import com.elsoudany.said.tripreminderapp.splashscreen.SplachMapScreen;
 import com.elsoudany.said.tripreminderapp.auth.Login;
 import com.elsoudany.said.tripreminderapp.history.HistoryFragment;
-import com.elsoudany.said.tripreminderapp.mapactivity.MapsActivity;
 import com.elsoudany.said.tripreminderapp.reminderwork.ReminderWorker;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Note;
@@ -143,9 +141,10 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
             case R.id.nav_map:
                 // Open Map
-                Toast.makeText(this, "open map", Toast.LENGTH_SHORT).show();
-                Intent map=new Intent(Drawer.this, MapsActivity.class);
+                Intent map=new Intent(Drawer.this, SplachMapScreen.class);
                 startActivity(map);
+               // Intent map=new Intent(Drawer.this, MapsActivity.class);
+               // startActivity(map);
                 break;
             case R.id.nav_sync:
                 //show Snackbar

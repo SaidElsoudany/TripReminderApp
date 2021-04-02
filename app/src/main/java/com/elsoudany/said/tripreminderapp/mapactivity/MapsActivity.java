@@ -124,6 +124,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        googleMap.getUiSettings().setCompassEnabled(false);
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
         mGoogleMap = googleMap;
         if(!tripsList.isEmpty()) {
             getTripDirections(tripsList.get(tripTurn));
@@ -131,11 +134,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         nextPressed.setClickable(true);
         prevPressed.setClickable(true);
         nextPressed.setOnClickListener(view -> {
-            if(prevPolyline != null){
-                prevPolyline.remove();
-                prevStartMarker.remove();
-                prevEndMarker.remove();
-            }
             if (tripTurn >= tripsList.size() - 1) {
                 tripTurn = 0;
             } else {
@@ -145,11 +143,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
         prevPressed.setOnClickListener(view -> {
-            if(prevPolyline != null){
-                prevPolyline.remove();
-                prevStartMarker.remove();
-                prevEndMarker.remove();
-            }
             if (tripTurn <= 0) {
                 tripTurn = tripsList.size() - 1;
             } else {
@@ -193,6 +186,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     PolylineOptions polylineOptions = new PolylineOptions();
                     polylineOptions.addAll(decodedPath);
                     polylineOptions.color(Color.BLACK);
+                    if(prevPolyline != null){
+                        prevPolyline.remove();
+                        prevStartMarker.remove();
+                        prevEndMarker.remove();
+                    }
                     prevPolyline = mGoogleMap.addPolyline(polylineOptions);
                     prevPolyline.setTag(trip);
                     prevPolyline.setClickable(true);

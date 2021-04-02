@@ -3,9 +3,11 @@ package com.elsoudany.said.tripreminderapp.mainscreen;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +60,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
     String email;
     Snackbar bar;
     SyncHandler handler;
-    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,16 +81,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         else {
             email = firebaseAuth.getCurrentUser().getEmail();
             ImageView userImage = headerView.findViewById(R.id.userImage);
-            Glide.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).circleCrop().into(userImage);
+            Glide.with(this).load(firebaseAuth.getCurrentUser().getPhotoUrl()).circleCrop().placeholder(R.drawable.user).into(userImage);
         }
-        if(savedInstanceState == null) {
-            upcomingTripsFragment = new UpcomingTripsFragment();
-            getSupportFragmentManager().beginTransaction().add(upcomingTripsFragment,"upComingTrip").commit();
-        }
-        else {
-            upcomingTripsFragment = (UpcomingTripsFragment) getSupportFragmentManager().findFragmentByTag("upComingTrip");
-        }
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_id);
@@ -106,6 +99,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
         //selected item
         if (savedInstanceState == null) {
+            upcomingTripsFragment = new UpcomingTripsFragment();
+            getSupportFragmentManager().beginTransaction().add(upcomingTripsFragment,"upComingTrip").commit();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     upcomingTripsFragment).commit();
             navigationView.setCheckedItem(R.id.nav_Upcoming);
@@ -114,9 +109,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
 
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START))
-        {
-
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -129,14 +122,12 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
             case R.id.nav_Upcoming:
                 // Show Upcoming Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        upcomingTripsFragment,"upComingTrip").commit();
-                setTitle("Upcoming Trips");
+                        new UpcomingTripsFragment(),"upComingTrip").commit();
                 break;
             case R.id.nav_history:
                 // Show History Trips Fragment
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HistoryFragment()).commit();
-                setTitle("History");
                 break;
 
             case R.id.nav_map:
@@ -145,7 +136,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 Intent map=new Intent(Drawer.this, MapsActivity.class);
                 startActivity(map);
                 break;
-
             case R.id.nav_sync:
                 //show Snackbar
                 LinearLayout linearLayout = findViewById(R.id.linearLayout);
@@ -156,18 +146,10 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                 contentLay.addView(progressBar);
                 bar.show();
                 // Sync to firebase
-                new Thread ()
-                {
+                new Thread () {
                     @Override
-                    synchronized public void  run() {
+                    synchronized public void  run(){
                         super.run();
-                        ArrayList<Trip> defaultTripList = new ArrayList<>();
-                        defaultTripList.add(new Trip());
-                        defaultTripList.add(new Trip());
-                        ArrayList<Note> defaultNoteList = new ArrayList<>();
-                        defaultNoteList.add(new Note());
-                        defaultNoteList.add(new Note());
-
                         AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
                         DatabaseReference mDatabase;
                         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -176,8 +158,7 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                         String uid= FirebaseAuth.getInstance().getCurrentUser().getUid();
                         List<UserTrip> userTripList = userTripDAO.getAllTrips(uid);
                         ArrayList<Trip> tripList = (ArrayList<Trip>) userTripList.get(0).tripList;
-                        for(Trip trip : tripList)
-                        {
+                        for(Trip trip : tripList) {
                             List<TripNote> tripNotesList = tripNoteDao.getAllNotes(trip.uid);
                             List<Note> noteList = tripNotesList.get(0).noteList;
                             mDatabase.child("users").child(uid).child("trips").child(""+trip.uid).setValue(trip);
@@ -188,8 +169,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                         handler.sendEmptyMessage(1);
                     }
                 }.start();
-
-
                 Toast.makeText(this, "nav_sync", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
@@ -211,7 +190,6 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                         Intent intent = new Intent(Drawer.this, Login.class);
                         startActivity(intent);
                         finish();
-
                     }
                 });
                 textViewNoLogout.setOnClickListener(new View.OnClickListener() {
@@ -220,12 +198,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
                         dialog.dismiss();
                     }
                 });
-
-
-
                 break;
         }
-
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -234,10 +208,8 @@ public class Drawer extends AppCompatActivity implements NavigationView.OnNaviga
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             bar.dismiss();
-
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -2,6 +2,9 @@ package com.elsoudany.said.tripreminderapp.history;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.elsoudany.said.tripreminderapp.retrofit.MapsApi;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.retrofit.RetrofitInstance;
@@ -36,10 +41,12 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
     Context context;
     List<Trip> list;
+    RequestManager glide;
 
-    public HistoryAdapter(Context context, List<Trip> list) {
+    public HistoryAdapter(Context context, List<Trip> list, RequestManager glide) {
         this.context = context;
         this.list = list;
+        this.glide = glide;
     }
 
     @NonNull
@@ -55,10 +62,18 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull HistoryAdapter.ViewHolder holder, int position) {
 
         holder.tripName.setText(list.get(position).tripName);
-      //  holder.startPoint.setText(list.get(position).startPoint);
-      //  holder.endPoint.setText(list.get(position).endPoint);
-        holder.tripStatus.setText(list.get(position).status);
-      //  holder.tripType.setText(list.get(position).tripType);
+        //  holder.startPoint.setText(list.get(position).startPoint);
+        //  holder.endPoint.setText(list.get(position).endPoint);
+        String status = list.get(position).status;
+        if(status.equals("cancelled")) {
+            holder.tripStatus.setTextColor(Color.RED);
+        }
+        else {
+            holder.tripStatus.setTextColor(Color.GREEN);
+        }
+        holder.tripStatus.setText(status);
+
+        //  holder.tripType.setText(list.get(position).tripType);
         if(list.get(position).tripType.equals("one")){
             holder.tripType.setText("One Direction");
         }
@@ -69,10 +84,10 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
         Call<MapResponse> call = mapsApi.getDirections(list.get(position).startPoint,list.get(position).endPoint);
         call.enqueue(new Callback<MapResponse>() {
             @Override
-            public void onResponse(Call<MapResponse> call, Response<MapResponse> response) {
+            synchronized public void onResponse(Call<MapResponse> call, Response<MapResponse> response) {
                 if(response.body().routes.size() != 0) {
                     String encodedPath = response.body().routes.get(0).overview_polyline.points;
-                    Glide.with(context).load("https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C\""
+                    glide.load("https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:red%7C\""
                             +list.get(position).startPoint
                             +"|"+list.get(position).endPoint
                             + "\"&size=800x400&path=color:0x212121|weight:5%7Cenc:"
@@ -104,6 +119,9 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
                 public void onClick(View view) {
                     dialog.dismiss();
                     Trip trip = list.get(position);
+                    list.remove(position);
+                    notifyDataSetChanged();
+
                     new Thread(){
                         @Override
                         synchronized public void run() {
@@ -118,9 +136,6 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
                         }
                     }.start();
-                    list.remove(position);
-                    notifyItemRemoved(position);
-
                 }
             });
             textViewNoLogout.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +145,14 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
                 }
             });
         });
+        holder.itemLayout.setOnClickListener(view -> {
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                Intent intent = new Intent(context, TripDetailsActivity.class);
+                intent.putExtra("tripDetails", list.get(position));
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -140,28 +163,31 @@ class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView tripName;
-        TextView startPoint;
-        TextView endPoint;
+        //        TextView startPoint;
+//        TextView endPoint;
         TextView tripStatus;
         TextView tripType;
         ImageView delete;
         ImageView mapImageView;
         TextView distance;
         TextView duration;
+        ConstraintLayout itemLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tripName = itemView.findViewById(R.id.tripName);
-          //  startPoint = itemView.findViewById(R.id.startPoint);
-         //   endPoint = itemView.findViewById(R.id.endPoint);
+            //  startPoint = itemView.findViewById(R.id.startPoint);
+            //   endPoint = itemView.findViewById(R.id.endPoint);
             distance = itemView.findViewById(R.id.distance);
             duration = itemView.findViewById(R.id.duration);
             delete = itemView.findViewById(R.id.delete);
             tripStatus=itemView.findViewById(R.id.tripStatus);
             tripType=itemView.findViewById(R.id.tripType);
             mapImageView = itemView.findViewById(R.id.mapImage);
+            itemLayout = itemView.findViewById(R.id.itemLayout);
 
         }
     }
+
 }
 

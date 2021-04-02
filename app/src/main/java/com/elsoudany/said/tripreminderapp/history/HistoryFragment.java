@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+
+import com.bumptech.glide.Glide;
 import com.elsoudany.said.tripreminderapp.R;
 import com.elsoudany.said.tripreminderapp.room.AppDatabase;
 import com.elsoudany.said.tripreminderapp.room.Trip;
@@ -42,7 +44,15 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().setTitle("History");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,7 +64,7 @@ public class HistoryFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         HistoryTripListView.setLayoutManager(layoutManager);
-        historyAdapter = new HistoryAdapter(getActivity(), HistoryTripList);
+        historyAdapter = new HistoryAdapter(getActivity(), HistoryTripList, Glide.with(this));
         HistoryTripListView.setAdapter(historyAdapter);
 
         AppDatabase db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "DataBase-name").build();
@@ -92,5 +102,10 @@ public class HistoryFragment extends Fragment {
             super.handleMessage(msg);
             historyAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

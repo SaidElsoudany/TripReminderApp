@@ -1,6 +1,7 @@
 package com.elsoudany.said.tripreminderapp.auth;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 import androidx.work.Data;
@@ -8,6 +9,7 @@ import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -120,6 +123,11 @@ public class Login extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonLogin.setClickable(false);
+                buttonSignInWithGoogle.setClickable(false);
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(getCurrentFocus() != null)
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                 String email = editTextEmail.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
                 if (email.isEmpty()) {
@@ -133,6 +141,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
@@ -142,12 +151,16 @@ public class Login extends AppCompatActivity {
                             else {
                                 fAuth.getCurrentUser().sendEmailVerification();
                                 Toast.makeText(Login.this, "Email Verification is sent to your Email", Toast.LENGTH_SHORT).show();
+                                buttonLogin.setClickable(true);
+                                buttonSignInWithGoogle.setClickable(true);
                             }
                         }
                         else {
                             Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             editTextEmail.setText("");
                             editTextPassword.setText("");
+                            buttonLogin.setClickable(true);
+                            buttonSignInWithGoogle.setClickable(true);
 
                         }
                     }
@@ -163,6 +176,8 @@ public class Login extends AppCompatActivity {
         buttonSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buttonLogin.setClickable(false);
+                buttonSignInWithGoogle.setClickable(false);
                 SignInGoogle();
             }
         });
@@ -186,6 +201,8 @@ public class Login extends AppCompatActivity {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
+                buttonLogin.setClickable(true);
+                buttonSignInWithGoogle.setClickable(true);
                 Log.w(TAG, "Google sign in failed", e);
 
             }
@@ -198,6 +215,7 @@ public class Login extends AppCompatActivity {
 
         fAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -212,6 +230,8 @@ public class Login extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(Login.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
+                            buttonLogin.setClickable(true);
+                            buttonSignInWithGoogle.setClickable(true);
 
                         }
 
@@ -220,13 +240,15 @@ public class Login extends AppCompatActivity {
                 });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void getDataFromFireBase() {
         LinearLayout linearLayout = findViewById(R.id.snackbar_layout);
-        bar = Snackbar.make(linearLayout,"Logging in..", Snackbar.LENGTH_INDEFINITE);
+        bar = Snackbar.make(linearLayout,"Logging in...", Snackbar.LENGTH_INDEFINITE);
         ViewGroup contentLay = (ViewGroup) bar.getView();
         ProgressBar progressBar = new ProgressBar(getApplicationContext());
         progressBar.setPadding(800,0,0,0);
         contentLay.addView(progressBar);
+
         bar.show();
         // Sync to firebase
         new Thread ()
@@ -248,6 +270,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         new Thread(){
+                            @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             synchronized public void run() {
                                 Log.i(TAG, "run: "+ task.getResult().getValue());
@@ -294,40 +317,75 @@ public class Login extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<Trip> parseTripData(Object value) {
         if(value != null) {
             HashMap<String, Object> data = (HashMap<String, Object>) value;
             if(data.get("trips") != null) {
-                ArrayList<HashMap<String, Object>> tripsData = (ArrayList<HashMap<String, Object>>) data.get("trips");
+                Log.i(TAG, "parseTripData: "+ data.get("trips").getClass());
                 ArrayList<Trip> trips = new ArrayList<>();
-                for (HashMap<String, Object> item : tripsData) {
-                    if (item != null) {
-                        Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
-                        trip.uid = (Long) item.get("uid");
-                        trips.add(trip);
-                    }
+                if (data.get("trips").getClass() == HashMap.class) {
+                    HashMap<String,HashMap<String,Object>> dataHashMap = (HashMap<String, HashMap<String, Object>>) data.get("trips");
+                    dataHashMap.forEach((s, item) -> {
+                        if (item != null) {
+                            Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
+                            trip.uid = (Long) item.get("uid");
+                            trips.add(trip);
+                        }
+                    });
+                }
+                else if(data.get("trips").getClass() == ArrayList.class){
 
+                    ArrayList<HashMap<String, Object>> tripsData = (ArrayList<HashMap<String, Object>>) data.get("trips");
+                    if (tripsData != null) {
+                        for (HashMap<String, Object> item : tripsData) {
+                            if (item != null) {
+                                Trip trip = new Trip((String) item.get("tripName"), (String) item.get("startPoint"), (String) item.get("endPoint"), (String) item.get("date"), (String) item.get("time"), (String) item.get("userId"), (String) item.get("status"), (String) item.get("tripType"));
+                                trip.uid = (Long) item.get("uid");
+                                trips.add(trip);
+                            }
+
+                        }
+                    }
                 }
                 return trips;
             }
+
+
         }
         return new ArrayList<>();
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private ArrayList<Note> parseNoteData(Object value) {
         if(value != null) {
             HashMap<String, Object> data = (HashMap<String, Object>) value;
-            if (data.get("notes") != null) {
-                ArrayList<HashMap<String, Object>> notesData = (ArrayList<HashMap<String, Object>>) data.get("notes");
-                ArrayList<Note> notes = new ArrayList<>();
-                for (HashMap<String, Object> item : notesData) {
-                    if (item != null) {
-                        Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
-                        note.uid = (Long) item.get("uid");
-                        notes.add(note);
+            ArrayList<Note> notes = new ArrayList<>();
+            if(data.get("notes") != null) {
+//                Log.i(TAG, "parseTripData: "+ data.get("trips").getClass());
+                if (data.get("notes").getClass() == HashMap.class) {
+                    HashMap<String, HashMap<String, Object>> dataHashMap = (HashMap<String, HashMap<String, Object>>) data.get("notes");
+                    dataHashMap.forEach((s, item) -> {
+                        if (item != null) {
+                            Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
+                            note.uid = (Long) item.get("uid");
+                            notes.add(note);
+                        }
+                    });
+                }
+
+                else if(data.get("notes").getClass() == ArrayList.class){
+                    ArrayList<HashMap<String, Object>> notesData = (ArrayList<HashMap<String, Object>>) data.get("notes");
+                    for (HashMap<String, Object> item : notesData) {
+                        if (item != null) {
+                            Note note = new Note((String) item.get("noteBody"), (Long) item.get("tripUid"));
+                            note.uid = (Long) item.get("uid");
+                            notes.add(note);
+                        }
+
                     }
 
+                    return notes;
                 }
-                return notes;
             }
         }
         return new ArrayList<>();
@@ -349,7 +407,8 @@ public class Login extends AppCompatActivity {
             Intent intent=new Intent(Login.this, Drawer.class);
             preferencesConfig.writeUserLoginStatus(true);
             startActivity(intent);
-            
+            finish();
+
         }
     }
 }

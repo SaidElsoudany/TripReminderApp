@@ -79,7 +79,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             list.get(position).status = "started";
             Trip trip = list.get(position);
             list.remove(position);
-            this.notifyItemRemoved(position);
+            notifyDataSetChanged();
             new Thread(){
                 @Override
                 synchronized public void run() {
@@ -104,7 +104,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             list.get(position).status = "cancelled";
             Trip trip = list.get(position);
             list.remove(position);
-            this.notifyItemRemoved(position);
+            notifyDataSetChanged();
             new Thread(){
                 @Override
                 synchronized public void run() {
@@ -132,7 +132,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
             intent.putExtra("editTrip",true);
             intent.putExtra("position",position);
             list.remove(list.get(position));
-            notifyItemRemoved(position);
+            notifyDataSetChanged();
             ((AppCompatActivity)context).startActivityForResult(intent,EDIT_TRIP_CODE);
         });
         holder.deleteBtn.setOnClickListener(view -> {
@@ -164,7 +164,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
                         }
                     }.start();
                     list.remove(position);
-                    notifyItemRemoved(position);
+                    notifyDataSetChanged();
 
                 }
             });

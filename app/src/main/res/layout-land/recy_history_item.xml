@@ -17,8 +17,8 @@
     app:contentPaddingTop="10dp">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -55,9 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="128dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:text="@string/status"
-            android:layout_marginTop="4dp"
             app:layout_constraintBottom_toTopOf="@+id/mapImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -76,7 +76,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tripName"
             app:srcCompat="@drawable/placeholder" />
-
 
 
         <!--   <TextView
@@ -112,16 +111,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="128dp"
+            android:layout_marginTop="4dp"
             android:drawablePadding="10dp"
             android:text="@string/distance"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mapImage" />
-
 
 
         <TextView
@@ -136,21 +134,21 @@
             app:layout_constraintBaseline_toBaselineOf="@+id/text_dis"
             app:layout_constraintStart_toEndOf="@+id/text_dis" />
 
+
         <TextView
             android:id="@+id/text_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="128dp"
             android:drawablePadding="10dp"
+            android:layout_marginTop="4dp"
             android:text="@string/duration"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:layout_marginTop="16dp"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_dis" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/distance"
+            app:layout_constraintTop_toBottomOf="@+id/mapImage" />
 
         <TextView
             android:id="@+id/duration"
@@ -168,12 +166,10 @@
             android:id="@+id/delete"
             android:layout_width="39dp"
             android:layout_height="53dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/duration"
+            app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_delete"
             tools:ignore="VectorDrawableCompat" />
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

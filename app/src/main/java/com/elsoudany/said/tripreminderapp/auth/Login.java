@@ -77,6 +77,12 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        try {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        }catch (Exception e) {
+
+        }
         editTextEmail=findViewById(R.id.inputEmail);
         editTextPassword=findViewById(R.id.inputPassword);
         buttonLogin=findViewById(R.id.btnlogin);
@@ -262,6 +268,8 @@ public class Login extends AppCompatActivity {
                 AppDatabase db = Room.databaseBuilder(getApplicationContext(),AppDatabase.class,"DataBase-name").build();
                 DatabaseReference mDatabase;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
+                mDatabase.onDisconnect().setValue("I disconnected!");
+                mDatabase.keepSynced(true);
                 TripDAO tripDAO = db.tripDAO();
                 UserDAO userDAO = db.userDAO();
                 NoteDao noteDao = db.noteDao();

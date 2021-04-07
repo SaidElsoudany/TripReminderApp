@@ -136,22 +136,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         nextPressed.setClickable(true);
         prevPressed.setClickable(true);
         nextPressed.setOnClickListener(view -> {
-            if (tripTurn >= tripsList.size() - 1) {
-                tripTurn = 0;
-            } else {
-                tripTurn ++;
+            if(!tripsList.isEmpty()) {
+                if (tripTurn >= tripsList.size() - 1) {
+                    tripTurn = 0;
+                } else {
+                    tripTurn++;
+                }
+                getTripDirections(tripsList.get(tripTurn));
             }
-            getTripDirections(tripsList.get(tripTurn));
-
         });
         prevPressed.setOnClickListener(view -> {
-            if (tripTurn <= 0) {
-                tripTurn = tripsList.size() - 1;
-            } else {
-                tripTurn --;
+            if(!tripsList.isEmpty()) {
+                if (tripTurn <= 0) {
+                    tripTurn = tripsList.size() - 1;
+                } else {
+                    tripTurn--;
+                }
+                getTripDirections(tripsList.get(tripTurn));
             }
-            getTripDirections(tripsList.get(tripTurn));
-
         });
         mGoogleMap.setOnPolylineClickListener(new  GoogleMap.OnPolylineClickListener(){
             @Override
@@ -184,7 +186,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     String encodedPath = response.body().routes.get(0).overview_polyline.points;
                     List<LatLng> decodedPath = PolyUtil.decode(encodedPath);
-                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(decodedPath.get((decodedPath.size() - 1)/2), decodedPath.size()/25));
+                    mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(decodedPath.get((decodedPath.size() - 1)/2),7));
                     PolylineOptions polylineOptions = new PolylineOptions();
                     polylineOptions.addAll(decodedPath);
                     polylineOptions.color(Color.BLACK);
